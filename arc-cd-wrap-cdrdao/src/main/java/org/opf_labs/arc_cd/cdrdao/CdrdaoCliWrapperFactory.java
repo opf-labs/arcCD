@@ -194,12 +194,10 @@ public final class CdrdaoCliWrapperFactory {
 		List<String> deviceList = new ArrayList<>();
 		String line;
 		try {
-			LOGGER.debug("Parsing output for CD devices " + DEVICE_PATTERN.pattern());
 			while ((line = cdrdaoScanbusReader.readLine()) != null) {
 				Matcher devMatch = DEVICE_PATTERN.matcher(line);
 				if (devMatch.matches()){
 					deviceList.add(devMatch.group(1).trim());
-					LOGGER.debug("Adding CD device:" + devMatch.group(1));
 				}
 			}
 		} catch (IOException excep) {

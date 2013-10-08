@@ -1,0 +1,180 @@
+CD_DA
+
+CD_TEXT {
+  LANGUAGE_MAP {
+    0: 9
+  }
+  LANGUAGE 0 {
+    TITLE "\"Wooden Arms\""
+    PERFORMER "Patrick Watson"
+    GENRE { 0,  0,  0}
+    SIZE_INFO { 1,  1, 11,  0, 16, 15,  0,  0,  0,  0,  0,  1,
+                0,  0,  0,  0,  0,  0,  0,  3, 34,  0,  0,  0,
+                0,  0,  0,  0,  9,  0,  0,  0,  0,  0,  0,  0}
+  }
+}
+
+// Track 1
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900001"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Fireweed"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 0 03:35:59
+
+
+// Track 2
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900002"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Tracy's Waters"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 03:35:59 03:47:52
+
+
+// Track 3
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900003"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Beijing"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 07:23:36 04:06:58
+
+
+// Track 4
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900004"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Wooden Arms"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 11:30:19 03:08:24
+
+
+// Track 5
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900005"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Hommage"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 14:38:43 02:04:10
+
+
+// Track 6
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900006"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Traveling Salesman"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 16:42:53 03:42:08
+
+
+// Track 7
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900007"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Big Bird In A Small Cage"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 20:24:61 04:03:46
+
+
+// Track 8
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900008"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Down At The Beach"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 24:28:32 05:18:34
+
+
+// Track 9
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900009"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Man Like You"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 29:46:66 04:11:57
+
+
+// Track 10
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900010"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Where The Wild Things Are"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 33:58:48 03:52:63
+
+
+// Track 11
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+ISRC "CA0RZ0900011"
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "Machinery Of The Heavens"
+    PERFORMER "Patrick Watson"
+  }
+}
+FILE "data.wav" 37:51:36 07:26:20
+

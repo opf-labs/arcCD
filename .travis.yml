@@ -8,3 +8,4 @@ before_install:
   - git clone https://github.com/openplanets/opf-java-utilities.git
   - cd opf-java-utilities
   - mvn clean install -DskipTests=true
+  - cd ..

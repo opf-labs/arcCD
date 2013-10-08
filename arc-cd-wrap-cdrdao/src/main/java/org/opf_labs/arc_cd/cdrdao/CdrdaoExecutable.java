@@ -3,6 +3,7 @@
  */
 package org.opf_labs.arc_cd.cdrdao;
 
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -21,12 +22,14 @@ import com.google.common.base.Preconditions;
  */
 
 final class CdrdaoExecutable {
+	/** Cdrdao Executable default instance */
+	public static final CdrdaoExecutable DEFAULT = new CdrdaoExecutable();
 	private final String command;
 	private final String version;
 	private final List<String> devices;
 	
 	private CdrdaoExecutable() {
-		throw new AssertionError("Should not be in CdrdaoExecutable()");
+		this("", "UNKOWN", Arrays.asList(new String[] {}));
 	}
 	
 	private CdrdaoExecutable(final String command, final String version, final List<String> devices) {

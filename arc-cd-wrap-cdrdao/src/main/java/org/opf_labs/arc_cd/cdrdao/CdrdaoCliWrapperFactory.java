@@ -63,7 +63,7 @@ public final class CdrdaoCliWrapperFactory {
 					Cdrdao.CDRDAO_COMMAND, version, devices);
 			LOGGER.trace("Installed version:" + version);
 		} else {
-			INSTALLED_CDRDAO = null;
+			INSTALLED_CDRDAO = CdrdaoExecutable.DEFAULT;
 		}
 	}
 

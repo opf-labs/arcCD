@@ -154,17 +154,20 @@ public class AllArcCdrdaoWrapperTests {
 				.getResourceAsFile("org/opf_labs/arc_cd/cdrdaoOut/disk-loaded-false.txt");
 	}
 
-	static String detectCdrdaoVersion() throws IOException,
-			ProcessRunnerException {
+	static String detectCdrdaoVersion() {
 		ProcessRunner cdrdaohelpRunner = ProcessRunnerImplFactory.getInstance()
 				.createProcessRunner("cdrdao");
-		cdrdaohelpRunner.execute();
-		// Get the process error, I don't know why cdrdao outputs to stderr
-		BufferedReader stderrReader = new BufferedReader(new InputStreamReader(
-				cdrdaohelpRunner.getProcessError()));
-		// The first line should give us the version
-		String versionLine = stderrReader.readLine();
-		return parseCdrdaoVersionLine(versionLine);
+		try {
+			cdrdaohelpRunner.execute();
+			BufferedReader stderrReader = new BufferedReader(new InputStreamReader(
+					cdrdaohelpRunner.getProcessError()));
+			// The first line should give us the version
+			String versionLine = stderrReader.readLine();
+			return parseCdrdaoVersionLine(versionLine);
+		} catch (ProcessRunnerException | IOException excep) {
+			// TODO Auto-generated catch block
+			return "UNKOWN";
+		}
 	}
 
 	static String parseCdrdaoVersionLine(String line) {

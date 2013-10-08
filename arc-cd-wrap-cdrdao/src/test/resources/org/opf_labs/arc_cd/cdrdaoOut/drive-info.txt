@@ -1,0 +1,11 @@
+Cdrdao version 1.2.3 - (C) Andreas Mueller <andreas@daneb.de>
+/dev/sr0: TSSTcorp DVDWBD SH-B123L	Rev: SB04
+Using driver: Generic SCSI-3/MMC - Version 2.0 (options 0x0000)
+
+Maximum reading speed: 7056 kB/s
+Current reading speed: 2822 kB/s
+Maximum writing speed: 8467 kB/s
+Current writing speed: 8467 kB/s
+BurnProof supported: yes
+JustLink supported: yes
+JustSpeed supported: no

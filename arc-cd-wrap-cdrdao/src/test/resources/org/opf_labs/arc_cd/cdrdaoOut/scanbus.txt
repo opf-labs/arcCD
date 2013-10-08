@@ -1,0 +1,2 @@
+Cdrdao version 1.2.3 - (C) Andreas Mueller <andreas@daneb.de>
+/dev/sr0 : TSSTcorp, DVDWBD SH-B123L , SB04

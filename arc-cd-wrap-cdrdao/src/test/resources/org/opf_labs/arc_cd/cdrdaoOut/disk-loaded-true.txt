@@ -1,0 +1,18 @@
+Cdrdao version 1.2.3 - (C) Andreas Mueller <andreas@daneb.de>
+/dev/sr0: TSSTcorp DVDWBD SH-B123L      Rev: SB04
+Using driver: Generic SCSI-3/MMC - Version 2.0 (options 0x0000)
+
+WARNING: Unit not ready, still trying...
+WARNING: Unit not ready, still trying...
+That data below may not reflect the real status of the inserted medium
+if a simulation run was performed before. Reload the medium in this case.
+
+CD-RW                : no
+Total Capacity       : n/a
+CD-R medium          : n/a
+Recording Speed      : n/a
+CD-R empty           : no
+Toc Type             : CD-DA or CD-ROM
+Sessions             : 1
+Last Track           : 10
+Appendable           : no

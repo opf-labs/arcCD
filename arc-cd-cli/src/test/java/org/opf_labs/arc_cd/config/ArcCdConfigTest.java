@@ -57,7 +57,7 @@ public class ArcCdConfigTest {
 	}
 
 	/**
-	 * Test method for {@link org.opf_labs.arc_cd.config.ArcCdConfig#fromValues(java.lang.String, java.lang.String, java.lang.String)}.
+	 * Test method for {@link org.opf_labs.arc_cd.config.ArcCdConfig#fromValues(boolean, java.lang.String, java.lang.String, java.lang.String)}.
 	 */
 	@Test
 	public void testFromValues() {

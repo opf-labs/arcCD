@@ -20,7 +20,7 @@ import org.opf_labs.arc_cd.cdrdao.TocItemRecord;
 public class TocItemRecordTests {
 
 	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.TocItemRecord#getTracks()}.
+	 * Test method for {@link org.opf_labs.arc_cd.cdrdao.TocItemRecord#getTracks()}.
 	 */
 	@Test
 	public void testGetTracks() {
@@ -28,7 +28,7 @@ public class TocItemRecordTests {
 	}
 
 	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.TocItemRecord#addTrack(org.opf_labs.arc_cd.collection.TrackTiming)}.
+	 * Test method for {@link org.opf_labs.arc_cd.cdrdao.TocItemRecord#addTrack(org.opf_labs.arc_cd.cdrdao.TrackTiming)}.
 	 */
 	@Test
 	public void testAddTrack() {
@@ -36,7 +36,7 @@ public class TocItemRecordTests {
 	}
 
 	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.TocItemRecord#fromTocFile(java.io.File)}.
+	 * Test method for {@link org.opf_labs.arc_cd.cdrdao.TocItemRecord#fromTocFile(java.io.File)}.
 	 * @throws URISyntaxException 
 	 * @throws IOException 
 	 */

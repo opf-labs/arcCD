@@ -66,7 +66,7 @@ public final class Capacity {
 	}
 
 	/**
-	 * TODO look at duration formate
+	 * TODO look at duration format
 	 * 
 	 * @return the capacity of the disk in mm:ss:?? format
 	 */

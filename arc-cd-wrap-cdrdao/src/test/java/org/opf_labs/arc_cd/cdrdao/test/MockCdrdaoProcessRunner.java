@@ -21,9 +21,9 @@ import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.Command;
 import org.opf_labs.utils.ProcessRunner;
 
 /**
- * TODO JavaDoc for MockCdrdaoProcessRunner.</p>
- * TODO Tests for MockCdrdaoProcessRunner.</p>
- * TODO Implementation for MockCdrdaoProcessRunner.</p>
+ * A mock test class that mimics a ProcessRunner, by taking cdrdao commands
+ * and returning test output from test data files.  The mapping of commands
+ * to test data is handled in the COMMAND_OUTPUT_MAP below.
  * 
  * @author  <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *          <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>
@@ -162,7 +162,6 @@ public final class MockCdrdaoProcessRunner implements ProcessRunner {
 	 */
 	@Override
 	public String getProcessErrorAsString() {
-		// TODO Auto-generated method stub
 		try {
 			return IOUtils.toString(new FileInputStream(COMMAND_OUTPUT_MAP.get(this.command)), ENCODING);
 		} catch (IOException excep) {

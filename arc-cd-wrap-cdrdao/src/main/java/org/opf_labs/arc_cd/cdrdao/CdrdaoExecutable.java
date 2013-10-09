@@ -10,9 +10,9 @@ import java.util.List;
 import com.google.common.base.Preconditions;
 
 /**
- * TODO JavaDoc for CdrdaoExecutable.</p>
- * TODO Tests for CdrdaoExecutable.</p>
- * TODO Implementation for CdrdaoExecutable.</p>
+ * Class encapsualtes the minimal details of a cdrdai executable,a path
+ * to the executable file (tested in the factory methods), the version 
+ * of cdrdao, and a string array holding the available cd devices. 
  * 
  * @author  <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *          <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>

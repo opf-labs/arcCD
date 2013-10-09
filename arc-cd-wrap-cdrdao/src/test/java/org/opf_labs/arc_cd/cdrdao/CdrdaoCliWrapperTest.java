@@ -26,8 +26,7 @@ import org.opf_labs.arc_cd.cdrdao.test.MockCdrdaoProcessRunner;
 import org.opf_labs.utils.ProcessRunnerFactory;
 
 /**
- * TODO JavaDoc for CdrdaoCliWrapperTest.</p> TODO Tests for
- * CdrdaoCliWrapperTest.</p> TODO Implementation for CdrdaoCliWrapperTest.</p>
+ * Test fixture for the CdrdaoCliWrapper class.
  * 
  * @author <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>

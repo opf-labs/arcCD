@@ -12,6 +12,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 
 import com.google.common.base.Preconditions;
 
@@ -98,28 +99,48 @@ public final class ArchiveItem {
 	public boolean hasManifest() {
 		return existsAndIsFile(this.getManifestPath());
 	}
+	/**
+	 * @return true if the item is archived, false otherwise
+	 */
 	public boolean isArchived() {
 		return this.hasInfo() && this.hasToc() && this.hasBin() && this.hasManifest();
 	}
 	private String createManifestString() throws FileNotFoundException, IOException {
 		StringBuilder builder = new StringBuilder();
+
 		File digestFile = new File(this.getInfoPath());
-		String infoMd5 = DigestUtils.md5Hex(new BufferedInputStream(new FileInputStream(digestFile)));
-		builder.append("info:" + infoMd5 + "\n");
-		digestFile = new File(this.getTocPath());
-		String tocMd5 = DigestUtils.md5Hex(new BufferedInputStream(new FileInputStream(digestFile)));
-		builder.append("toc:" + tocMd5 + "\n");
-		digestFile = new File(this.getBinPath());
-		String binMd5 = DigestUtils.md5Hex(new BufferedInputStream(new FileInputStream(digestFile)));
-		builder.append("bin:" + binMd5 + "\n");
+		try (BufferedInputStream infoStr = new BufferedInputStream(new FileInputStream(digestFile))) {
+			String infoMd5 = DigestUtils.md5Hex(infoStr);
+			builder.append("info:" + infoMd5 + "\n");
+			IOUtils.closeQuietly(infoStr);
+		}
+
+		File tocFile = new File(this.getTocPath());
+		try (BufferedInputStream tocStr = new BufferedInputStream(new FileInputStream(tocFile))) {
+			String tocMd5 = DigestUtils.md5Hex(tocStr);
+			builder.append("toc:" + tocMd5 + "\n");
+			IOUtils.closeQuietly(tocStr);
+		}
+		
+		File binFile = new File(this.getBinPath());
+		try (BufferedInputStream binStr = new BufferedInputStream(new FileInputStream(binFile))) {
+			String binMd5 = DigestUtils.md5Hex(binStr);
+			builder.append("bin:" + binMd5 + "\n");
+			IOUtils.closeQuietly(binStr);
+		}
 		return builder.toString();
 	}
+	/**
+	 * write out the manifest file.
+	 * @throws IOException
+	 */
 	public void writeManifestFile() throws IOException {
 		File manFile = new File(this.getManifestPath());
 		if (manFile.exists()) manFile.delete();
-		BufferedWriter writer = new BufferedWriter(new FileWriter(manFile));
-		writer.write(this.createManifestString());
-		writer.close();
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(manFile))) {
+			writer.write(this.createManifestString());
+			IOUtils.closeQuietly(writer);
+		}
 	}
 	public static ArchiveItem fromValues(File collectionRoot, CataloguedCd item) {
 		Preconditions.checkNotNull(collectionRoot, "collectionRoot is null");

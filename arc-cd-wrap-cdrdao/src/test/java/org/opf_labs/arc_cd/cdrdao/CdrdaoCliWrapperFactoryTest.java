@@ -13,9 +13,7 @@ import org.junit.Test;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
 
 /**
- * TODO JavaDoc for CdrdaoCliWrapperFactoryTest.</p> TODO Tests for
- * CdrdaoCliWrapperFactoryTest.</p> TODO Implementation for
- * CdrdaoCliWrapperFactoryTest.</p>
+ * unit test fixture for the CdrdaoCliWrapperFactory class.
  * 
  * @author <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>

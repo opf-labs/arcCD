@@ -11,6 +11,7 @@ import java.net.URISyntaxException;
 
 import org.junit.Test;
 import org.opf_labs.arc_cd.AllArcCdCliTests;
+import org.opf_labs.arc_cd.cdrdao.TocItemRecord;
 
 /**
  * @author carl

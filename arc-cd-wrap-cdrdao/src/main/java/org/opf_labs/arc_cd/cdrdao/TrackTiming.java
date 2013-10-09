@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.opf_labs.arc_cd.collection;
+package org.opf_labs.arc_cd.cdrdao;
 
 /**
  * @author carl

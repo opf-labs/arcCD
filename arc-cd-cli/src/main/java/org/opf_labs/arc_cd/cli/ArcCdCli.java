@@ -14,13 +14,11 @@ import org.apache.log4j.Logger;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapperFactory;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
-import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdDeviceException;
-import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdException;
+import org.opf_labs.arc_cd.cdrdao.TocItemRecord;
 import org.opf_labs.arc_cd.collection.ArchiveCollection;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
 import org.opf_labs.arc_cd.collection.CataloguedCd;
 import org.opf_labs.arc_cd.collection.CdItemRecord;
-import org.opf_labs.arc_cd.collection.TocItemRecord;
 import org.opf_labs.arc_cd.config.ArcCdConfig;
 
 /**

@@ -178,8 +178,8 @@ public class AllArcCdrdaoWrapperTests {
 			String versionLine = stderrReader.readLine();
 			return parseCdrdaoVersionLine(versionLine);
 		} catch (ProcessRunnerException | IOException excep) {
-			// TODO Auto-generated catch block
-			return "UNKOWN";
+			// So no installation detected, return UNKNOWN
+			return "UNKNOWN";
 		}
 	}
 

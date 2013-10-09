@@ -7,7 +7,6 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.opf_labs.arc_cd.collection.CollectionItemTest;
-import org.opf_labs.arc_cd.collection.TocItemRecordTests;
 import org.opf_labs.arc_cd.config.ArcCdConfigTest;
 
 /**
@@ -20,7 +19,7 @@ import org.opf_labs.arc_cd.config.ArcCdConfigTest;
  * Created 7 Oct 2013:23:31:18
  */
 @RunWith(Suite.class)
-@SuiteClasses({ArcCdConfigTest.class, CollectionItemTest.class, TocItemRecordTests.class})
+@SuiteClasses({ArcCdConfigTest.class, CollectionItemTest.class })
 public class AllArcCdCliTests {
 
 	/**

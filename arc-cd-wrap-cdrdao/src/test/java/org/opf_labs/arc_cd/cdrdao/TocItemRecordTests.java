@@ -1,7 +1,7 @@
 /**
  * 
  */
-package org.opf_labs.arc_cd.collection;
+package org.opf_labs.arc_cd.cdrdao;
 
 import static org.junit.Assert.fail;
 
@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 
 import org.junit.Test;
-import org.opf_labs.arc_cd.AllArcCdCliTests;
 import org.opf_labs.arc_cd.cdrdao.TocItemRecord;
 
 /**
@@ -43,7 +42,7 @@ public class TocItemRecordTests {
 	 */
 	@Test
 	public void testFromTocFile() throws URISyntaxException, IOException {
-		File test = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/cd-1.toc");
+		File test = AllArcCdrdaoWrapperTests.getResourceAsFile("org/opf_labs/arc_cd/collection/cd-1.toc");
 		TocItemRecord.fromTocFile(test);
 	}
 

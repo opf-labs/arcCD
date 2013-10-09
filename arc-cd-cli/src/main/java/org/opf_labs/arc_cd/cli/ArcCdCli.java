@@ -115,9 +115,9 @@ public final class ArcCdCli {
 				+ formattedId + "." + "toc";
 		try {
 			wrapper.readTocFromDefaultCdDevice();
-		} catch (NoCdDeviceException | NoCdException | CdrdaoException excep2) {
+		} catch (CdrdaoException excep) {
 			// TODO Auto-generated catch block
-			excep2.printStackTrace();
+			excep.printStackTrace();
 		}
 		File tocFile = new File(tocPath);
 		try {
@@ -134,9 +134,9 @@ public final class ArcCdCli {
 				if (ArcCdInputProcessor.confirmChoice()) {
 					try {
 						wrapper.ripCdToBinFromDefaultCdDevice(itemDir, formattedId);
-					} catch (NoCdDeviceException | NoCdException | CdrdaoException excep1) {
+					} catch (CdrdaoException excep) {
 						// TODO Auto-generated catch block
-						excep1.printStackTrace();
+						excep.printStackTrace();
 					}
 					try {
 						CD_COLLECTION.archiveItem(itemId.intValue());

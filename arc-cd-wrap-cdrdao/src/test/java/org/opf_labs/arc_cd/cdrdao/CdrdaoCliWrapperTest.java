@@ -205,43 +205,4 @@ public class CdrdaoCliWrapperTest {
 		wrapper.isDiskLoaded(EMPTY_STRING);
 	}
 
-	/**
-	 * Test method for
-	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#readTocFromDefaultCdDevice()}
-	 * .
-	 */
-	@Test
-	public void testReadTocFromDefaultCdDevice() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#readTocFromCdDevice(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testReadTocFromCdDevice() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#ripCdToBinFromDefaultCdDevice(java.io.File, java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testRipCdToBinFromDefaultCdDevice() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#ripCdToBinFromCdDevice(java.lang.String, java.io.File, java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testRipCdToBinFromCdDevice() {
-		fail("Not yet implemented"); // TODO
-	}
 }

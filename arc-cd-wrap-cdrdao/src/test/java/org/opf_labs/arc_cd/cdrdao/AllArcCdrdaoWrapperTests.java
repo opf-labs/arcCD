@@ -129,7 +129,7 @@ public class AllArcCdrdaoWrapperTests {
 	}
 
 	/**
-	 * @return File object for the test for cdrdao disk info output when a disk is loaded
+	 * @return File object for the test for cdrdao disk-info output when a disk is loaded
 	 * @throws FileNotFoundException
 	 *             if the test script file not found
 	 * @throws URISyntaxException
@@ -142,7 +142,7 @@ public class AllArcCdrdaoWrapperTests {
 	}
 
 	/**
-	 * @return File object for the test for cdrdao disk info output when a disk is NOT loaded
+	 * @return File object for the test for cdrdao disk-info output when a disk is NOT loaded
 	 * @throws FileNotFoundException
 	 *             if the test script file not found
 	 * @throws URISyntaxException
@@ -152,6 +152,19 @@ public class AllArcCdrdaoWrapperTests {
 			throws FileNotFoundException, URISyntaxException {
 		return AllArcCdrdaoWrapperTests
 				.getResourceAsFile("org/opf_labs/arc_cd/cdrdaoOut/disk-loaded-false.txt");
+	}
+
+	/**
+	 * @return File object for the test for cdrdao read-toc output when a disk is NOT loaded
+	 * @throws FileNotFoundException
+	 *             if the test script file not found
+	 * @throws URISyntaxException
+	 *             shouldn't happen as file name is hard coded and good
+	 */
+	public final static File getCdrdaoReadTocOutput()
+			throws FileNotFoundException, URISyntaxException {
+		return AllArcCdrdaoWrapperTests
+				.getResourceAsFile("org/opf_labs/arc_cd/cdrdaoOut/read-toc.txt");
 	}
 
 	static String detectCdrdaoVersion() {

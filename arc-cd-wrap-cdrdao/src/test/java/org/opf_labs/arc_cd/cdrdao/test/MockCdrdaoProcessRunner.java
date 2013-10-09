@@ -42,6 +42,8 @@ public final class MockCdrdaoProcessRunner implements ProcessRunner {
 			COMMAND_OUTPUT_MAP.put("", AllArcCdrdaoWrapperTests.getCdrdaoDefaultOutput());
 			COMMAND_OUTPUT_MAP.put(Command.SCANBUS.value(), AllArcCdrdaoWrapperTests.getCdrdaoScanbusOutput());
 			COMMAND_OUTPUT_MAP.put(Command.DRIVE_INFO.value(), AllArcCdrdaoWrapperTests.getCdrdaoDriveInfoOutput());
+			COMMAND_OUTPUT_MAP.put(Command.DISC_INFO.value(), AllArcCdrdaoWrapperTests.getCdrdaoDiskLoadedTrueOutput());
+			COMMAND_OUTPUT_MAP.put(Command.READ_TOC.value(), AllArcCdrdaoWrapperTests.getCdrdaoReadTocOutput());
 		} catch (FileNotFoundException | URISyntaxException excep) {
 			throw new IllegalStateException("Cant create test output set.");
 		}

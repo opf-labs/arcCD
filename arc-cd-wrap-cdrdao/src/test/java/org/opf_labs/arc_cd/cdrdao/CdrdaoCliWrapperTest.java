@@ -18,7 +18,9 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.Command;
+import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdDeviceException;
+import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdException;
 import org.opf_labs.arc_cd.cdrdao.test.MockCdrProcessFactory;
 import org.opf_labs.arc_cd.cdrdao.test.MockCdrdaoProcessRunner;
 import org.opf_labs.utils.ProcessRunnerFactory;
@@ -148,7 +150,6 @@ public class CdrdaoCliWrapperTest {
 	/**
 	 * Test method for
 	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#isDiskLoaded(java.lang.String)}
-	 * .
 	 * 
 	 * @throws NoCdDeviceException
 	 * @throws URISyntaxException
@@ -167,7 +168,6 @@ public class CdrdaoCliWrapperTest {
 	/**
 	 * Test method for
 	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#isDiskLoaded(java.lang.String)}
-	 * .
 	 * 
 	 * @throws NoCdDeviceException
 	 * @throws URISyntaxException
@@ -183,7 +183,6 @@ public class CdrdaoCliWrapperTest {
 	/**
 	 * Test method for
 	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#isDiskLoaded(java.lang.String)}
-	 * .
 	 * 
 	 * @throws NoCdDeviceException
 	 * @throws URISyntaxException
@@ -196,11 +195,55 @@ public class CdrdaoCliWrapperTest {
 		wrapper.isDiskLoaded(EMPTY_STRING);
 	}
 
+	/**
+	 * Test method for
+	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#readTocFromDefaultCdDevice()}
+	 * .
+	 * @throws CdrdaoException 
+	 * @throws NoCdException 
+	 * @throws NoCdDeviceException 
+	 */
+	@Test
+	public void testReadTocFromDefaultCdDevice() throws NoCdDeviceException, NoCdException, CdrdaoException {
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
+		wrapper.readTocFromDefaultCdDevice();
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#readTocFromCdDevice(java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testReadTocFromCdDevice() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#ripCdToBinFromDefaultCdDevice(java.io.File, java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testRipCdToBinFromDefaultCdDevice() {
+		fail("Not yet implemented"); // TODO
+	}
+
+	/**
+	 * Test method for
+	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#ripCdToBinFromCdDevice(java.lang.String, java.io.File, java.lang.String)}
+	 * .
+	 */
+	@Test
+	public void testRipCdToBinFromCdDevice() {
+		fail("Not yet implemented"); // TODO
+	}
+
 	static CdrdaoCliWrapper createTestableInstance(final ProcessRunnerFactory testMock) {
 		
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
 				MockCdrdaoProcessRunner.COMMAND_OUTPUT_MAP.get("scanbus"))))) {
-			reader.mark(1000);
+			reader.mark(10000);
 			String version = Cdrdao.parseCdrdaoVersion(IOUtils.toString(reader));
 			reader.reset();
 			List<String> devices = CdrdaoCliWrapperFactory.parseCdDeviceNames(reader);

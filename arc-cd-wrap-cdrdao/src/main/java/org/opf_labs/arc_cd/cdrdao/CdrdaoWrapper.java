@@ -181,93 +181,7 @@ public interface CdrdaoWrapper {
 	}
 
 	/**
-	 * Exception thrown when no cd device found
-	 * 
-	 * @author <a href="mailto:carl@openplanetsfoundation.org">Carl
-	 *         Wilson</a>.</p> <a
-	 *         href="https://github.com/carlwilson">carlwilson AT
-	 *         github</a>.</p>
-	 * @version 0.1
-	 * 
-	 *          Created 7 Sep 2013:17:45:44
-	 */
-	public final static class NoCdDeviceException extends Exception {
-		private static final long serialVersionUID = 2489185264229635872L;
-
-		/**
-		 * @see java.lang.Exception#Exception()
-		 */
-		public NoCdDeviceException() {
-			super();
-		}
-
-		/**
-		 * @see java.lang.Exception#Exception(String)
-		 */
-		public NoCdDeviceException(String message) {
-			super(message);
-		}
-
-		/**
-		 * @see java.lang.Exception#Exception(String, Throwable)
-		 */
-		public NoCdDeviceException(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * @see java.lang.Exception#Exception(Throwable)
-		 */
-		public NoCdDeviceException(Throwable cause) {
-			super(cause);
-		}
-	}
-
-	/**
-	 * Exception thrown when no cd found
-	 * 
-	 * @author <a href="mailto:carl@openplanetsfoundation.org">Carl
-	 *         Wilson</a>.</p> <a
-	 *         href="https://github.com/carlwilson">carlwilson AT
-	 *         github</a>.</p>
-	 * @version 0.1
-	 * 
-	 *          Created 7 Sep 2013:17:45:44
-	 */
-	public final static class NoCdException extends Exception {
-		private static final long serialVersionUID = 2489185264229635872L;
-
-		/**
-		 * @see java.lang.Exception#Exception()
-		 */
-		public NoCdException() {
-			super();
-		}
-
-		/**
-		 * @see java.lang.Exception#Exception(String)
-		 */
-		public NoCdException(String message) {
-			super(message);
-		}
-
-		/**
-		 * @see java.lang.Exception#Exception(String, Throwable)
-		 */
-		public NoCdException(String message, Throwable cause) {
-			super(message, cause);
-		}
-
-		/**
-		 * @see java.lang.Exception#Exception(Throwable)
-		 */
-		public NoCdException(Throwable cause) {
-			super(cause);
-		}
-	}
-
-	/**
-	 * TODO JavaDoc for CdrdaoException.</p>
+	 * Top level exception class for cdrdao
 	 * 
 	 * @author <a href="mailto:carl@openplanetsfoundation.org">Carl
 	 *         Wilson</a>.</p> <a
@@ -277,7 +191,7 @@ public interface CdrdaoWrapper {
 	 * 
 	 *          Created 4 Oct 2013:00:41:08
 	 */
-	public final static class CdrdaoException extends Exception {
+	public static class CdrdaoException extends Exception {
 		private static final long serialVersionUID = 3113555239733574051L;
 		private final StatusCode status;
 
@@ -334,6 +248,92 @@ public interface CdrdaoWrapper {
 		 */
 		public StatusCode getStatus() {
 			return this.status;
+		}
+	}
+
+	/**
+	 * Exception thrown when no cd device found
+	 * 
+	 * @author <a href="mailto:carl@openplanetsfoundation.org">Carl
+	 *         Wilson</a>.</p> <a
+	 *         href="https://github.com/carlwilson">carlwilson AT
+	 *         github</a>.</p>
+	 * @version 0.1
+	 * 
+	 *          Created 7 Sep 2013:17:45:44
+	 */
+	public final static class NoCdDeviceException extends CdrdaoException {
+		private static final long serialVersionUID = 2489185264229635872L;
+
+		/**
+		 * @see java.lang.Exception#Exception()
+		 */
+		public NoCdDeviceException() {
+			super(StatusCode.ERROR);
+		}
+
+		/**
+		 * @see java.lang.Exception#Exception(String)
+		 */
+		public NoCdDeviceException(String message) {
+			super(StatusCode.ERROR, message);
+		}
+
+		/**
+		 * @see java.lang.Exception#Exception(String, Throwable)
+		 */
+		public NoCdDeviceException(String message, Exception cause) {
+			super(StatusCode.ERROR, message, cause);
+		}
+
+		/**
+		 * @see java.lang.Exception#Exception(Throwable)
+		 */
+		public NoCdDeviceException(Exception cause) {
+			super(StatusCode.ERROR, cause);
+		}
+	}
+
+	/**
+	 * Exception thrown when no cd found
+	 * 
+	 * @author <a href="mailto:carl@openplanetsfoundation.org">Carl
+	 *         Wilson</a>.</p> <a
+	 *         href="https://github.com/carlwilson">carlwilson AT
+	 *         github</a>.</p>
+	 * @version 0.1
+	 * 
+	 *          Created 7 Sep 2013:17:45:44
+	 */
+	public final static class NoCdException extends CdrdaoException {
+		private static final long serialVersionUID = 2489185264229635872L;
+
+		/**
+		 * @see java.lang.Exception#Exception()
+		 */
+		public NoCdException() {
+			super(StatusCode.ERROR);
+		}
+
+		/**
+		 * @see java.lang.Exception#Exception(String)
+		 */
+		public NoCdException(String message) {
+			super(StatusCode.ERROR, message);
+		}
+
+		/**
+		 * @see java.lang.Exception#Exception(String, Throwable)
+		 */
+		public NoCdException(String message, Exception cause) {
+			super(StatusCode.ERROR, message, cause);
+		}
+
+		/**
+		 * @see java.lang.Exception#Exception(Throwable)
+		 */
+		public NoCdException(Exception cause) {
+			super(StatusCode.ERROR, cause);
 		}
 	}
 }

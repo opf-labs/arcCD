@@ -35,6 +35,7 @@ public final class Track {
 	 */
 	public static Track fromValues(final String title) {
 		Preconditions.checkNotNull(title, "Track title is null");
+		Preconditions.checkArgument(!title.isEmpty(), "title.isEmpty()");
 		return new Track(title);
 	}
 	/**
@@ -44,7 +45,9 @@ public final class Track {
 	 */
 	public static Track fromValues(final String title, final String artist) {
 		Preconditions.checkNotNull(title, "Track title is null");
+		Preconditions.checkArgument(!title.isEmpty(), "title.isEmpty()");
 		Preconditions.checkNotNull(artist, "Track artist is null");
+		Preconditions.checkArgument(!artist.isEmpty(), "artist.isEmpty()");
 		return new Track(title, artist);
 	}
 	/**

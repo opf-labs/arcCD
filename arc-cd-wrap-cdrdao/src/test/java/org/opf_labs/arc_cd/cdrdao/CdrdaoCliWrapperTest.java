@@ -7,9 +7,11 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.List;
 
@@ -44,8 +46,7 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test
 	public void testGetCdDeviceNames() {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		List<String> retrievedDevices = wrapper.getDevices();
 		assertTrue("retrievedDevices.size():" + retrievedDevices.size(),
 				retrievedDevices.size() == 1);
@@ -59,8 +60,7 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test
 	public void testGetDefaultCdDeviceName() throws NoCdDeviceException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		assertTrue(wrapper.getDefaultDevice().equals(
 				wrapper.getDevices().get(0)));
 	}
@@ -73,8 +73,7 @@ public class CdrdaoCliWrapperTest {
 	@Test
 	public void testGetDriveInfo() throws NoCdDeviceException,
 			URISyntaxException, IOException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		try (FileInputStream expectedFis = new FileInputStream(
 				AllArcCdrdaoWrapperTests.getCdrdaoDriveInfoOutput())) {
 			assertTrue(IOUtils.contentEquals(wrapper.getDriveInfo(),
@@ -88,8 +87,7 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test(expected = NullPointerException.class)
 	public void testGetDriveInfoNullString() throws NoCdDeviceException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		wrapper.getDriveInfo(null);
 	}
 
@@ -98,8 +96,7 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test(expected = IllegalArgumentException.class)
 	public void testGetDriveInfoEmptyString() throws NoCdDeviceException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		wrapper.getDriveInfo(EMPTY_STRING);
 	}
 
@@ -111,8 +108,7 @@ public class CdrdaoCliWrapperTest {
 	@Test
 	public void testGetDriveInfoString() throws NoCdDeviceException,
 			IOException, URISyntaxException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		try (FileInputStream expectedFis = new FileInputStream(
 				AllArcCdrdaoWrapperTests.getCdrdaoDriveInfoOutput())) {
 			assertTrue(IOUtils.contentEquals(
@@ -127,8 +123,7 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test(expected = NoCdDeviceException.class)
 	public void testGetDriveInfoNoSuchDrive() throws NoCdDeviceException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		wrapper.getDriveInfo(NO_SUCH_DEVICE);
 	}
 
@@ -146,8 +141,7 @@ public class CdrdaoCliWrapperTest {
 		MockCdrdaoProcessRunner.COMMAND_OUTPUT_MAP.put(
 				Command.DISC_INFO.value(),
 				AllArcCdrdaoWrapperTests.getCdrdaoDiskLoadedTrueOutput());
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		assertTrue(wrapper.isDiskLoaded());
 	}
 
@@ -166,8 +160,7 @@ public class CdrdaoCliWrapperTest {
 		MockCdrdaoProcessRunner.COMMAND_OUTPUT_MAP.put(
 				Command.DISC_INFO.value(),
 				AllArcCdrdaoWrapperTests.getCdrdaoDiskLoadedFalseOutput());
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		assertFalse(wrapper.isDiskLoaded());
 	}
 
@@ -183,8 +176,7 @@ public class CdrdaoCliWrapperTest {
 	@Test(expected = NullPointerException.class)
 	public void testIsDiskLoadedNullString() throws NoCdDeviceException,
 			FileNotFoundException, URISyntaxException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		wrapper.isDiskLoaded(null);
 	}
 
@@ -200,9 +192,27 @@ public class CdrdaoCliWrapperTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testIsDiskLoadedEmptyString() throws NoCdDeviceException,
 			FileNotFoundException, URISyntaxException {
-		CdrdaoCliWrapper wrapper = CdrdaoCliWrapperFactory
-				.createTestableInstance(MOCK_FACTORY);
+		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
 		wrapper.isDiskLoaded(EMPTY_STRING);
+	}
+
+	static CdrdaoCliWrapper createTestableInstance(final ProcessRunnerFactory testMock) {
+		
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
+				MockCdrdaoProcessRunner.COMMAND_OUTPUT_MAP.get("scanbus"))))) {
+			reader.mark(1000);
+			String version = Cdrdao.parseCdrdaoVersion(IOUtils.toString(reader));
+			reader.reset();
+			List<String> devices = CdrdaoCliWrapperFactory.parseCdDeviceNames(reader);
+			IOUtils.closeQuietly(reader);
+			CdrdaoExecutable cdrdao = CdrdaoExecutable.getNewInstance(
+					Cdrdao.CDRDAO_COMMAND, version, devices);
+			return new CdrdaoCliWrapper(cdrdao,
+					CdrdaoCommands.getParanoidInstance(cdrdao.getCommand()),
+					testMock);
+		} catch (IOException excep) {
+			throw new IllegalStateException("Couldn't read in scanbus test data.", excep);
+		}
 	}
 
 }

@@ -5,7 +5,6 @@ package org.opf_labs.arc_cd.cdrdao;
 
 import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -16,12 +15,10 @@ import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.IOUtils;
 import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.StatusCode;
-import org.opf_labs.arc_cd.cdrdao.test.MockCdrdaoProcessRunner;
 import org.opf_labs.utils.ProcessRunner;
 import org.opf_labs.utils.ProcessRunner.ProcessRunnerException;
 import org.opf_labs.utils.ProcessRunnerFactory;
@@ -138,25 +135,6 @@ public final class CdrdaoCliWrapperFactory {
 		return INSTALLED_CDRDAO.getVersion();
 	}
 
-	static CdrdaoCliWrapper createTestableInstance(final ProcessRunnerFactory testMock) {
-		
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(
-				MockCdrdaoProcessRunner.COMMAND_OUTPUT_MAP.get("scanbus"))))) {
-			reader.mark(1000);
-			String version = Cdrdao.parseCdrdaoVersion(IOUtils.toString(reader));
-			reader.reset();
-			List<String> devices = parseCdDeviceNames(reader);
-			IOUtils.closeQuietly(reader);
-			CdrdaoExecutable cdrdao = CdrdaoExecutable.getNewInstance(
-					Cdrdao.CDRDAO_COMMAND, version, devices);
-			return new CdrdaoCliWrapper(cdrdao,
-					CdrdaoCommands.getParanoidInstance(cdrdao.getCommand()),
-					testMock);
-		} catch (IOException excep) {
-			throw new IllegalStateException("Couldn't read in scanbus test data.", excep);
-		}
-	}
-
 	private static List<String> scanForDevices(final String cdrdaoCommand,
 			ProcessRunnerFactory factory) {
 		List<String> deviceList = Collections
@@ -189,7 +167,7 @@ public final class CdrdaoCliWrapperFactory {
 		return out;
 	}
 
-	private static List<String> parseCdDeviceNames(
+	static List<String> parseCdDeviceNames(
 			final BufferedReader cdrdaoScanbusReader) {
 		List<String> deviceList = new ArrayList<>();
 		String line;

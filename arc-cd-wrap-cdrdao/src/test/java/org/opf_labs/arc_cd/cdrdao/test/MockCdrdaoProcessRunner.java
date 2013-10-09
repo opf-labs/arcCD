@@ -17,7 +17,6 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.opf_labs.arc_cd.cdrdao.AllArcCdrdaoWrapperTests;
-import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.Command;
 import org.opf_labs.utils.ProcessRunner;
 

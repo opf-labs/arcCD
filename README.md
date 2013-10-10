@@ -13,7 +13,7 @@ This project is supported by a SPRUCE award.
 
 # Description
 
-arcCD is designed to archive at risk and decaying audio data on CDs. Such a process involves the deveopment of a workflow model to ensure that the data on the audio CDs being archived is preserved in the most appropriate way for long-term storage and easy access for further use.
+arcCD is designed to archive at risk and decaying audio data on CDs. Such a process involves the development of a workflow model to ensure that the data on the audio CDs being archived is preserved in the most appropriate way for long-term storage and easy access for further use.
 
 The workflow model proposed through early adoption of arcCD on a relatively small collection of mainly hand-made audio CDs, includes the following steps: 
 - Disk Imaging (stabilizing the data)

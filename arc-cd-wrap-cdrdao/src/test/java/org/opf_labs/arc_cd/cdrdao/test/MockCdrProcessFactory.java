@@ -10,9 +10,7 @@ import org.opf_labs.utils.ProcessRunner;
 import org.opf_labs.utils.ProcessRunnerFactory;
 
 /**
- * TODO JavaDoc for MockCdrProcessFactory.</p>
- * TODO Tests for MockCdrProcessFactory.</p>
- * TODO Implementation for MockCdrProcessFactory.</p>
+ * Mock factory class to produce dummy ProcessRunners for unit testing,
  * 
  * @author  <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *          <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>
@@ -32,8 +30,7 @@ public final class MockCdrProcessFactory implements ProcessRunnerFactory {
 	 */
 	@Override
 	public ProcessRunner createProcessRunner() {
-		// TODO Auto-generated method stub
-		return null;
+		throw new AssertionError("Should never enter Mock factor default constructor.");
 	}
 
 	/**

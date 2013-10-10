@@ -33,7 +33,7 @@ import com.google.common.base.Preconditions;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ CdrdaoCommandsTest.class, CdrdaoExecutableTest.class,
-		CdrdaoCliWrapperFactoryTest.class, CdrdaoCliWrapperTest.class, CapacityTest.class })
+		CdrdaoCliWrapperFactoryTest.class, CdrdaoCliWrapperTest.class, CapacityTest.class, CdrdaoDiskInfoTest.class })
 public class AllArcCdrdaoWrapperTests {
 	/**
 	 * Given a string resource path and name returns a File object. Used to load
@@ -178,8 +178,8 @@ public class AllArcCdrdaoWrapperTests {
 			String versionLine = stderrReader.readLine();
 			return parseCdrdaoVersionLine(versionLine);
 		} catch (ProcessRunnerException | IOException excep) {
-			// TODO Auto-generated catch block
-			return "UNKOWN";
+			// So no installation detected, return UNKNOWN
+			return "UNKNOWN";
 		}
 	}
 

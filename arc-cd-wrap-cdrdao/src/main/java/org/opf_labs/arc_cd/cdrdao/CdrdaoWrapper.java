@@ -225,9 +225,9 @@ public interface CdrdaoWrapper {
 		/**
 		 * @param status 
 		 * @param cause 
-		 * @see java.lang.Exception#Exception(Exception)
+		 * @see java.lang.Exception#Exception(Throwable)
 		 */
-		public CdrdaoException(final StatusCode status, final Exception cause) {
+		public CdrdaoException(final StatusCode status, final Throwable cause) {
 			super(cause);
 			this.status = status;
 		}
@@ -236,9 +236,9 @@ public interface CdrdaoWrapper {
 		 * @param status 
 		 * @param message 
 		 * @param cause 
-		 * @see java.lang.Exception#Exception(Exception)
+		 * @see java.lang.Exception#Exception(Throwable)
 		 */
-		public CdrdaoException(final StatusCode status, final String message, final Exception cause) {
+		public CdrdaoException(final StatusCode status, final String message, final Throwable cause) {
 			super(message, cause);
 			this.status = status;
 		}
@@ -282,14 +282,14 @@ public interface CdrdaoWrapper {
 		/**
 		 * @see java.lang.Exception#Exception(String, Throwable)
 		 */
-		public NoCdDeviceException(String message, Exception cause) {
+		public NoCdDeviceException(String message, Throwable cause) {
 			super(StatusCode.ERROR, message, cause);
 		}
 
 		/**
 		 * @see java.lang.Exception#Exception(Throwable)
 		 */
-		public NoCdDeviceException(Exception cause) {
+		public NoCdDeviceException(Throwable cause) {
 			super(StatusCode.ERROR, cause);
 		}
 	}
@@ -325,14 +325,14 @@ public interface CdrdaoWrapper {
 		/**
 		 * @see java.lang.Exception#Exception(String, Throwable)
 		 */
-		public NoCdException(String message, Exception cause) {
+		public NoCdException(String message, Throwable cause) {
 			super(StatusCode.ERROR, message, cause);
 		}
 
 		/**
 		 * @see java.lang.Exception#Exception(Throwable)
 		 */
-		public NoCdException(Exception cause) {
+		public NoCdException(Throwable cause) {
 			super(StatusCode.ERROR, cause);
 		}
 	}

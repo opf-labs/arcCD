@@ -27,8 +27,10 @@ import org.opf_labs.utils.ProcessRunnerImplFactory;
 import com.google.common.base.Preconditions;
 
 /**
- * TODO JavaDoc for CdrdaoWrapperFactory.</p> TODO Tests for
- * CdrdaoWrapperFactory.</p> TODO Implementation for CdrdaoWrapperFactory.</p>
+ * Factory class for cdrdao command line wrapper instance. The class will
+ * initially try to detect any installed instance of cdrdao. If detected an
+ * wrapper for the installed instance can be created using the
+ * getInstalledInstance() factory method.
  * 
  * @author <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *         <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>
@@ -38,7 +40,8 @@ import com.google.common.base.Preconditions;
  */
 
 public final class CdrdaoCliWrapperFactory {
-	private final static Pattern DEVICE_PATTERN = Pattern.compile("^(.*)[\\s]?:.*$");
+	private final static Pattern DEVICE_PATTERN = Pattern
+			.compile("^(.*)[\\s]?:.*$");
 
 	private final static Logger LOGGER = Logger
 			.getLogger(CdrdaoCliWrapperFactory.class);
@@ -174,7 +177,7 @@ public final class CdrdaoCliWrapperFactory {
 		try {
 			while ((line = cdrdaoScanbusReader.readLine()) != null) {
 				Matcher devMatch = DEVICE_PATTERN.matcher(line);
-				if (devMatch.matches()){
+				if (devMatch.matches()) {
 					deviceList.add(devMatch.group(1).trim());
 				}
 			}

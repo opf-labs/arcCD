@@ -13,9 +13,7 @@ import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.Option;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.ParanoiaModeOption;
 
 /**
- * TODO JavaDoc for CdrdaoCommandsTest.</p>
- * TODO Tests for CdrdaoCommandsTest.</p>
- * TODO Implementation for CdrdaoCommandsTest.</p>
+ * Test fixture for the CdrdaoCommands class.
  * 
  * @author  <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *          <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>

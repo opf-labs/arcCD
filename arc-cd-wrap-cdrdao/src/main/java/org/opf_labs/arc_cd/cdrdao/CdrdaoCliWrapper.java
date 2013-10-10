@@ -170,8 +170,7 @@ public final class CdrdaoCliWrapper implements CdrdaoWrapper {
 		try {
 			runner.execute();
 		} catch (ProcessRunnerException excep) {
-			// TODO Auto-generated catch block
-			excep.printStackTrace();
+			throw new CdrdaoException(StatusCode.NO_EXECUTION, excep);
 		}
 
 		// Check the process runner for problems

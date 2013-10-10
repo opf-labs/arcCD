@@ -133,9 +133,7 @@ public final class ArcCdConfig {
 	}
 	
 	/**
-	 * TODO JavaDoc for Builder.</p>
-	 * TODO Tests for Builder.</p>
-	 * TODO Implementation for Builder.</p>
+	 * Builder class for config instances.
 	 * 
 	 * @author  <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
 	 *          <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>

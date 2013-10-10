@@ -173,7 +173,6 @@ public final class Capacity {
 	/**
 	 * Simple builder for capacity instances
 	 */
-	@SuppressWarnings("hiding")
 	public static final class Builder {
 		private static final int CDR_FREE_BLOCKS = 359845;
 		private static final int CDR_FREE_MB = 702;

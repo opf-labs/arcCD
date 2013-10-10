@@ -43,9 +43,9 @@ Until end of October 2013, I won't even guarantee that the API methods won't cha
 
 The following tasks are currently under active development
 
- [ ] Refactoring the code that parses cdrdao output so that the ProcessRunner takes a filter interface. These filters will parse cdrdao output and create the appropriate objects, the filter interface provides a generic "processStream()" method. 
- [ ] A TOC file to CUE file converter, toc2cue sucks metadata wise.
- [ ] Wrapping cdrdao's CDDB functionality to obtain metadata for audio CDs.
+* [ ] Refactoring the code that parses cdrdao output so that the ProcessRunner takes a filter interface. These filters will parse cdrdao output and create the appropriate objects, the filter interface provides a generic "processStream()" method. 
+* [ ] A TOC file to CUE file converter, toc2cue sucks metadata wise.
+* [ ] Wrapping cdrdao's CDDB functionality to obtain metadata for audio CDs.
  
 # Using the project
 
@@ -60,7 +60,11 @@ The CdrdaoWrapper interface provides the methods that wrap cdrdao functionality,
 ```
 CdrdaoCliWrapperFactory.getInstalledInstance()
 ```
-This only works if cdrdao is installed, and throws a checked cdrdao exception if it isn't.  Beware, it's very likely that this method will become newInstalledInstance() very soon.  You can check whether an installation has been detected by calling CdrdaoCliWrapperFactory.isCdrdaoInstalled if you prefer code without exception handling.
+This only works if cdrdao is installed, and throws a checked cdrdao exception if it isn't.  Beware, it's very likely that this method will become newInstalledInstance() very soon.  You can check whether an installation has been detected by calling:
+```
+CdrdaoCliWrapperFactory.isCdrdaoInstalled()
+```
+if you prefer code without exception handling.
 
 ### If the application has access to a cdrdao executable file
 ```

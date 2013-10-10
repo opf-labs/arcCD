@@ -26,9 +26,9 @@ This code is still very much in development, with the aim of creating a more gen
 
 Current tasks are:
 
- [ ] Implement MD5 checking, to verify manifests.
- [ ] Generation of CUE files using .info files and cdrdao's .toc output.
- [ ] Some top level collection reporting.
+* [ ] Implement MD5 checking, to verify manifests.
+* [ ] Generation of CUE files using .info files and cdrdao's .toc output.
+* [ ] Some top level collection reporting.
 
 ## Build
 

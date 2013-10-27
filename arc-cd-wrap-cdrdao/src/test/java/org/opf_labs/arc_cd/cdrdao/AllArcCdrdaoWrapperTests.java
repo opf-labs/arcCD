@@ -47,7 +47,7 @@ public class AllArcCdrdaoWrapperTests {
 	 * @throws FileNotFoundException
 	 *             if the resource can't be found
 	 */
-	final static File getResourceAsFile(String resName)
+	public final static File getResourceAsFile(String resName)
 			throws URISyntaxException, FileNotFoundException {
 		Preconditions.checkNotNull(resName, "resName == null");
 		Preconditions.checkArgument(!resName.isEmpty(),

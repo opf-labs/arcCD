@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapperFactory;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
-import org.opf_labs.arc_cd.cdrdao.TocItemRecord;
+import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 import org.opf_labs.arc_cd.collection.ArchiveCollection;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
 import org.opf_labs.arc_cd.collection.CataloguedCd;

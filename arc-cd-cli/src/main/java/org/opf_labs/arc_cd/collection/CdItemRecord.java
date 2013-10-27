@@ -13,7 +13,6 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
-import org.opf_labs.arc_cd.cdrdao.Track;
 
 import com.google.common.base.Preconditions;
 
@@ -42,18 +41,18 @@ public final class CdItemRecord {
 	final String title;
 	final String albumArtist;
 	final boolean isCompilation;
-	final List<Track> tracks;
+	final List<CdTrack> tracks;
 	final boolean isArchived;
 	
 	private CdItemRecord() {
-		this(DEFAULT_STRING_VALUE, DEFAULT_STRING_VALUE, new ArrayList<Track>());
+		this(DEFAULT_STRING_VALUE, DEFAULT_STRING_VALUE, new ArrayList<CdTrack>());
 	}
 	
-	private CdItemRecord(final String title, final String artist, final List<Track> tracks) {
+	private CdItemRecord(final String title, final String artist, final List<CdTrack> tracks) {
 		this(title, artist, tracks, false);
 	}
 
-	private CdItemRecord(final String title, final String artist, final List<Track> tracks, final boolean isArchived) {
+	private CdItemRecord(final String title, final String artist, final List<CdTrack> tracks, final boolean isArchived) {
 		this.title = title;
 		this.albumArtist = (artist == null || artist.isEmpty()) ? VARIOUS : artist;
 		this.isCompilation = (this.albumArtist == VARIOUS);
@@ -81,7 +80,7 @@ public final class CdItemRecord {
 	 * 
 	 * @return a java.util.List of Track items, one for each track on the CD
 	 */
-	public List<Track> getTracks() {
+	public List<CdTrack> getTracks() {
 		return this.tracks;
 	}
 	
@@ -123,7 +122,7 @@ public final class CdItemRecord {
 		private String title = DEFAULT_STRING_VALUE;
 		private String albumArtist = DEFAULT_STRING_VALUE;
 		boolean isCompilation = false;
-		List<Track> tracks = new ArrayList<>();
+		List<CdTrack> tracks = new ArrayList<>();
 		boolean isArchived = false;
 		
 		/**	creates a bare bones, default instance */
@@ -149,12 +148,12 @@ public final class CdItemRecord {
 			return this;
 		}
 		
-		public Builder tracks(final List<Track> tracks) {
+		public Builder tracks(final List<CdTrack> tracks) {
 			this.tracks = tracks;
 			return this;
 		}
 		
-		public Builder track(final Track track) {
+		public Builder track(final CdTrack track) {
 			this.tracks.add(track);
 			return this;
 		}
@@ -185,7 +184,7 @@ public final class CdItemRecord {
 			} else if (infoLine.startsWith("[AlbumArtist]")) {
 				this.albumArtist = infoLine.substring(infoLine.indexOf("]") + 1);
 			} else if (infoLine.startsWith("[Track]")) {
-				this.tracks.add(Track.fromValues(infoLine.substring(infoLine.indexOf("]") + 1)));
+				this.tracks.add(CdTrack.fromValues(infoLine.substring(infoLine.indexOf("]") + 1)));
 			}
 			return this;
 		}

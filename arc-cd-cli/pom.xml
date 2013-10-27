@@ -41,10 +41,6 @@
 	</build>
 	<dependencies>
 		<dependency>
-			<groupId>org.opf-labs.utils</groupId>
-			<artifactId>java-env</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 		</dependency>
@@ -62,6 +58,15 @@
 			<groupId>org.opf-labs.arc-cd</groupId>
 			<artifactId>arc-cd-wrap-cdrdao</artifactId>
 			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opf-labs.audio</groupId>
+			<artifactId>cuelib</artifactId>
+			<version>1.2.1-SNAPSHOT</version>
+		</dependency>
+		<dependency>
+			<groupId>org.opf-labs.utils</groupId>
+			<artifactId>java-env</artifactId>
 		</dependency>
 	</dependencies>
 </project>

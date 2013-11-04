@@ -12,6 +12,7 @@ import nl.jqno.equalsverifier.EqualsVerifier;
 
 import org.apache.commons.codec.digest.DigestUtils;
 import org.junit.Test;
+import org.opf_labs.arc_cd.AllArcCdCliTests;
 
 /**
  * @author carl
@@ -19,39 +20,6 @@ import org.junit.Test;
  */
 @SuppressWarnings("static-method")
 public class ItemManifestTest {
-
-	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#getInfoMD5()}.
-	 */
-	@Test
-	public final void testGetInfoMD5() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#getTocMD5()}.
-	 */
-	@Test
-	public final void testGetTocMD5() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#getBinMD5()}.
-	 */
-	@Test
-	public final void testGetBinMD5() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#getCueMD5()}.
-	 */
-	@Test
-	public final void testGetCueMD5() {
-		fail("Not yet implemented"); // TODO
-	}
-
 	/**
 	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#defaultInstance()}.
 	 */
@@ -69,15 +37,9 @@ public class ItemManifestTest {
 	 */
 	@Test
 	public final void testFromDirectory() {
-		fail("Not yet implemented"); // TODO
-	}
-
-	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#fromManifestFile(java.io.File)}.
-	 */
-	@Test
-	public final void testFromManifestFile() {
-		fail("Not yet implemented"); // TODO
+		ItemManifest fromItem = ItemManifest.fromDirectory(AllArcCdCliTests.ITEM_00022);
+		ItemManifest fromManifest = ItemManifest.fromManifestFile(AllArcCdCliTests.MANIFEST_00022);
+		assertTrue(fromManifest.equals(fromItem));
 	}
 
 	/**

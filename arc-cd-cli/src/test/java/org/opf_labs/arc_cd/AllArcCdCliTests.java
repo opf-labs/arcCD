@@ -1,11 +1,13 @@
 package org.opf_labs.arc_cd;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.opf_labs.arc_cd.collection.ArchiveItem;
 import org.opf_labs.arc_cd.collection.CollectionItemTest;
 import org.opf_labs.arc_cd.collection.ItemManifestTest;
 import org.opf_labs.arc_cd.config.ArcCdConfigTest;
@@ -27,11 +29,15 @@ public class AllArcCdCliTests {
 
 	public static final File INFO_00001;
 	public static final File INFO_00022;
+	public static final File MANIFEST_00022;
+	public static final ArchiveItem ITEM_00022;
 	static {
 		try {
 			INFO_00001 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00001/00001.info");
 			INFO_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.info");
-		} catch (URISyntaxException excep) {
+			MANIFEST_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.manifest");
+			ITEM_00022 = ArchiveItem.fromDirectory(INFO_00022.getParentFile());
+		} catch (URISyntaxException | FileNotFoundException excep) {
 			throw new AssertionError("Couldn't load test data.");
 		}
 	}

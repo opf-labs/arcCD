@@ -34,7 +34,6 @@ import org.opf_labs.utils.ProcessRunnerFactory;
  * 
  *          Created 4 Oct 2013:16:43:40
  */
-@SuppressWarnings("static-method")
 public class CdrdaoCliWrapperTest {
 	private static final String EMPTY_STRING = "";
 	private static final String NO_SUCH_DEVICE = "/dev/sr1";

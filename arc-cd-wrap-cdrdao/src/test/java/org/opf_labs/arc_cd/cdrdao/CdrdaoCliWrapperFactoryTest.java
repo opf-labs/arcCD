@@ -21,7 +21,6 @@ import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
  * 
  *          Created 5 Oct 2013:22:20:27
  */
-@SuppressWarnings("static-method")
 public class CdrdaoCliWrapperFactoryTest {
 	private static final String EMPTY_STRING = "";
 	private static boolean CDRDAO_INSTALLED = false;

@@ -18,7 +18,6 @@ import org.junit.Test;
  * 
  * Created 8 Oct 2013:13:13:48
  */
-@SuppressWarnings("static-method")
 public class CapacityTest {
 
 	/**

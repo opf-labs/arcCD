@@ -20,7 +20,6 @@ import org.junit.Test;
  * 
  * Created 7 Oct 2013:09:24:16
  */
-@SuppressWarnings("static-method")
 public class CdrdaoExecutableTest {
 	private static final String EMPTY = "";
 	private static final List<String> EMPTY_LIST = new ArrayList<>();

@@ -3,8 +3,6 @@
  */
 package org.opf_labs.arc_cd.cdrdao.toc;
 
-import static org.junit.Assert.fail;
-
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
@@ -16,7 +14,6 @@ import org.opf_labs.arc_cd.cdrdao.AllArcCdrdaoWrapperTests;
  * @author carl
  *
  */
-@SuppressWarnings("static-method")
 public class TocItemRecordTests {
 
 	/**

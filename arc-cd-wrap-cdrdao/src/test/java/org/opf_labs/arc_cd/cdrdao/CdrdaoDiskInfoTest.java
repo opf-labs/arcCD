@@ -19,7 +19,6 @@ import org.opf_labs.arc_cd.cdrdao.CdrdaoDiskInfo.TocType;
  * 
  * Created 9 Oct 2013:23:43:28
  */
-@SuppressWarnings("static-method")
 public class CdrdaoDiskInfoTest {
 
 	/**

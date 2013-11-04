@@ -9,6 +9,7 @@ import com.google.common.base.Preconditions;
  * @author carl
  * 
  */
+@SuppressWarnings("static-method")
 public final class AudioTrack {
 	private final int number;
 	private final boolean copyPermitted;
@@ -50,63 +51,63 @@ public final class AudioTrack {
 	 * @return the number
 	 */
 	public int getNumber() {
-		return number;
+		return this.number;
 	}
 
 	/**
 	 * @return the copyPermitted
 	 */
 	public boolean isCopyPermitted() {
-		return copyPermitted;
+		return this.copyPermitted;
 	}
 
 	/**
 	 * @return the preEmphasisFlag
 	 */
 	public boolean isPreEmphasisFlag() {
-		return preEmphasisFlag;
+		return this.preEmphasisFlag;
 	}
 
 	/**
 	 * @return the isTwoChannel
 	 */
 	public boolean isTwoChannel() {
-		return isTwoChannel;
+		return this.isTwoChannel;
 	}
 
 	/**
 	 * @return the isFourChannel
 	 */
 	public boolean isFourChannel() {
-		return isFourChannel;
+		return this.isFourChannel;
 	}
 
 	/**
 	 * @return the isrc
 	 */
 	public String getIsrc() {
-		return isrc;
+		return this.isrc;
 	}
 
 	/**
 	 * @return the file
 	 */
 	public String getFile() {
-		return file;
+		return this.file;
 	}
 
 	/**
 	 * @return the start
 	 */
 	public String getStart() {
-		return start;
+		return this.start;
 	}
 
 	/**
 	 * @return the length
 	 */
 	public String getLength() {
-		return length;
+		return this.length;
 	}
 
 	/**
@@ -116,9 +117,12 @@ public final class AudioTrack {
 		return TrackType.AUDIO;
 	}
 
+	@Override
 	public String toString() {
 		return this.file + " track:" + this.number + ", ISRC:" + this.isrc + ", start:" + this.start + ", length: " + this.length + "\n";
 	}
+
+	@SuppressWarnings("hiding")
 	public static class Builder {
 		private int number = 1;
 		private boolean copyPermitted = false;

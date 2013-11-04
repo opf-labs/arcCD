@@ -48,6 +48,7 @@ public final class TocItemRecord {
 		this.tracks.add(track);
 	}
 	
+	@Override
 	public String toString() {
 		StringBuilder value = new StringBuilder();
 		for (AudioTrack track : this.tracks) {

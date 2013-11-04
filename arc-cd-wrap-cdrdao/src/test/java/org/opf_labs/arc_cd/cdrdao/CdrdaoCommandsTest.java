@@ -21,7 +21,6 @@ import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.ParanoiaModeOption;
  * 
  * Created 7 Oct 2013:11:43:11
  */
-@SuppressWarnings("static-method")
 public class CdrdaoCommandsTest {
 	private static final String EMPTY_STRING = "";
 	private static final String COMMAND = "cdrdao";

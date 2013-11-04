@@ -99,6 +99,8 @@ public final class TocItemRecord {
 			TocItemRecord record = fromBufferedReader(reader);
 			IOUtils.closeQuietly(reader);
 			return record;
+		} finally {
+			// Do nothing
 		}
 	}
 

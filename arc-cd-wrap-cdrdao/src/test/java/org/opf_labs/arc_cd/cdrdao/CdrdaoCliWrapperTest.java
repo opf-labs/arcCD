@@ -5,7 +5,6 @@ package org.opf_labs.arc_cd.cdrdao;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;

@@ -5,7 +5,6 @@ package org.opf_labs.arc_cd.cdrdao;
 
 import static org.junit.Assert.assertTrue;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,7 +21,6 @@ import org.junit.Test;
  */
 public class CdrdaoExecutableTest {
 	private static final String EMPTY = "";
-	private static final List<String> EMPTY_LIST = new ArrayList<>();
 	private static final String COMMAND = "cdrdao";
 	private static final String VERSION = "3.2.1";
 	private static final String DEFAULT_DEVICE = "/dev/sr0";

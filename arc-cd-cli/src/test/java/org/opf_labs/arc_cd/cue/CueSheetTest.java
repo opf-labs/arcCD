@@ -5,14 +5,12 @@ package org.opf_labs.arc_cd.cue;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.net.URISyntaxException;
 
 import org.junit.Test;
 import org.opf_labs.arc_cd.AllArcCdCliTests;
-import org.opf_labs.arc_cd.collection.CdTrack;
 import org.opf_labs.arc_cd.collection.CdItemRecord;
+import org.opf_labs.arc_cd.collection.CdTrack;
 import org.opf_labs.audio.CueSheet;
 import org.opf_labs.audio.FileData;
 import org.opf_labs.audio.TrackData;

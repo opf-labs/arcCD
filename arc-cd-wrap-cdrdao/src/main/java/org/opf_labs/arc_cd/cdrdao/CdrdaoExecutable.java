@@ -29,7 +29,7 @@ final class CdrdaoExecutable {
 	private final List<String> devices;
 	
 	private CdrdaoExecutable() {
-		this("", "UNKOWN", Arrays.asList(new String[] {}));
+		this("", "UNKNOWN", Arrays.asList(new String[] {}));
 	}
 	
 	private CdrdaoExecutable(final String command, final String version, final List<String> devices) {

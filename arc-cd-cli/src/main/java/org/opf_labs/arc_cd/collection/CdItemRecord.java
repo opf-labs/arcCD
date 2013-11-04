@@ -10,6 +10,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.log4j.Logger;
@@ -30,7 +31,7 @@ public final class CdItemRecord {
 	public static final String ALBUM_ARTIST = "AlbumArtist";
 	public static final String TRACK = "Track";
 	public static final String TRACK_ARTIST = "TrackArtist";
-	private static final String GRABBER = "(.*)$";
+	private static final String GRABBER = "(.+)$";
 	private static final Pattern ALBUM_TITLE_PATTERN = Pattern.compile("^" + OPEN_DELIM + ALBUM_TITLE + CLOSE_DELIM + GRABBER);
 	private static final Pattern ALBUM_ARTIST_PATTERN = Pattern.compile("^" + OPEN_DELIM + ALBUM_ARTIST + CLOSE_DELIM + GRABBER);
 	private static final Pattern TRACK_TITLE_PATTERN = Pattern.compile("^" + OPEN_DELIM + TRACK + CLOSE_DELIM + GRABBER);
@@ -178,13 +179,20 @@ public final class CdItemRecord {
 		}
 		
 		private Builder updateFromInfoLine(final String infoLine) {
-			// TODO Replace this hack with regex
-			if (infoLine.startsWith("[AlbumTitle]")) {
-				this.title = infoLine.substring(infoLine.indexOf("]") + 1);
-			} else if (infoLine.startsWith("[AlbumArtist]")) {
-				this.albumArtist = infoLine.substring(infoLine.indexOf("]") + 1);
-			} else if (infoLine.startsWith("[Track]")) {
-				this.tracks.add(CdTrack.fromValues(infoLine.substring(infoLine.indexOf("]") + 1)));
+			Matcher trackMatcher = TRACK_TITLE_PATTERN.matcher(infoLine);
+			if (trackMatcher.matches()) {
+				this.tracks.add(CdTrack.fromValues(trackMatcher.group(1)));
+				return this;
+			}
+			Matcher albumTitleMatcher = ALBUM_TITLE_PATTERN.matcher(infoLine);
+			if (albumTitleMatcher.matches()) {
+				this.title = albumTitleMatcher.group(1);
+				return this;
+			}
+			Matcher albumArtistMatcher = ALBUM_ARTIST_PATTERN.matcher(infoLine);
+			if (albumArtistMatcher.matches()) {
+				this.albumArtist = albumArtistMatcher.group(1);
+				return this;
 			}
 			return this;
 		}

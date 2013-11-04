@@ -42,7 +42,7 @@ public class CueSheetTest {
 	}
 
 	@Test
-	public void testAddFile() throws URISyntaxException, FileNotFoundException {
+	public void testAddFile() {
 		CueSheet testInstance = new CueSheet();
 		FileData fileData = new FileData(testInstance);
 		fileData.setFile("./00022.bin");

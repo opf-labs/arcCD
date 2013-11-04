@@ -19,7 +19,6 @@ import org.opf_labs.arc_cd.config.ArcCdConfig;
  * 
  * Created 29 Aug 2013:18:38:23
  */
-@SuppressWarnings("static-method")
 public class ArcCdConfigTest {
 	
 	/**

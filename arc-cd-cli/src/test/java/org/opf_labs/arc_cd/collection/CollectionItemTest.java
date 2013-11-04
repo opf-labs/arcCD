@@ -16,7 +16,6 @@ import org.opf_labs.arc_cd.AllArcCdCliTests;
  * @author carl
  * 
  */
-@SuppressWarnings("static-method")
 public class CollectionItemTest {
 
 	/**

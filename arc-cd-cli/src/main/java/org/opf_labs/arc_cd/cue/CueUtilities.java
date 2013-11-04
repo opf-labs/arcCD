@@ -3,9 +3,7 @@
  */
 package org.opf_labs.arc_cd.cue;
 
-import java.util.Arrays;
 import java.util.Iterator;
-import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
 import org.opf_labs.arc_cd.cdrdao.toc.AudioTrack;

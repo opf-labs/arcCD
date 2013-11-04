@@ -78,13 +78,6 @@ public class CdrdaoExecutableTest {
 	}
 
 	/**
-	 * Test method for CdrdaoExecutable#getNewInstance(java.lang.String, java.lang.String, java.util.List)
-	 */
-	@Test(expected=IllegalArgumentException.class)
-	public void testGetNewInstanceEmptyDevices() {
-		CdrdaoExecutable.getNewInstance(COMMAND, VERSION, EMPTY_LIST);
-	}
-	/**
 	 * Test method for CdrdaoExecutable#getCommand()
 	 */
 	@Test

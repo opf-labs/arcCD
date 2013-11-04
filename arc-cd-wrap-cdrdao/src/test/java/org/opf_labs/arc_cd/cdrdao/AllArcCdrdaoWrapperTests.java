@@ -15,6 +15,7 @@ import java.util.List;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecordTests;
 import org.opf_labs.utils.Environments;
 import org.opf_labs.utils.ProcessRunner;
 import org.opf_labs.utils.ProcessRunnerImplFactory;
@@ -33,7 +34,7 @@ import com.google.common.base.Preconditions;
  */
 @RunWith(Suite.class)
 @SuiteClasses({ CdrdaoCommandsTest.class, CdrdaoExecutableTest.class,
-		CdrdaoCliWrapperFactoryTest.class, CdrdaoCliWrapperTest.class, CapacityTest.class, CdrdaoDiskInfoTest.class })
+		CdrdaoCliWrapperFactoryTest.class, CdrdaoCliWrapperTest.class, CapacityTest.class, CdrdaoDiskInfoTest.class, TocItemRecordTests.class })
 public class AllArcCdrdaoWrapperTests {
 	/**
 	 * Given a string resource path and name returns a File object. Used to load

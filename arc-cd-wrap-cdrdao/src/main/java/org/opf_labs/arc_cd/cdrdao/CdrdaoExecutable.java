@@ -44,7 +44,6 @@ final class CdrdaoExecutable {
 		Preconditions.checkNotNull(devices, "devices == null");
 		Preconditions.checkArgument(!command.isEmpty(), "command.isEmpty()");
 		Preconditions.checkArgument(!version.isEmpty(), "version.isEmpty()");
-		Preconditions.checkArgument(!devices.isEmpty(), "devices.isEmpty()");
 		return new CdrdaoExecutable(command, version, devices);
 	}
 	/**

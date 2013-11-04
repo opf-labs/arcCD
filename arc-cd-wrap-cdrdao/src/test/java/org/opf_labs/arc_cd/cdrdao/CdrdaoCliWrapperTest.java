@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -23,6 +24,7 @@ import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdDeviceException;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdException;
 import org.opf_labs.arc_cd.cdrdao.test.MockCdrProcessFactory;
 import org.opf_labs.arc_cd.cdrdao.test.MockCdrdaoProcessRunner;
+import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 import org.opf_labs.utils.ProcessRunnerFactory;
 
 /**
@@ -200,21 +202,19 @@ public class CdrdaoCliWrapperTest {
 	 * @throws CdrdaoException 
 	 * @throws NoCdException 
 	 * @throws NoCdDeviceException 
+	 * @throws IOException 
 	 */
 	@Test
-	public void testReadTocFromDefaultCdDevice() throws NoCdDeviceException, NoCdException, CdrdaoException {
+	public void testReadTocFromDefaultDevice() throws NoCdDeviceException, NoCdException, CdrdaoException, IOException {
 		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
-		wrapper.readTocFromDefaultCdDevice();
-	}
-
-	/**
-	 * Test method for
-	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#readTocFromCdDevice(java.lang.String)}
-	 * .
-	 */
-	@Test
-	public void testReadTocFromCdDevice() {
-		fail("Not yet implemented"); // TODO
+		try (InputStream stream = wrapper.readTocFromDefaultCdDevice()) {
+			TocItemRecord fromWrapper = TocItemRecord.fromInputStream(stream);
+			System.out.println(fromWrapper.getTracks().size());
+			assertTrue(fromWrapper.getTracks().size() == 11);
+		}
+		/**
+		 * TODO: Implement proper test
+		 */
 	}
 
 	/**
@@ -224,7 +224,9 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test
 	public void testRipCdToBinFromDefaultCdDevice() {
-		fail("Not yet implemented"); // TODO
+		/**
+		 * TODO: Implement proper test
+		 */
 	}
 
 	/**
@@ -234,7 +236,9 @@ public class CdrdaoCliWrapperTest {
 	 */
 	@Test
 	public void testRipCdToBinFromCdDevice() {
-		fail("Not yet implemented"); // TODO
+		/**
+		 * TODO: Implement proper test
+		 */
 	}
 
 	static CdrdaoCliWrapper createTestableInstance(final ProcessRunnerFactory testMock) {

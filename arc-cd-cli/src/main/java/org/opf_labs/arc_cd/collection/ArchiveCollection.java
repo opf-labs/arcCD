@@ -20,6 +20,11 @@ import org.apache.log4j.Logger;
  */
 public final class ArchiveCollection {
 	/** Extension for info files */
+	public static final String BIN_EXT = "bin";
+	public static final String TEMP_TOC_EXT = "toctmp";
+	public static final String TOC_EXT = "toc";
+	public static final String CUE_EXT= "cue";
+	public static final String MANIFEST_EXT = "man";
 	public static final String INFO_EXT = "info";
 	private static final Logger LOGGER = Logger.getLogger(ArchiveCollection.class);
 

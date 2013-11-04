@@ -21,11 +21,6 @@ import com.google.common.base.Preconditions;
  *
  */
 public final class ArchiveItem {
-	public static final String BIN_EXT = "bin";
-	public static final String TEMP_TOC_EXT = "toctmp";
-	public static final String TOC_EXT = "toc";
-	public static final String CUE_EXT= "cue";
-	public static final String MANIFEST_EXT = "man";
 
 	public static final File DEFAULT_ROOT = new File(".");
 	public static final ArchiveItem DEFAULT = new ArchiveItem();
@@ -72,16 +67,16 @@ public final class ArchiveItem {
 		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + ArchiveCollection.INFO_EXT;
 	}
 	public String getTocPath() {
-		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + TOC_EXT;
+		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + ArchiveCollection.TOC_EXT;
 	}
 	public String getCuePath() {
-		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + CUE_EXT;
+		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + ArchiveCollection.CUE_EXT;
 	}
 	public String getBinPath() {
-		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + BIN_EXT;
+		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + ArchiveCollection.BIN_EXT;
 	}
 	public String getManifestPath() {
-		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + MANIFEST_EXT;
+		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + ArchiveCollection.MANIFEST_EXT;
 	}
 	
 	public boolean hasInfo() {

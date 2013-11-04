@@ -171,8 +171,12 @@ public final class ArchiveItem {
 		return new ArchiveItem(itemDir, cd);
 	}
 
-	private static boolean existsAndIsFile(String path) {
-		File test = new File(path);
-		return test.exists() && test.isFile();
+	private static boolean existsAndIsFile(String pathToTest) {
+		File toTest = new File(pathToTest);
+		return existsAndIsFile(toTest);
+	}
+	
+	private static boolean existsAndIsFile(File toTest) {
+		return toTest.exists() && toTest.isFile();
 	}
 }

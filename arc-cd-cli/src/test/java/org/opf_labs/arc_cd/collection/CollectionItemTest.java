@@ -17,14 +17,6 @@ import org.opf_labs.arc_cd.AllArcCdCliTests;
  * 
  */
 public class CollectionItemTest {
-	private static final File INFO_00001;
-	static {
-		try {
-			INFO_00001 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00001.info");
-		} catch (URISyntaxException excep) {
-			throw new AssertionError("Couldn't load test data.");
-		}
-	}
 	/**
 	 * Test method for
 	 * {@link org.opf_labs.arc_cd.collection.CdItemRecord#fromInfoFile(java.io.File)}
@@ -34,7 +26,7 @@ public class CollectionItemTest {
 	 */
 	@Test
 	public void testArtistFromFile() throws URISyntaxException, IOException {
-		CdItemRecord item = CdItemRecord.fromInfoFile(INFO_00001);
+		CdItemRecord item = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00001);
 		assertTrue(item.albumArtist, item.albumArtist.equals("Pink Floyd"));
 	}
 
@@ -47,7 +39,7 @@ public class CollectionItemTest {
 	 */
 	@Test
 	public void testTitleFromFile() throws URISyntaxException, IOException {
-		CdItemRecord item = CdItemRecord.fromInfoFile(INFO_00001);
+		CdItemRecord item = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00001);
 		assertTrue(item.title.equals("Wish You Were Here"));
 	}
 
@@ -60,7 +52,7 @@ public class CollectionItemTest {
 	 */
 	@Test
 	public void testTracksFromFile() throws URISyntaxException, IOException {
-		CdItemRecord item = CdItemRecord.fromInfoFile(INFO_00001);
+		CdItemRecord item = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00001);
 		assertTrue(item.tracks.size() == 2);
 	}
 
@@ -72,7 +64,6 @@ public class CollectionItemTest {
 	 */
 	@Test
 	public void testIsInfoFile() throws URISyntaxException {
-		File test = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00001.info");
-		assertTrue(ArchiveCollection.isInfoFile(test));
+		assertTrue(ArchiveCollection.isInfoFile(AllArcCdCliTests.INFO_00001));
 	}
 }

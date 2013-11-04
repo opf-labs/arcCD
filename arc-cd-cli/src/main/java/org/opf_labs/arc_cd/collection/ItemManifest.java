@@ -23,9 +23,10 @@ public final class ItemManifest {
 	private static final String TOC_HEADER = "toc:";
 	private static final String BIN_HEADER = "bin:";
 	private static final String CUE_HEADER = "cue:";
-	private static final String EMPTY_MD5 = DigestUtils.md5Hex("");
-	private static final ItemManifest DEFAULT = new ItemManifest();
-	private static Logger LOGGER = Logger.getLogger(ItemManifest.class); 
+	static final String EMPTY_MD5 = DigestUtils.md5Hex("");
+	/** Default instance with MD5s of empty string for all field values */
+	public static final ItemManifest DEFAULT = new ItemManifest();
+	private static final Logger LOGGER = Logger.getLogger(ItemManifest.class); 
 
 	private final String infoMD5;
 	private final String tocMD5;
@@ -116,6 +117,10 @@ public final class ItemManifest {
 			LOGGER.warn("Problem closing manifest file.");
 		}
 		return builder.build();
+	}
+	
+	public static ItemManifest fromBufferedReader(BufferedReader br) {
+		return Builder.fromBufferedReader(br).build();
 	}
 
 	/* (non-Javadoc)

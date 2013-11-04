@@ -33,14 +33,12 @@ public class CueUtilitiesTest {
 	static final int[] TEST_FRAMES = new int[] {0, 8, 17, 38, 74, 75};
 	static final String[] TEST_TIMES = new String[] {"0", "00:00:99", "12:50:50", "07:59:99", "02:01:00"};
 	static final Position[] TEST_POSITIONS = new Position[] {new Position(0, 0, 0), new Position(0, 0, 74), new Position(12, 50, 38), new Position(7, 59, 74), new Position(2, 1, 0)};
-	static final File INFO_00022;
 	static final File TOC_00022;
 	static final File TOC_CD1;
 	static {
 		try {
-			INFO_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022.info");
-			TOC_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022.toc");
-			TOC_CD1 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/cd-1.toc");
+			TOC_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.toc");
+			TOC_CD1 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/misc/cd-1.toc");
 		} catch (URISyntaxException e) {
 			throw new IllegalStateException("Couldn't find test data");
 		}
@@ -113,7 +111,7 @@ public class CueUtilitiesTest {
 	 */
 	@Test(expected=NullPointerException.class)
 	public void testCueFromTocAndInfoNullToc() throws FileNotFoundException {
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(INFO_00022);
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueUtilities.cueFromTocAndInfo(null, itemRecord);
 	}
 
@@ -134,7 +132,7 @@ public class CueUtilitiesTest {
 	@Test(expected=IllegalStateException.class)
 	public void testCueFromTocAndInfoDifferingTracks() throws IOException {
 		TocItemRecord tocRecord = TocItemRecord.fromTocFile(TOC_CD1);
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(INFO_00022);
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueUtilities.cueFromTocAndInfo(tocRecord, itemRecord);
 	}
 
@@ -144,7 +142,7 @@ public class CueUtilitiesTest {
 	 */
 	@Test
 	public void testCueFromTocAndInfoCdDetails() throws IOException {
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(INFO_00022);
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		TocItemRecord tocRecord = TocItemRecord.fromTocFile(TOC_00022);
 		CueSheet cue = CueUtilities.cueFromTocAndInfo(tocRecord, itemRecord);
 		assertTrue(cue.getPerformer().equals(itemRecord.getAlbumArtist()));
@@ -153,7 +151,7 @@ public class CueUtilitiesTest {
 
 	@Test
 	public void testCueFromTocAndInfoTrackTocDetails() throws IOException {
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(INFO_00022);
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		TocItemRecord tocRecord = TocItemRecord.fromTocFile(TOC_00022);
 		CueSheet cue = CueUtilities.cueFromTocAndInfo(tocRecord, itemRecord);
 		assertEquals(tocRecord.getTracks().size(), cue.getAllTrackData().size());

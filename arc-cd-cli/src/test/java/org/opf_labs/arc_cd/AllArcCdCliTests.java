@@ -7,7 +7,10 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.opf_labs.arc_cd.collection.CollectionItemTest;
+import org.opf_labs.arc_cd.collection.ItemManifestTest;
 import org.opf_labs.arc_cd.config.ArcCdConfigTest;
+import org.opf_labs.arc_cd.cue.CueSheetTest;
+import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
 
 /**
  * Test suite for the ArcCd CLI project
@@ -19,8 +22,19 @@ import org.opf_labs.arc_cd.config.ArcCdConfigTest;
  * Created 7 Oct 2013:23:31:18
  */
 @RunWith(Suite.class)
-@SuiteClasses({ArcCdConfigTest.class, CollectionItemTest.class })
+@SuiteClasses({ArcCdConfigTest.class, CollectionItemTest.class, ItemManifestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
 public class AllArcCdCliTests {
+
+	public static final File INFO_00001;
+	public static final File INFO_00022;
+	static {
+		try {
+			INFO_00001 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00001/00001.info");
+			INFO_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.info");
+		} catch (URISyntaxException excep) {
+			throw new AssertionError("Couldn't load test data.");
+		}
+	}
 
 	/**
 	 * Given a string resource path and name returns a File object. Used to load

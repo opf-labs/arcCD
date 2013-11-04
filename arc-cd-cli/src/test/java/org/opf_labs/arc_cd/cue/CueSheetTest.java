@@ -24,18 +24,16 @@ import org.opf_labs.audio.TrackData;
 public class CueSheetTest {
 
 	@Test
-	public void testSetPerformer() throws URISyntaxException, FileNotFoundException {
-		File infoFile = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022.info");
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(infoFile);
+	public void testSetPerformer() throws FileNotFoundException {
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueSheet testInstance = new CueSheet();
 		testInstance.setPerformer(itemRecord.getAlbumArtist());
 		assertTrue(testInstance.getPerformer().equals(itemRecord.getAlbumArtist()));
 	}
 
 	@Test
-	public void testSetTitle() throws URISyntaxException, FileNotFoundException {
-		File infoFile = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022.info");
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(infoFile);
+	public void testSetTitle() throws FileNotFoundException {
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueSheet testInstance = new CueSheet();
 		testInstance.setTitle(itemRecord.getTitle());
 		assertTrue(testInstance.getTitle().equals(itemRecord.getTitle()));
@@ -54,9 +52,8 @@ public class CueSheetTest {
 	}
 
 	@Test
-	public void testAddTrack() throws URISyntaxException, FileNotFoundException {
-		File infoFile = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022.info");
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(infoFile);
+	public void testAddTrack() throws FileNotFoundException {
+		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueSheet testInstance = new CueSheet();
 		FileData fileData = new FileData(testInstance);
 		fileData.setFile("./00022.bin");

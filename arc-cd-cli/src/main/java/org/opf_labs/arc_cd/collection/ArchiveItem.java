@@ -100,6 +100,7 @@ public final class ArchiveItem {
 	public boolean isArchived() {
 		return this.hasInfo() && this.hasToc() && this.hasBin() && this.hasManifest();
 	}
+
 	private String createManifestString() throws FileNotFoundException, IOException {
 		StringBuilder builder = new StringBuilder();
 

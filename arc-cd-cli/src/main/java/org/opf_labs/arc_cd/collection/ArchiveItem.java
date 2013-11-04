@@ -25,6 +25,7 @@ public final class ArchiveItem {
 	public static final File DEFAULT_ROOT = new File(".");
 	public static final ArchiveItem DEFAULT = new ArchiveItem();
 	
+	private ItemState state = ItemState.CATALOGUED;
 	private final File rootDirectory;
 	private final CataloguedCd cdItem;
 	
@@ -55,6 +56,13 @@ public final class ArchiveItem {
 	 */
 	public File getRootDirectory() {
 		return this.rootDirectory;
+	}
+	
+	/**
+	 * @return the item's state
+	 */
+	public ItemState getState() {
+		return this.state;
 	}
 	
 	/**

@@ -43,22 +43,16 @@ public final class CdItemRecord {
 	final String albumArtist;
 	final boolean isCompilation;
 	final List<CdTrack> tracks;
-	final boolean isArchived;
 	
 	private CdItemRecord() {
 		this(DEFAULT_STRING_VALUE, DEFAULT_STRING_VALUE, new ArrayList<CdTrack>());
 	}
 	
 	private CdItemRecord(final String title, final String artist, final List<CdTrack> tracks) {
-		this(title, artist, tracks, false);
-	}
-
-	private CdItemRecord(final String title, final String artist, final List<CdTrack> tracks, final boolean isArchived) {
 		this.title = title;
 		this.albumArtist = (artist == null || artist.isEmpty()) ? VARIOUS : artist;
 		this.isCompilation = (this.albumArtist == VARIOUS);
 		this.tracks = new ArrayList<>(tracks);
-		this.isArchived = isArchived;
 	}
 	
 	/**
@@ -124,7 +118,6 @@ public final class CdItemRecord {
 		private String albumArtist = DEFAULT_STRING_VALUE;
 		boolean isCompilation = false;
 		List<CdTrack> tracks = new ArrayList<>();
-		boolean isArchived = false;
 		
 		/**	creates a bare bones, default instance */
 		public Builder() {
@@ -156,11 +149,6 @@ public final class CdItemRecord {
 		
 		public Builder track(final CdTrack track) {
 			this.tracks.add(track);
-			return this;
-		}
-		
-		public Builder archived(final boolean archived) {
-			this.isArchived = archived;
 			return this;
 		}
 		
@@ -198,7 +186,7 @@ public final class CdItemRecord {
 		}
 		
 		public CdItemRecord build() {
-			return new CdItemRecord(this.title, this.albumArtist, this.tracks, this.isArchived);
+			return new CdItemRecord(this.title, this.albumArtist, this.tracks);
 		}
 	}
 }

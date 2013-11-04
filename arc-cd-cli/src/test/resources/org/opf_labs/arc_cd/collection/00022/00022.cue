@@ -1,0 +1,16 @@
+PERFORMER "26 Other Worlds"
+TITLE Manipulated
+FILE 00022.bin
+  TRACK 01 AUDIO
+    ISRC 400000000000
+    TITLE "When Beauty Danced"
+    INDEX 01 00:00:00
+  TRACK 02 AUDIO
+    TITLE Incubus
+    INDEX 01 07:27:30
+  TRACK 03 AUDIO
+    TITLE "As I Call on the Dark"
+    INDEX 01 15:38:15
+  TRACK 04 AUDIO
+    TITLE "Lady Deadly"
+    INDEX 01 26:45:25

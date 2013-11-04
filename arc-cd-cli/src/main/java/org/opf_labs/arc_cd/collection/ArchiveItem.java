@@ -3,15 +3,12 @@
  */
 package org.opf_labs.arc_cd.collection;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 
 import com.google.common.base.Preconditions;
@@ -59,7 +56,7 @@ public final class ArchiveItem {
 	}
 	
 	/**
-	 * @return the item's state
+	 * @return the items state
 	 */
 	public ItemState getState() {
 		return this.state;
@@ -87,6 +84,25 @@ public final class ArchiveItem {
 		return this.rootDirectory.getAbsolutePath() + File.separator + this.cdItem.getFormattedId() + "." + ArchiveCollection.MANIFEST_EXT;
 	}
 	
+	public File getRootInfoFile() {
+		return new File(this.getRootInfoPath());
+	}
+	public File getInfoFile() {
+		return new File(this.getInfoPath());
+	}
+	public File getTocFile() {
+		return new File(this.getTocPath());
+	}
+	public File getCueFile() {
+		return new File(this.getCuePath());
+	}
+	public File getBinFile() {
+		return new File(this.getBinPath());
+	}
+	public File getManifestFile() {
+		return new File(this.getManifestPath());
+	}
+	
 	public boolean hasInfo() {
 		return existsAndIsFile(this.getInfoPath());
 	}
@@ -109,31 +125,6 @@ public final class ArchiveItem {
 		return this.hasInfo() && this.hasToc() && this.hasBin() && this.hasManifest();
 	}
 
-	private String createManifestString() throws FileNotFoundException, IOException {
-		StringBuilder builder = new StringBuilder();
-
-		File digestFile = new File(this.getInfoPath());
-		try (BufferedInputStream infoStr = new BufferedInputStream(new FileInputStream(digestFile))) {
-			String infoMd5 = DigestUtils.md5Hex(infoStr);
-			builder.append("info:" + infoMd5 + "\n");
-			IOUtils.closeQuietly(infoStr);
-		}
-
-		File tocFile = new File(this.getTocPath());
-		try (BufferedInputStream tocStr = new BufferedInputStream(new FileInputStream(tocFile))) {
-			String tocMd5 = DigestUtils.md5Hex(tocStr);
-			builder.append("toc:" + tocMd5 + "\n");
-			IOUtils.closeQuietly(tocStr);
-		}
-		
-		File binFile = new File(this.getBinPath());
-		try (BufferedInputStream binStr = new BufferedInputStream(new FileInputStream(binFile))) {
-			String binMd5 = DigestUtils.md5Hex(binStr);
-			builder.append("bin:" + binMd5 + "\n");
-			IOUtils.closeQuietly(binStr);
-		}
-		return builder.toString();
-	}
 	/**
 	 * write out the manifest file.
 	 * @throws IOException
@@ -141,8 +132,9 @@ public final class ArchiveItem {
 	public void writeManifestFile() throws IOException {
 		File manFile = new File(this.getManifestPath());
 		if (manFile.exists()) manFile.delete();
+		ItemManifest manifest = ItemManifest.fromDirectory(this);
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(manFile))) {
-			writer.write(this.createManifestString());
+			writer.write(manifest.toString());
 			IOUtils.closeQuietly(writer);
 		}
 	}

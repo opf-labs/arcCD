@@ -72,6 +72,10 @@ public final class CataloguedCdManager {
 		return this.managedCdRecords.get(requestedId);
 	}
 
+	/**
+	 * @param requestedId the id of the requested Catalogue file
+	 * @return the File object for the catalogue file
+	 */
 	public File getCatalogueFileById(final Integer requestedId) {
 		if (this.catalogueFiles.containsKey(requestedId))
 			this.currentId = requestedId;

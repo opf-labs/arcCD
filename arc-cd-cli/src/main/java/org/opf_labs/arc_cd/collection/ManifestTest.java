@@ -8,10 +8,23 @@ package org.opf_labs.arc_cd.collection;
  * 
  */
 public class ManifestTest {
+	/**
+	 * Enumeration used to record manifest test result
+	 * @author carl
+	 *
+	 */
 	public enum Result {
-		OK, ADDED, DELETED, ALTERED;
+		/** OK Result */
+		OK, 
+		/** Item Added Result */
+		ADDED,
+		/** Item Deleted Result */
+		DELETED,
+		/** Item Altered Result */
+		ALTERED;
 	}
 
+	/**	Default ManifestTest instance */
 	public static final ManifestTest DEFAULT = new ManifestTest();
 
 	private final Result infoResult;
@@ -64,6 +77,9 @@ public class ManifestTest {
 		return this.cueResult;
 	}
 
+	/**
+	 * @return the default ManifestTest instance for failed lookups and testing
+	 */
 	public static ManifestTest defaultInstance() {
 		return DEFAULT;
 	}
@@ -75,9 +91,13 @@ public class ManifestTest {
 		return this.passed;
 	}
 
+	/**
+	 * @param item the item to manifest test
+	 * @return the result of the test
+	 */
 	public static ManifestTest testItem(ArchiveItem item) {
-		ItemManifest recordedState = item.getManifest();
-		ItemManifest currentState = ItemManifest.fromDirectory(item);
+		ItemManifest recordedState = item.getRecordedManifest();
+		ItemManifest currentState = ItemManifest.fromItemDirectory(item);
 		Result infoResult = calcResult(recordedState.getInfoMD5(), currentState.getInfoMD5());
 		Result tocResult = calcResult(recordedState.getTocMD5(), currentState.getTocMD5());
 		Result binResult = calcResult(recordedState.getBinMD5(), currentState.getBinMD5());

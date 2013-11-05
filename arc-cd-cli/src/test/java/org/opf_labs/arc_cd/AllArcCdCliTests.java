@@ -14,7 +14,7 @@ import org.opf_labs.arc_cd.cue.CueSheetTest;
 import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
 
 /**
- * Test suite for the ArcCd CLI project
+ * Test suite for the ArcCd CLI project, supressed JavaDoc warnings
  * 
  * @author  <a href="mailto:carl@openplanetsfoundation.org">Carl Wilson</a>.</p>
  *          <a href="https://github.com/carlwilson">carlwilson AT github</a>.</p>
@@ -22,6 +22,7 @@ import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
  * 
  * Created 7 Oct 2013:23:31:18
  */
+@SuppressWarnings("javadoc")
 @RunWith(Suite.class)
 @SuiteClasses({ArcCdConfigTest.class, CdItemRecordTest.class, ItemManifestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
 public class AllArcCdCliTests {

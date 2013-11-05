@@ -122,6 +122,10 @@ public final class AudioTrack {
 		return this.file + " track:" + this.number + ", ISRC:" + this.isrc + ", start:" + this.start + ", length: " + this.length + "\n";
 	}
 
+	/**
+	 * A Builder object used to create new AudioTrack instances.
+	 * @author carl
+	 */
 	@SuppressWarnings("hiding")
 	public static class Builder {
 		private int number = 1;
@@ -134,44 +138,76 @@ public final class AudioTrack {
 		private String start = "0";
 		private String length = "";
 
+		/**
+		 * Create a new Builder with the passed track number
+		 * @param number the track number 
+		 */
 		public Builder(final int number) {
 			Preconditions.checkArgument((number > 0) || (number < 100),
 					"Track number out of range:" + number);
 			this.number = number;
 		}
 
+		/**
+		 * @param copyPermitted a new copyPermitted flag value
+		 * @return this Builder object for chaining
+		 */
 		public Builder copyPermitted(final boolean copyPermitted) {
 			this.copyPermitted = copyPermitted;
 			return this;
 		}
 
+		/**
+		 * @param preEmphasisFlag a new preEmphasisFlag flag value
+		 * @return this Builder object for chaining
+		 */
 		public Builder preEmphasisFlag(final boolean preEmphasisFlag) {
 			this.preEmphasisFlag = preEmphasisFlag;
 			return this;
 		}
 
+		/**
+		 * @param isTwoChannel a new isTwoChannel flag value
+		 * @return this Builder object for chaining
+		 */
 		public Builder isTwoChannel(final boolean isTwoChannel) {
 			this.isTwoChannel = isTwoChannel;
 			return this;
 		}
 
+		/**
+		 * @param isFourChannel a new isFourChannel flag value
+		 * @return this Builder object for chaining
+		 */
 		public Builder isFourChannel(final boolean isFourChannel) {
 			this.isFourChannel = isFourChannel;
 			return this;
 		}
 
+		/**
+		 * @param isrc an International Standard Recording Number for the track
+		 * @return this Builder object for chaining
+		 */
 		public Builder isrc(final String isrc) {
 			Preconditions.checkNotNull(isrc, "isrc == null");
 			this.isrc = isrc;
 			return this;
 		}
 
+		/**
+		 * @param file the file value for the track
+		 * @return this Builder object for chaining
+		 */
 		public Builder file(final String file) {
 			Preconditions.checkNotNull(file, "file == null");
 			this.file = file;
 			return this;
 		}
 
+		/**
+		 * @param start set the Track start
+		 * @return this Builder object for chaining
+		 */
 		public Builder start(final String start) {
 			Preconditions.checkNotNull(start, "start is null");
 			Preconditions.checkArgument(!start.isEmpty(), "start.isEmpty()");
@@ -179,12 +215,20 @@ public final class AudioTrack {
 			return this;
 		}
 
+		/**
+		 * @param length set the Track length
+		 * @return this Builder object for chaining
+		 */
 		public Builder length(final String length) {
 			Preconditions.checkNotNull(length, "length is null");
 			this.length = length;
 			return this;
 		}
 
+		/**
+		 * Create a new AudioTrack instance from the Builder values
+		 * @return the created AudioTrack
+		 */
 		public AudioTrack build() {
 			return new AudioTrack(this.number, this.copyPermitted,
 					this.preEmphasisFlag, this.isTwoChannel,

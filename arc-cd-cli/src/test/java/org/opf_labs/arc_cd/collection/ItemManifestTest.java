@@ -33,11 +33,11 @@ public class ItemManifestTest {
 	}
 
 	/**
-	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#fromDirectory(org.opf_labs.arc_cd.collection.ArchiveItem)}.
+	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#fromItemDirectory(org.opf_labs.arc_cd.collection.ArchiveItem)}.
 	 */
 	@Test
 	public final void testFromDirectory() {
-		ItemManifest fromItem = ItemManifest.fromDirectory(AllArcCdCliTests.ITEM_00022);
+		ItemManifest fromItem = ItemManifest.fromItemDirectory(AllArcCdCliTests.ITEM_00022);
 		ItemManifest fromManifest = ItemManifest.fromManifestFile(AllArcCdCliTests.MANIFEST_00022);
 		assertTrue(fromManifest.equals(fromItem));
 	}

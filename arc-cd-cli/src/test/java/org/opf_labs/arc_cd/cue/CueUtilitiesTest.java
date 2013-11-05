@@ -25,9 +25,11 @@ import org.opf_labs.audio.Position;
 import org.opf_labs.audio.TrackData;
 
 /**
+ * A test class for the CueUtilities, JavaDoc supressed
  * @author carl
  *
  */
+@SuppressWarnings("javadoc")
 public class CueUtilitiesTest {
 	static final String[] TEST_HUNDRETHS = new String[] {"0", "10", "22", "50", "99", "100"};
 	static final int[] TEST_FRAMES = new int[] {0, 8, 17, 38, 74, 75};

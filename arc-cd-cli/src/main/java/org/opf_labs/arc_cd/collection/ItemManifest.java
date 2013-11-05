@@ -73,11 +73,19 @@ public final class ItemManifest {
 		return this.cueMD5;
 	}
 
+	/**
+	 * @return the default ItemManifest object used for handling missing lookups and for testing
+	 */
 	public static ItemManifest defaultInstance() {
 		return DEFAULT;
 	}
 
-	public static ItemManifest fromDirectory(final ArchiveItem item) {
+	/**
+	 * Create a new ItemManifest from the files in it's directory
+	 * @param item the ArchiveItem to generate a new Manifest for
+	 * @return the ItemManifest generated from the directory
+	 */
+	public static ItemManifest fromItemDirectory(final ArchiveItem item) {
 		Preconditions.checkNotNull(item, "item == null");
 		Preconditions.checkNotNull(item.getRootDirectory(), "item.getRootDirectory() == null");
 		Preconditions.checkArgument(item.getRootDirectory().isDirectory(), "item.getRootDirectory() is not a directory.");
@@ -106,6 +114,11 @@ public final class ItemManifest {
 		return itemBuilder.build();
 	}
 	
+	/**
+	 * Create a new ItemManifest from the manifest file
+	 * @param manifestFile the manifest file
+	 * @return an ItemManifest created from the manifest file
+	 */
 	public static ItemManifest fromManifestFile(File manifestFile) {
 		Preconditions.checkNotNull(manifestFile, "manifestFile == null");
 		Preconditions.checkArgument(manifestFile.isFile(), "manifestFile.isFile() != true");
@@ -119,6 +132,11 @@ public final class ItemManifest {
 		return builder.build();
 	}
 	
+	/**
+	 * Create a new ItemManifest from a BufferedReader
+	 * @param br the BufferedReader to use
+	 * @return the ItemManifest created from the BufferedReader contents
+	 */
 	public static ItemManifest fromBufferedReader(BufferedReader br) {
 		return Builder.fromBufferedReader(br).build();
 	}
@@ -186,12 +204,19 @@ public final class ItemManifest {
 		return builder.toString();
 	}
 	
+	/**
+	 * A Builder class for an ItemManifest
+	 */
 	public static class Builder {
 		private String infoMD5 = EMPTY_MD5;
 		private String tocMD5 = EMPTY_MD5;
 		private String binMD5 = EMPTY_MD5;
 		private String cueMD5 = EMPTY_MD5;
 
+		/**
+		 * @param md5 the MD5 hex value of the info file
+		 * @return the builder object
+		 */
 		public Builder infoMD5(final String md5) {
 			Preconditions.checkNotNull(md5, "md5 == null");
 			Preconditions
@@ -200,6 +225,10 @@ public final class ItemManifest {
 			return this;
 		}
 
+		/**
+		 * @param md5 the MD5 hex value of the TOC file
+		 * @return the builder object
+		 */
 		public Builder tocMD5(final String md5) {
 			Preconditions.checkNotNull(md5, "md5 == null");
 			Preconditions
@@ -208,6 +237,10 @@ public final class ItemManifest {
 			return this;
 		}
 
+		/**
+		 * @param md5 the MD5 hex value of the bin file
+		 * @return the builder object
+		 */
 		public Builder binMD5(final String md5) {
 			Preconditions.checkNotNull(md5, "md5 == null");
 			Preconditions
@@ -216,6 +249,10 @@ public final class ItemManifest {
 			return this;
 		}
 
+		/**
+		 * @param md5 the MD5 hex value of the cue file
+		 * @return the builder object
+		 */
 		public Builder cueMD5(final String md5) {
 			Preconditions.checkNotNull(md5, "md5 == null");
 			Preconditions
@@ -224,10 +261,17 @@ public final class ItemManifest {
 			return this;
 		}
 
+		/**
+		 * @return the ItemManifest created from the Builder fields
+		 */
 		public ItemManifest build() {
 			return new ItemManifest(this.infoMD5, this.tocMD5, this.binMD5,
 					this.cueMD5);
 		}
+		/**
+		 * @param reader the reader to create the Builder from 
+		 * @return the Builder created from the BufferedReader contents
+		 */
 		public static Builder fromBufferedReader(BufferedReader reader) {
 			Builder builder = new Builder();
 			String line;

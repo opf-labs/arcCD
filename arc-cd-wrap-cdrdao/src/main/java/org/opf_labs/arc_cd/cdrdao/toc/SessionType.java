@@ -8,8 +8,11 @@ package org.opf_labs.arc_cd.cdrdao.toc;
  *
  */
 public enum SessionType {
+	/** CD-DA Session */
 	CD_DA("CD_DA"),
+	/** CD-ROM Session */
 	CD_ROM("CD_ROM"),
+	/** CD-ROM-XA Session */
 	CD_ROM_XA("CD_ROM_XA");
 	
 	private final String text;

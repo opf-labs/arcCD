@@ -23,14 +23,20 @@ import com.google.common.base.Preconditions;
  */
 public final class CdItemRecord {
 	private static final String DEFAULT_STRING_VALUE = "UNKNOWN";
+	/** A default CdItemRecord for failed lookup and testing */
 	public static final CdItemRecord DEFAULT_ITEM = new CdItemRecord();
+	/** Value for Various Artists artist field */
 	public static final String VARIOUS = "Various Artists";
+	/** Label for the Album Title field */
+	public static final String ALBUM_TITLE = "AlbumTitle";
+	/** Label for the Album Artist field */
+	public static final String ALBUM_ARTIST = "AlbumArtist";
+	/** Label for a Track field */
+	public static final String TRACK = "Track";
+	/** Label for a Track Artist field */
+	public static final String TRACK_ARTIST = "TrackArtist";
 	private static final String OPEN_DELIM = "\\[";
 	private static final String CLOSE_DELIM = "\\]";
-	public static final String ALBUM_TITLE = "AlbumTitle";
-	public static final String ALBUM_ARTIST = "AlbumArtist";
-	public static final String TRACK = "Track";
-	public static final String TRACK_ARTIST = "TrackArtist";
 	private static final String GRABBER = "(.+)$";
 	private static final Pattern ALBUM_TITLE_PATTERN = Pattern.compile("^" + OPEN_DELIM + ALBUM_TITLE + CLOSE_DELIM + GRABBER);
 	private static final Pattern ALBUM_ARTIST_PATTERN = Pattern.compile("^" + OPEN_DELIM + ALBUM_ARTIST + CLOSE_DELIM + GRABBER);

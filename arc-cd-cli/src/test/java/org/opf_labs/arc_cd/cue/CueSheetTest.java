@@ -14,9 +14,12 @@ import org.opf_labs.audio.FileData;
 import org.opf_labs.audio.TrackData;
 
 /**
+ * Unit Test class for the cuelib CueSheet object.
+ * JavaDoc supressed for this test class.
  * @author carl
  *
  */
+@SuppressWarnings("javadoc")
 public class CueSheetTest {
 
 	@Test

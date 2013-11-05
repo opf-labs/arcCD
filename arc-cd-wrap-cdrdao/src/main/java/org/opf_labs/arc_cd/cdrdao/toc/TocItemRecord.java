@@ -75,8 +75,6 @@ public final class TocItemRecord {
 	 * @param tocFile
 	 *            the table of contents file
 	 * @return a TocItemRecord instance created from the file
-	 * @throws IOException
-	 *             when there's a problem reading the file
 	 */
 	public static TocItemRecord fromTocFile(File tocFile) {
 		try (BufferedReader reader = new BufferedReader(new FileReader(tocFile))) {

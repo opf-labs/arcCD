@@ -21,12 +21,17 @@ import org.opf_labs.audio.CueSheet;
  * 
  */
 public final class ArchiveCollection {
-	/** Extension for info files */
+	/** Extension for bin files */
 	public static final String BIN_EXT = "bin";
+	/** Extension for temp TOC files */
 	public static final String TEMP_TOC_EXT = "toctmp";
+	/** Extension for TOC files */
 	public static final String TOC_EXT = "toc";
+	/** Extension for CUE files */
 	public static final String CUE_EXT = "cue";
+	/** Extension for manifest files */
 	public static final String MANIFEST_EXT = "man";
+	/** Extension for info files */
 	public static final String INFO_EXT = "info";
 	private static final Logger LOGGER = Logger
 			.getLogger(ArchiveCollection.class);
@@ -61,23 +66,41 @@ public final class ArchiveCollection {
 	/**
 	 * @param id
 	 *            the id of the item to retrieve
-	 * @return the item found at that id
-	 * @throws FileNotFoundException
-	 *             of the item is not found
+	 * @return the item found at that id, or the default item if non is found.
 	 */
 	public CdItemRecord getItemRecord(Integer id) {
 		ArchiveItem item = this.archived.get(id);
 		return (item != null) ? item.getInfo() : CdItemRecord.defaultItem();
 	}
 
+	/**
+	 * Retrieve the TocItemRecord for an Integer id.
+	 * @param id the Integer id of the item for which the TOC object is requested
+	 * @return the TocItemRecord object for the Integer id
+	 */
 	public TocItemRecord getItemToc(Integer id) {
 		ArchiveItem item = this.archived.get(id);
 		return (item != null) ? item.getToc() : TocItemRecord.defaultInstance();
 	}
 
+	/**
+	 * Retrieve the CueSheet for an Integer id.
+	 * @param id the Integer id of the item for which the CueSheet is requested
+	 * @return the CueSheet object for the Integer id
+	 */
 	public CueSheet getItemCueSheet(Integer id) {
 		ArchiveItem item = this.archived.get(id);
 		return (item != null) ? item.getCue() : ArchiveItem.DEFAULT_CUE;
+	}
+
+	/**
+	 * Test the manifest for an ArchiveItem 
+	 * @param id the Integer id of the item to manifest test
+	 * @return the ManifestTest object holding the test results
+	 */
+	public ManifestTest checkItemManifest(Integer id) {
+		ArchiveItem item = this.archived.get(id);
+		return (item != null) ? item.checkManifest() : ManifestTest.defaultInstance();
 	}
 
 	/**
@@ -148,13 +171,13 @@ public final class ArchiveCollection {
 	public File getInfoFile(int id) {
 		Integer intId = Integer.valueOf(id);
 		if (this.toArchive.containsKey(intId)) {
-			return new File(String.format("%s%s%05d.%s",
+			return new File(String.format("%s%s%sd.%s",
 					this.rootDirectory.getAbsolutePath(), File.pathSeparator,
-					intId, INFO_EXT));
+					CataloguedCd.formatIdToString(intId), INFO_EXT));
 		} else if (this.archived.containsKey(intId)) {
-			return new File(String.format("%s%s%05d%s%05d.%s",
+			return new File(String.format("%s%s%s%s%s.%s",
 					this.rootDirectory.getAbsolutePath(), File.pathSeparator,
-					intId, File.pathSeparator, intId, INFO_EXT));
+					CataloguedCd.formatIdToString(intId), File.pathSeparator, CataloguedCd.formatIdToString(intId), INFO_EXT));
 		}
 		return null;
 	}

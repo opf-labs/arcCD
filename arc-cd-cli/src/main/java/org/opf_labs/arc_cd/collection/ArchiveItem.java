@@ -68,6 +68,10 @@ public final class ArchiveItem {
 		}
 
 	}
+	
+	public ItemManifest getManifest() {
+		return this.hasManifest() ? ItemManifest.fromManifestFile(this.getManifestFile()) : ItemManifest.defaultInstance();
+	}
 
 	/**
 	 * @return the collection's root directory

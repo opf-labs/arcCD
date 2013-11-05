@@ -16,7 +16,7 @@ import org.opf_labs.arc_cd.AllArcCdCliTests;
  * @author carl
  * 
  */
-public class CollectionItemTest {
+public class CdItemRecordTest {
 	/**
 	 * Test method for
 	 * {@link org.opf_labs.arc_cd.collection.CdItemRecord#fromInfoFile(java.io.File)}

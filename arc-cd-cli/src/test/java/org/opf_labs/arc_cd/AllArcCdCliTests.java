@@ -8,7 +8,7 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
-import org.opf_labs.arc_cd.collection.CollectionItemTest;
+import org.opf_labs.arc_cd.collection.CdItemRecordTest;
 import org.opf_labs.arc_cd.collection.ItemManifestTest;
 import org.opf_labs.arc_cd.config.ArcCdConfigTest;
 import org.opf_labs.arc_cd.cue.CueSheetTest;
@@ -24,7 +24,7 @@ import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
  * Created 7 Oct 2013:23:31:18
  */
 @RunWith(Suite.class)
-@SuiteClasses({ArcCdConfigTest.class, CollectionItemTest.class, ItemManifestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
+@SuiteClasses({ArcCdConfigTest.class, CdItemRecordTest.class, ItemManifestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
 public class AllArcCdCliTests {
 
 	public static final File INFO_00001;

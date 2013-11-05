@@ -14,7 +14,6 @@ import java.util.Set;
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
 import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
-import org.opf_labs.audio.CueParser;
 import org.opf_labs.audio.CueSheet;
 
 /**
@@ -22,7 +21,6 @@ import org.opf_labs.audio.CueSheet;
  * 
  */
 public final class ArchiveCollection {
-	public static final CueSheet DEFAULT_CUE = new CueSheet();
 	/** Extension for info files */
 	public static final String BIN_EXT = "bin";
 	public static final String TEMP_TOC_EXT = "toctmp";
@@ -69,22 +67,17 @@ public final class ArchiveCollection {
 	 */
 	public CdItemRecord getItemRecord(Integer id) {
 		ArchiveItem item = this.archived.get(id);
-		return item.hasInfo() ? CdItemRecord.fromInfoFile(item.getInfoFile()) : CdItemRecord.defaultItem();
+		return (item != null) ? item.getInfo() : CdItemRecord.defaultItem();
 	}
 
 	public TocItemRecord getItemToc(Integer id) {
 		ArchiveItem item = this.archived.get(id);
-		return item.hasToc() ? TocItemRecord.fromTocFile(item.getTocFile()) : TocItemRecord.defaultInstance();
+		return (item != null) ? item.getToc() : TocItemRecord.defaultInstance();
 	}
-	
+
 	public CueSheet getItemCueSheet(Integer id) {
 		ArchiveItem item = this.archived.get(id);
-		try {
-			return item.hasCue() ? CueParser.parse(item.getCueFile()) : DEFAULT_CUE;
-		} catch (IOException excep) {
-			LOGGER.error(excep);
-			return DEFAULT_CUE;
-		}
+		return (item != null) ? item.getCue() : ArchiveItem.DEFAULT_CUE;
 	}
 
 	/**

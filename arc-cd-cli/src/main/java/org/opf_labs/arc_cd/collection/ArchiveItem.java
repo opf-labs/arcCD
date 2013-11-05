@@ -9,6 +9,10 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
+import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
+import org.opf_labs.audio.CueParser;
+import org.opf_labs.audio.CueSheet;
 
 import com.google.common.base.Preconditions;
 
@@ -17,9 +21,11 @@ import com.google.common.base.Preconditions;
  *
  */
 public final class ArchiveItem {
-
 	public static final File DEFAULT_ROOT = new File(".");
+	public static final CueSheet DEFAULT_CUE = new CueSheet();
 	public static final ArchiveItem DEFAULT = new ArchiveItem();
+	private static final Logger LOGGER = Logger
+			.getLogger(ArchiveItem.class);
 	
 	private ItemState state = ItemState.CATALOGUED;
 	private final File rootDirectory;
@@ -46,7 +52,23 @@ public final class ArchiveItem {
 	public CataloguedCd getItem() {
 		return this.cdItem;
 	}
-	
+	public CdItemRecord getInfo() {
+		return (this.hasInfo()) ? CdItemRecord.fromInfoFile(this.getInfoFile()) : CdItemRecord.defaultItem();
+	}
+	public TocItemRecord getToc() {
+		return (this.hasToc()) ? TocItemRecord.fromTocFile(this.getTocFile()) : TocItemRecord.defaultInstance();
+	}
+
+	public CueSheet getCue() {
+		try {
+			return this.hasCue() ? CueParser.parse(this.getCueFile()) : DEFAULT_CUE;
+		} catch (IOException excep) {
+			LOGGER.error(excep);
+			return DEFAULT_CUE;
+		}
+
+	}
+
 	/**
 	 * @return the collection's root directory
 	 */

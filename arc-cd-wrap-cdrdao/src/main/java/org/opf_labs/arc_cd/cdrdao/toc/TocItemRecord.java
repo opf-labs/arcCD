@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.log4j.Logger;
 import org.opf_labs.arc_cd.cdrdao.toc.AudioTrack.Builder;
 
 /**
@@ -30,6 +30,7 @@ public final class TocItemRecord {
 	private static final Pattern FILE_PATTERN = Pattern
 			.compile("^FILE \"(.*)\" ([0-9:]+) ([0-9:]+)$");
 	private static final TocItemRecord DEFAULT = new TocItemRecord();
+	private static final Logger LOGGER = Logger.getLogger(TocItemRecord.class); 
 	private final List<AudioTrack> tracks = new ArrayList<>();
 
 	private TocItemRecord() {
@@ -77,11 +78,13 @@ public final class TocItemRecord {
 	 * @throws IOException
 	 *             when there's a problem reading the file
 	 */
-	public static TocItemRecord fromTocFile(File tocFile) throws IOException {
+	public static TocItemRecord fromTocFile(File tocFile) {
 		try (BufferedReader reader = new BufferedReader(new FileReader(tocFile))) {
 			TocItemRecord record = fromBufferedReader(reader);
-			IOUtils.closeQuietly(reader);
 			return record;
+		} catch (IOException excep) {
+			LOGGER.error(excep);
+			return DEFAULT;
 		}
 	}
 
@@ -97,7 +100,6 @@ public final class TocItemRecord {
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(
 				stream))) {
 			TocItemRecord record = fromBufferedReader(reader);
-			IOUtils.closeQuietly(reader);
 			return record;
 		} finally {
 			// Do nothing

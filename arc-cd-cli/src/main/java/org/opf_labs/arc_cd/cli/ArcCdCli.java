@@ -4,7 +4,6 @@
 package org.opf_labs.arc_cd.cli;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import org.apache.commons.cli.HelpFormatter;
@@ -38,7 +37,7 @@ public final class ArcCdCli {
 	public static final int OK_STATUS = 0;
 	/** Error status */
 	public static final int ERROR_STATUS = 1;
-	
+
 	private static ArcCdConfig CONFIG = ArcCdConfig.getDefault();
 	private static ArchiveCollection CD_COLLECTION;
 	private static Logger LOGGER = Logger.getLogger(ArcCdCli.class);
@@ -59,15 +58,14 @@ public final class ArcCdCli {
 		// TODO Replace basic logger configuration
 		BasicConfigurator.configure();
 		setupConfiguration(args);
-
 		outputWelcome();
 
 		CD_COLLECTION = new ArchiveCollection(CONFIG.getCollectionRoot());
 		CdrdaoCliWrapper wrapper;
 		try {
 			wrapper = CdrdaoCliWrapperFactory.getInstalledInstance();
-		} catch (CdrdaoException excep3) {
-			throw new IllegalStateException();
+		} catch (CdrdaoException excep) {
+			throw new IllegalStateException(excep);
 		}
 
 		Integer itemId = ArcCdInputProcessor.getInputId();
@@ -75,17 +73,7 @@ public final class ArcCdCli {
 
 		// Check for info file in root
 		CdItemRecord item;
-		try {
-			item = CD_COLLECTION.getItemRecord(itemId);
-		} catch (FileNotFoundException excep) {
-			logFatalMessageAndTerminateWithCode(
-					"No info file "
-							+ String.format("%s%s%05d.info",
-									CONFIG.getCollectionRoot(), File.separator,
-									itemId) + " found, please create one.",
-					ERROR_STATUS);
-			return;
-		}
+		item = CD_COLLECTION.getItemRecord(itemId);
 
 		File itemDir = new File(String.format("%s%s%05d",
 				CONFIG.getCollectionRoot(), File.separator, itemId));
@@ -95,16 +83,11 @@ public final class ArcCdCli {
 				System.exit(ERROR_STATUS);
 			}
 		} else if (itemDir.list().length > 0) {
-			try {
-				ArchiveItem archItem = ArchiveItem.fromDirectory(itemDir);
-				if (archItem.isArchived()) {
-					System.out.println("Item " + itemDir
-							+ " exists and is already valid");
-					System.exit(ERROR_STATUS);
-				}
-			} catch (FileNotFoundException excep) {
-				// TODO Auto-generated catch block
-				excep.printStackTrace();
+			ArchiveItem archItem = ArchiveItem.fromDirectory(itemDir);
+			if (archItem.isArchived()) {
+				System.out.println("Item " + itemDir
+						+ " exists and is already valid");
+				System.exit(ERROR_STATUS);
 			}
 		}
 
@@ -118,46 +101,41 @@ public final class ArcCdCli {
 			excep.printStackTrace();
 		}
 		File tocFile = new File(tocPath);
-		try {
-			TocItemRecord tocRecord = TocItemRecord.fromTocFile(tocFile);
-			if (tocFile.exists())
-				tocFile.delete();
-			if (tocRecord.getTracks().size() == item.getTracks().size()) {
-				System.out.println("Inserted CD is id " + formattedId);
-				System.out.println("Artist is " + item.getAlbumArtist()
-						+ ", and title is " + item.getTitle());
-				System.out.println("Item has " + item.getTracks().size()
-						+ " tracks.");
-				System.out.println("OK to archive? [Y/n]");
-				if (ArcCdInputProcessor.confirmChoice()) {
-					try {
-						wrapper.ripCdToBinFromDefaultCdDevice(itemDir, formattedId);
-					} catch (CdrdaoException excep) {
-						// TODO Auto-generated catch block
-						excep.printStackTrace();
-					}
-					try {
-						CD_COLLECTION.archiveItem(itemId.intValue());
-					} catch (IOException excep) {
-						// TODO Auto-generated catch block
-						excep.printStackTrace();
-					}
+		TocItemRecord tocRecord = TocItemRecord.fromTocFile(tocFile);
+		if (tocFile.exists())
+			tocFile.delete();
+		if (tocRecord.getTracks().size() == item.getTracks().size()) {
+			System.out.println("Inserted CD is id " + formattedId);
+			System.out.println("Artist is " + item.getAlbumArtist()
+					+ ", and title is " + item.getTitle());
+			System.out.println("Item has " + item.getTracks().size()
+					+ " tracks.");
+			System.out.println("OK to archive? [Y/n]");
+			if (ArcCdInputProcessor.confirmChoice()) {
+				try {
+					wrapper.ripCdToBinFromDefaultCdDevice(itemDir, formattedId);
+				} catch (CdrdaoException excep) {
+					// TODO Auto-generated catch block
+					excep.printStackTrace();
 				}
-			} else if (tocRecord.getTracks().size() != item.getTracks().size()) {
-				System.out.println("Inserted CD is id " + formattedId);
-				System.out.println("Artist is " + item.getAlbumArtist()
-						+ ", and title is " + item.getTitle());
-				System.out.println("Info record states that the item should have "
-						+ item.getTracks().size() + " tracks.");
-				System.out.println("Inserted CD has "
-						+ tocRecord.getTracks().size() + " tracks.");
-				System.out.println("Please check that the CD matches.");
-			} else {
-				System.out.println("CD is not inserted or has no tracks.");
+				try {
+					CD_COLLECTION.archiveItem(itemId.intValue());
+				} catch (IOException excep) {
+					// TODO Auto-generated catch block
+					excep.printStackTrace();
+				}
 			}
-		} catch (IOException excep2) {
-			// TODO Auto-generated catch block
-			excep2.printStackTrace();
+		} else if (tocRecord.getTracks().size() != item.getTracks().size()) {
+			System.out.println("Inserted CD is id " + formattedId);
+			System.out.println("Artist is " + item.getAlbumArtist()
+					+ ", and title is " + item.getTitle());
+			System.out.println("Info record states that the item should have "
+					+ item.getTracks().size() + " tracks.");
+			System.out.println("Inserted CD has "
+					+ tocRecord.getTracks().size() + " tracks.");
+			System.out.println("Please check that the CD matches.");
+		} else {
+			System.out.println("CD is not inserted or has no tracks.");
 		}
 	}
 
@@ -166,7 +144,7 @@ public final class ArcCdCli {
 		checkHelpRequested();
 		validateConfiguration();
 	}
-	
+
 	private static void parseConfiguration(final String args[]) {
 		try {
 			CONFIG = ArcCdOptionsParser.parseConfigFromCommandLineArgs(args);
@@ -177,7 +155,7 @@ public final class ArcCdCli {
 			outputHelpAndExit(ERROR_STATUS);
 		}
 	}
-	
+
 	private static void checkHelpRequested() {
 		if (CONFIG.helpRequested()) {
 			outputHelpAndExit(OK_STATUS);
@@ -191,7 +169,7 @@ public final class ArcCdCli {
 					ERROR_STATUS);
 		}
 	}
-	
+
 	private static boolean ensureCollectionRootExists() {
 		File collectionRoot = new File(CONFIG.getCollectionRoot());
 
@@ -211,7 +189,8 @@ public final class ArcCdCli {
 			System.exit(ERROR_STATUS);
 		}
 		System.out.println("Welcome to archCD, please insert a CD to archive.");
-		System.out.println("cdrdao version " + CdrdaoCliWrapperFactory.getInstalledVersion() 
+		System.out.println("cdrdao version "
+				+ CdrdaoCliWrapperFactory.getInstalledVersion()
 				+ " detected and running.");
 	}
 

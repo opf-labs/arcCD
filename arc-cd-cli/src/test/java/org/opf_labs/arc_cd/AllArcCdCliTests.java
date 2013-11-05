@@ -1,7 +1,6 @@
 package org.opf_labs.arc_cd;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.net.URISyntaxException;
 
 import org.junit.runner.RunWith;
@@ -37,7 +36,7 @@ public class AllArcCdCliTests {
 			INFO_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.info");
 			MANIFEST_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.manifest");
 			ITEM_00022 = ArchiveItem.fromDirectory(INFO_00022.getParentFile());
-		} catch (URISyntaxException | FileNotFoundException excep) {
+		} catch (URISyntaxException excep) {
 			throw new AssertionError("Couldn't load test data.");
 		}
 	}

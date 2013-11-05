@@ -5,7 +5,6 @@ package org.opf_labs.arc_cd.collection;
 
 import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -162,7 +161,7 @@ public final class ArchiveItem {
 		return archItem;
 	}
 
-	public static ArchiveItem fromDirectory(File itemDir) throws FileNotFoundException {
+	public static ArchiveItem fromDirectory(File itemDir) {
 		Preconditions.checkNotNull(itemDir, "itemDir is null");
 		Preconditions.checkArgument(itemDir.isDirectory(), "itemDir:" + itemDir.getAbsolutePath() + " is not a directory.");
 		int idFromDirName = Integer.parseInt(itemDir.getName());

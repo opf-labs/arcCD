@@ -13,6 +13,7 @@ import java.util.Set;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.log4j.Logger;
+import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 
 /**
  * @author carl
@@ -23,10 +24,11 @@ public final class ArchiveCollection {
 	public static final String BIN_EXT = "bin";
 	public static final String TEMP_TOC_EXT = "toctmp";
 	public static final String TOC_EXT = "toc";
-	public static final String CUE_EXT= "cue";
+	public static final String CUE_EXT = "cue";
 	public static final String MANIFEST_EXT = "man";
 	public static final String INFO_EXT = "info";
-	private static final Logger LOGGER = Logger.getLogger(ArchiveCollection.class);
+	private static final Logger LOGGER = Logger
+			.getLogger(ArchiveCollection.class);
 
 	private final File rootDirectory;
 	private Map<Integer, CataloguedCd> toArchive = new HashMap<>();
@@ -45,7 +47,9 @@ public final class ArchiveCollection {
 	 */
 	public ArchiveCollection(File root) {
 		if (!root.isDirectory()) {
-			LOGGER.fatal("Archive Collection root directory " + root.getAbsolutePath() + " should be an existing directory.");
+			LOGGER.fatal("Archive Collection root directory "
+					+ root.getAbsolutePath()
+					+ " should be an existing directory.");
 			throw new IllegalArgumentException(
 					"root should be an existing directory.");
 		}
@@ -54,19 +58,25 @@ public final class ArchiveCollection {
 	}
 
 	/**
-	 * @param id the id of the item to retrieve 
+	 * @param id
+	 *            the id of the item to retrieve
 	 * @return the item found at that id
-	 * @throws FileNotFoundException of the item is not found
+	 * @throws FileNotFoundException
+	 *             of the item is not found
 	 */
-	public CdItemRecord getItemRecord(Integer id) throws FileNotFoundException {
-		String itemFileName = String.format("%s%s%05d.info",
-				this.rootDirectory.getAbsolutePath(), File.separator, id);
-		File itemFile = new File(itemFileName);
-		return CdItemRecord.fromInfoFile(itemFile);
+	public CdItemRecord getItemRecord(Integer id) {
+		ArchiveItem item = this.archived.get(id);
+		return item.hasInfo() ? CdItemRecord.fromInfoFile(item.getInfoFile()) : CdItemRecord.defaultItem();
+	}
+
+	public TocItemRecord getItemToc(Integer id) {
+		ArchiveItem item = this.archived.get(id);
+		return item.hasToc() ? TocItemRecord.fromTocFile(item.getTocFile()) : TocItemRecord.defaultInstance();
 	}
 
 	/**
-	 * @param id the id of the item to archive
+	 * @param id
+	 *            the id of the item to archive
 	 * @return true if archived successfully
 	 * @throws IOException
 	 */
@@ -75,10 +85,12 @@ public final class ArchiveCollection {
 		if (this.toArchive.containsKey(intId)) {
 			CataloguedCd cdToArchive = this.toArchive.get(intId);
 			File infoFile = new File(this.rootDirectory.getAbsolutePath()
-					+ File.separator + cdToArchive.getFormattedId() + "." + INFO_EXT);
+					+ File.separator + cdToArchive.getFormattedId() + "."
+					+ INFO_EXT);
 			File dest = new File(this.rootDirectory.getAbsolutePath()
-					+ File.separator + cdToArchive.getFormattedId() + File.separator
-					+ cdToArchive.getFormattedId() + "." + INFO_EXT);
+					+ File.separator + cdToArchive.getFormattedId()
+					+ File.separator + cdToArchive.getFormattedId() + "."
+					+ INFO_EXT);
 
 			if (!infoFile.exists())
 				return false;
@@ -105,7 +117,8 @@ public final class ArchiveCollection {
 	}
 
 	/**
-	 * @param file a file to test to see if it's an info file
+	 * @param file
+	 *            a file to test to see if it's an info file
 	 * @return true if the file is an info file
 	 */
 	public static boolean isInfoFile(File file) {
@@ -113,7 +126,8 @@ public final class ArchiveCollection {
 	}
 
 	/**
-	 * @param fileName the file name to test if it matches an info filename
+	 * @param fileName
+	 *            the file name to test if it matches an info filename
 	 * @return true if the file name is five digits zero padded number
 	 */
 	public static boolean isInfoFilename(String fileName) {
@@ -121,7 +135,8 @@ public final class ArchiveCollection {
 	}
 
 	/**
-	 * @param id the id of the Info file to open
+	 * @param id
+	 *            the id of the Info file to open
 	 * @return the info file for id id
 	 */
 	public File getInfoFile(int id) {
@@ -156,32 +171,31 @@ public final class ArchiveCollection {
 	}
 
 	private void addArchiveItemFromDirectory(final File directory) {
-		Integer id = new Integer(Integer.parseInt(FilenameUtils.getBaseName(directory.getName())));
+		Integer id = new Integer(Integer.parseInt(FilenameUtils
+				.getBaseName(directory.getName())));
 		ArchiveItem itemFromDirectory = ArchiveItem.DEFAULT;
-		try {
-			itemFromDirectory = ArchiveItem.fromDirectory(directory);
-		} catch (FileNotFoundException excep) {
-			LOGGER.warn("Problem reading archived item id:" + id + " from " + directory.getAbsolutePath());
-			logAndRecordParseException(id, excep);
-		}
+		itemFromDirectory = ArchiveItem.fromDirectory(directory);
 		this.archived.put(id, itemFromDirectory);
 	}
-	
+
 	private void addCataloguedCdFromFile(final File file) {
-		Integer id = new Integer(Integer.parseInt(FilenameUtils.getBaseName(file.getName())));
+		Integer id = new Integer(Integer.parseInt(FilenameUtils
+				.getBaseName(file.getName())));
 		CdItemRecord item = CdItemRecord.defaultItem();
-		CataloguedCd cd = CataloguedCd.defaultInstance(); 
+		CataloguedCd cd = CataloguedCd.defaultInstance();
 		try {
 			item = readItemRecordFromFile(file);
-			cd = CataloguedCd.fromValues(id, item); 
+			cd = CataloguedCd.fromValues(id, item);
 		} catch (FileNotFoundException excep) {
-			LOGGER.warn("Problem reading item record for id:" + id + " from " + file.getAbsolutePath());
+			LOGGER.warn("Problem reading item record for id:" + id + " from "
+					+ file.getAbsolutePath());
 			logAndRecordParseException(id, excep);
 		}
 		this.toArchive.put(id, cd);
 	}
-	
-	private void logAndRecordParseException(final Integer id, final Exception excep) {
+
+	private void logAndRecordParseException(final Integer id,
+			final Exception excep) {
 		LOGGER.warn(excep.getMessage());
 		LOGGER.warn(excep.getStackTrace());
 		this.parseErrors.add(id);

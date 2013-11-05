@@ -5,8 +5,6 @@ package org.opf_labs.arc_cd.cue;
 
 import static org.junit.Assert.assertTrue;
 
-import java.io.FileNotFoundException;
-
 import org.junit.Test;
 import org.opf_labs.arc_cd.AllArcCdCliTests;
 import org.opf_labs.arc_cd.collection.CdItemRecord;
@@ -22,7 +20,7 @@ import org.opf_labs.audio.TrackData;
 public class CueSheetTest {
 
 	@Test
-	public void testSetPerformer() throws FileNotFoundException {
+	public void testSetPerformer() {
 		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueSheet testInstance = new CueSheet();
 		testInstance.setPerformer(itemRecord.getAlbumArtist());
@@ -30,7 +28,7 @@ public class CueSheetTest {
 	}
 
 	@Test
-	public void testSetTitle() throws FileNotFoundException {
+	public void testSetTitle() {
 		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueSheet testInstance = new CueSheet();
 		testInstance.setTitle(itemRecord.getTitle());
@@ -50,7 +48,7 @@ public class CueSheetTest {
 	}
 
 	@Test
-	public void testAddTrack() throws FileNotFoundException {
+	public void testAddTrack() {
 		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		CueSheet testInstance = new CueSheet();
 		FileData fileData = new FileData(testInstance);

@@ -37,7 +37,7 @@ public final class CdItemRecord {
 	private static final Pattern TRACK_TITLE_PATTERN = Pattern.compile("^" + OPEN_DELIM + TRACK + CLOSE_DELIM + GRABBER);
 	private static final Pattern TRACK_ARTIST_PATTERN = Pattern.compile("^" + OPEN_DELIM + TRACK_ARTIST + CLOSE_DELIM + GRABBER);
 
-	private static Logger LOGGER = Logger.getLogger(CdItemRecord.class); 
+	private static final Logger LOGGER = Logger.getLogger(CdItemRecord.class); 
 
 	final String title;
 	final String albumArtist;
@@ -89,16 +89,17 @@ public final class CdItemRecord {
 	/**
 	 * Factory method that instantiates the 
 	 * @param itemFile
-	 * @return a CdItemRecord populated from file
-	 * @throws FileNotFoundException when the item file can't be found
+	 * @return a CdItemRecord populated from file or the DEFAULT item if non found
 	 */
-	public static CdItemRecord fromInfoFile(File itemFile) throws FileNotFoundException {
+	public static CdItemRecord fromInfoFile(File itemFile) {
 		Preconditions.checkNotNull(itemFile, "itemFile is null");
 		Builder builder = new Builder();
 		try (BufferedReader br = new BufferedReader(new FileReader(itemFile))) {
 			builder = Builder.fromBufferedReader(br);
-		} catch (IOException excep1) {
-			LOGGER.info("Problem closing item file:" + itemFile.getAbsolutePath());
+		} catch (FileNotFoundException excep) {
+			LOGGER.info("Couldn't find file:" + itemFile.getAbsolutePath());
+		} catch (IOException excep) {
+			LOGGER.info("Problem reading item info file:" + itemFile.getAbsolutePath());
 		}
 		return builder.build();
 	}
@@ -161,7 +162,7 @@ public final class CdItemRecord {
 				}
 			} catch (IOException excep) {
 				// Going to return what we can
-				LOGGER.warn("Problem reading line from reader");
+				LOGGER.error("Problem reading line from reader");
 			}
 			return builder;
 		}

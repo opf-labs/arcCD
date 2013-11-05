@@ -150,7 +150,7 @@ public class CueUtilitiesTest {
 	}
 
 	@Test
-	public void testCueFromTocAndInfoTrackTocDetails() throws IOException {
+	public void testCueFromTocAndInfoTrackTocDetails() {
 		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
 		TocItemRecord tocRecord = TocItemRecord.fromTocFile(TOC_00022);
 		CueSheet cue = CueUtilities.cueFromTocAndInfo(tocRecord, itemRecord);

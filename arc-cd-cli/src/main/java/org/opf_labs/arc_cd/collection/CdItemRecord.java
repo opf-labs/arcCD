@@ -85,6 +85,67 @@ public final class CdItemRecord {
 		return this.tracks;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CdItemRecord [title=" + this.title + ", albumArtist="
+				+ this.albumArtist + ", isCompilation=" + this.isCompilation
+				+ ", tracks=" + this.tracks + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime
+				* result
+				+ ((this.albumArtist == null) ? 0 : this.albumArtist.hashCode());
+		result = prime * result + (this.isCompilation ? 1231 : 1237);
+		result = prime * result
+				+ ((this.title == null) ? 0 : this.title.hashCode());
+		result = prime * result
+				+ ((this.tracks == null) ? 0 : this.tracks.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CdItemRecord other = (CdItemRecord) obj;
+		if (this.albumArtist == null) {
+			if (other.albumArtist != null)
+				return false;
+		} else if (!this.albumArtist.equals(other.albumArtist))
+			return false;
+		if (this.isCompilation != other.isCompilation)
+			return false;
+		if (this.title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!this.title.equals(other.title))
+			return false;
+		if (this.tracks == null) {
+			if (other.tracks != null)
+				return false;
+		} else if (!this.tracks.equals(other.tracks)) {
+			return false;
+		}
+		return true;
+	}
+
 	/**
 	 * @param fileName
 	 *            the file name to test if it matches an info filename

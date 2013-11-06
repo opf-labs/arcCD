@@ -10,6 +10,8 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
 
+import nl.jqno.equalsverifier.EqualsVerifier;
+
 import org.junit.Test;
 import org.opf_labs.arc_cd.AllArcCdCliTests;
 
@@ -80,6 +82,15 @@ public class CdItemRecordTest {
 		assertFalse(CdItemRecord.isInfoFilename("001"));
 		assertFalse(CdItemRecord.isInfoFilename("001.info"));
 		assertTrue(CdItemRecord.isInfoFilename("99999.info"));
+	}
+
+	/**
+	 * Test method for {@link org.opf_labs.arc_cd.collection.ItemManifest#equals(java.lang.Object)}.
+	 */
+	@Test
+	@SuppressWarnings("static-method")
+	public final void testEqualsObject() {
+		EqualsVerifier.forClass(CdItemRecord.class).verify();
 	}
 	
 }

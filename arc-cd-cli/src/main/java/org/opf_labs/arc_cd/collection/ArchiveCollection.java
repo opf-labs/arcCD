@@ -64,6 +64,12 @@ public final class ArchiveCollection {
 	}
 
 	/**
+	 * @return the number of items in the archive
+	 */
+	public int size() {
+		return this.archived.size();
+	}
+	/**
 	 * @param id
 	 *            the id of the item to retrieve
 	 * @return the item found at that id, or the default item if non is found.
@@ -154,12 +160,12 @@ public final class ArchiveCollection {
 		Integer intId = Integer.valueOf(id);
 		if (this.toArchive.containsKey(intId)) {
 			return new File(String.format("%s%s%sd.%s",
-					this.rootDirectory.getAbsolutePath(), File.pathSeparator,
+					this.rootDirectory.getAbsolutePath(), File.separator,
 					CataloguedCd.formatIdToString(intId), INFO_EXT));
 		} else if (this.archived.containsKey(intId)) {
 			return new File(String.format("%s%s%s%s%s.%s",
-					this.rootDirectory.getAbsolutePath(), File.pathSeparator,
-					CataloguedCd.formatIdToString(intId), File.pathSeparator, CataloguedCd.formatIdToString(intId), INFO_EXT));
+					this.rootDirectory.getAbsolutePath(), File.separator,
+					CataloguedCd.formatIdToString(intId), File.separator, CataloguedCd.formatIdToString(intId), INFO_EXT));
 		}
 		return null;
 	}
@@ -182,11 +188,15 @@ public final class ArchiveCollection {
 	}
 
 	private void addArchiveItemFromDirectory(final File directory) {
-		Integer id = new Integer(Integer.parseInt(FilenameUtils
-				.getBaseName(directory.getName())));
-		ArchiveItem itemFromDirectory = ArchiveItem.DEFAULT;
-		itemFromDirectory = ArchiveItem.fromDirectory(directory);
-		this.archived.put(id, itemFromDirectory);
+		try {
+			Integer id = new Integer(Integer.parseInt(FilenameUtils
+					.getBaseName(directory.getName())));
+			ArchiveItem itemFromDirectory = ArchiveItem.DEFAULT;
+			itemFromDirectory = ArchiveItem.fromDirectory(directory);
+			this.archived.put(id, itemFromDirectory);
+		} catch (NumberFormatException excep) {
+			// No need for alarm, don't process non-numeric dirs
+		}
 	}
 
 	private void addCataloguedCdFromFile(final File file) {

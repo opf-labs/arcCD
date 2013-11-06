@@ -30,6 +30,24 @@ public final class CdTrack {
 		this.artist = artist;
 	}
 	/**
+	 * @return the track title as a String
+	 */
+	public String getTitle() {
+		return this.title;
+	}
+	/**
+	 * @return the track artist as a string
+	 */
+	public String getArtist() {
+		return this.artist;
+	}
+	/**
+	 * @return the default CdTrack Instance for failed lookups and testing
+	 */
+	public static CdTrack defaultInstance() {
+		return DEFAULT;
+	}
+	/**
 	 * @param title the title for the track, the artits will default to UNKNOWN
 	 * @return the initialised Track 
 	 */
@@ -50,16 +68,48 @@ public final class CdTrack {
 		Preconditions.checkArgument(!artist.isEmpty(), "artist.isEmpty()");
 		return new CdTrack(title, artist);
 	}
-	/**
-	 * @return the track title as a String
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
 	 */
-	public String getTitle() {
-		return this.title;
+	@Override
+	public String toString() {
+		return "CdTrack [title=" + this.title + ", artist=" + this.artist + "]";
 	}
-	/**
-	 * @return the track artist as a string
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
 	 */
-	public String getArtist() {
-		return this.artist;
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.artist == null) ? 0 : this.artist.hashCode());
+		result = prime * result
+				+ ((this.title == null) ? 0 : this.title.hashCode());
+		return result;
+	}
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CdTrack other = (CdTrack) obj;
+		if (this.artist == null) {
+			if (other.artist != null)
+				return false;
+		} else if (!this.artist.equals(other.artist))
+			return false;
+		if (this.title == null) {
+			if (other.title != null)
+				return false;
+		} else if (!this.title.equals(other.title))
+			return false;
+		return true;
 	}
 }

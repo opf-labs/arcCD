@@ -8,7 +8,9 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 import org.opf_labs.arc_cd.collection.ArchiveCollectionTest;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
+import org.opf_labs.arc_cd.collection.ArchiveItemTest;
 import org.opf_labs.arc_cd.collection.CdItemRecordTest;
+import org.opf_labs.arc_cd.collection.CdTrackTest;
 import org.opf_labs.arc_cd.collection.ItemManifestTest;
 import org.opf_labs.arc_cd.collection.ManifestTestTest;
 import org.opf_labs.arc_cd.config.ArcCdConfigTest;
@@ -26,7 +28,7 @@ import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
  */
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
-@SuiteClasses({ArcCdConfigTest.class, ArchiveCollectionTest.class, CdItemRecordTest.class, ItemManifestTest.class, ManifestTestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
+@SuiteClasses({ArchiveCollectionTest.class, ArchiveItemTest.class, CdItemRecordTest.class, CdTrackTest.class, ItemManifestTest.class, ManifestTestTest.class, ArcCdConfigTest.class, CueSheetTest.class, CueUtilitiesTest.class })
 public class AllArcCdCliTests {
 
 	public static final File INFO_00001;
@@ -37,6 +39,7 @@ public class AllArcCdCliTests {
 	public static final File INFO_00429;
 	public static final File MANIFEST_00022;
 	public static final File MANIFEST_00390;
+	public static final File TEST_COLLECTION_ROOT;
 	public static final ArchiveItem ITEM_00022;
 	public static final ArchiveItem ITEM_00103;
 	public static final ArchiveItem ITEM_00212;
@@ -53,6 +56,7 @@ public class AllArcCdCliTests {
 			INFO_00429 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00429/00429.info");
 			MANIFEST_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.man");
 			MANIFEST_00390 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00390/00390.man");
+			TEST_COLLECTION_ROOT = INFO_00022.getParentFile().getParentFile();
 			ITEM_00022 = ArchiveItem.fromDirectory(INFO_00022.getParentFile());
 			ITEM_00103 = ArchiveItem.fromDirectory(INFO_00103.getParentFile());
 			ITEM_00212 = ArchiveItem.fromDirectory(INFO_00212.getParentFile());

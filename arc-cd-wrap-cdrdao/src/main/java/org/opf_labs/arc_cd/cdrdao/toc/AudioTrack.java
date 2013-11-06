@@ -122,6 +122,74 @@ public final class AudioTrack {
 		return this.file + " track:" + this.number + ", ISRC:" + this.isrc + ", start:" + this.start + ", length: " + this.length + "\n";
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + (this.copyPermitted ? 1231 : 1237);
+		result = prime * result
+				+ ((this.file == null) ? 0 : this.file.hashCode());
+		result = prime * result + (this.isFourChannel ? 1231 : 1237);
+		result = prime * result + (this.isTwoChannel ? 1231 : 1237);
+		result = prime * result
+				+ ((this.isrc == null) ? 0 : this.isrc.hashCode());
+		result = prime * result
+				+ ((this.length == null) ? 0 : this.length.hashCode());
+		result = prime * result + this.number;
+		result = prime * result + (this.preEmphasisFlag ? 1231 : 1237);
+		result = prime * result
+				+ ((this.start == null) ? 0 : this.start.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AudioTrack other = (AudioTrack) obj;
+		if (this.copyPermitted != other.copyPermitted)
+			return false;
+		if (this.file == null) {
+			if (other.file != null)
+				return false;
+		} else if (!this.file.equals(other.file))
+			return false;
+		if (this.isFourChannel != other.isFourChannel)
+			return false;
+		if (this.isTwoChannel != other.isTwoChannel)
+			return false;
+		if (this.isrc == null) {
+			if (other.isrc != null)
+				return false;
+		} else if (!this.isrc.equals(other.isrc))
+			return false;
+		if (this.length == null) {
+			if (other.length != null)
+				return false;
+		} else if (!this.length.equals(other.length))
+			return false;
+		if (this.number != other.number)
+			return false;
+		if (this.preEmphasisFlag != other.preEmphasisFlag)
+			return false;
+		if (this.start == null) {
+			if (other.start != null)
+				return false;
+		} else if (!this.start.equals(other.start))
+			return false;
+		return true;
+	}
+
 	/**
 	 * A Builder object used to create new AudioTrack instances.
 	 * @author carl

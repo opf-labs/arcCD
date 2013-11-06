@@ -7,7 +7,7 @@ package org.opf_labs.arc_cd.collection;
  * @author carl
  * 
  */
-public class ManifestTest {
+public final class ManifestTest {
 	/**
 	 * Enumeration used to record manifest test result
 	 * @author carl
@@ -31,7 +31,6 @@ public class ManifestTest {
 	private final Result tocResult;
 	private final Result binResult;
 	private final Result cueResult;
-	private final boolean passed;
 
 	private ManifestTest() {
 		this(Result.DELETED, Result.DELETED, Result.DELETED, Result.DELETED);
@@ -43,10 +42,6 @@ public class ManifestTest {
 		this.tocResult = tocResult;
 		this.binResult = binResult;
 		this.cueResult = cueResult;
-		this.passed = ((this.infoResult == Result.OK)
-				&& (this.tocResult == Result.OK)
-				&& (this.binResult == Result.OK)
-				&& (this.cueResult == Result.OK));
 	}
 
 	/**
@@ -78,6 +73,67 @@ public class ManifestTest {
 	}
 
 	/**
+	 * @return the hasPassed
+	 */
+	public boolean hasPassed() {
+		return ((this.infoResult == Result.OK)
+				&& (this.tocResult == Result.OK)
+				&& (this.binResult == Result.OK)
+				&& (this.cueResult == Result.OK));
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "ManifestTest [infoResult=" + this.infoResult + ", tocResult="
+				+ this.tocResult + ", binResult=" + this.binResult
+				+ ", cueResult=" + this.cueResult + "]";
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((this.binResult == null) ? 0 : this.binResult.hashCode());
+		result = prime * result
+				+ ((this.cueResult == null) ? 0 : this.cueResult.hashCode());
+		result = prime * result
+				+ ((this.infoResult == null) ? 0 : this.infoResult.hashCode());
+		result = prime * result
+				+ ((this.tocResult == null) ? 0 : this.tocResult.hashCode());
+		return result;
+	}
+
+	/* (non-Javadoc)
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ManifestTest other = (ManifestTest) obj;
+		if (this.binResult != other.binResult)
+			return false;
+		if (this.cueResult != other.cueResult)
+			return false;
+		if (this.infoResult != other.infoResult)
+			return false;
+		if (this.tocResult != other.tocResult)
+			return false;
+		return true;
+	}
+
+	/**
 	 * @return the default ManifestTest instance for failed lookups and testing
 	 */
 	public static ManifestTest defaultInstance() {
@@ -85,12 +141,19 @@ public class ManifestTest {
 	}
 
 	/**
-	 * @return the hasPassed
+	 * Create a new instance from passed values.
+	 * 
+	 * @param infoResult the result of the info file test
+	 * @param tocResult the result of the toc file test
+	 * @param binResult the result of the bin file test
+	 * @param cueResult the result of the cue file test
+	 * @return the ManifestTest object
 	 */
-	public boolean hasPassed() {
-		return this.passed;
+	public static ManifestTest fromValues(final Result infoResult, final Result tocResult,
+			final Result binResult, final Result cueResult) {
+		return new ManifestTest(infoResult, tocResult,
+				binResult, cueResult);
 	}
-
 	/**
 	 * @param item the item to manifest test
 	 * @return the result of the test

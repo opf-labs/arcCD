@@ -86,6 +86,24 @@ public final class CdItemRecord {
 	}
 	
 	/**
+	 * @param fileName
+	 *            the file name to test if it matches an info filename
+	 * @return true if the file name is five digits zero padded number
+	 */
+	public static boolean isInfoFilename(String fileName) {
+		return fileName.matches("^[0-9]{5}\\." + ArchiveCollection.INFO_EXT);
+	}
+
+	/**
+	 * @param file
+	 *            a file to test to see if it's an info file
+	 * @return true if the file is an info file
+	 */
+	public static boolean isInfoFile(File file) {
+		return file.isFile() && CdItemRecord.isInfoFilename(file.getName());
+	}
+
+	/**
 	 * @return the default instance of a CdItemRecord
 	 */
 	public static CdItemRecord defaultItem() {

@@ -146,24 +146,6 @@ public final class ArchiveCollection {
 	}
 
 	/**
-	 * @param file
-	 *            a file to test to see if it's an info file
-	 * @return true if the file is an info file
-	 */
-	public static boolean isInfoFile(File file) {
-		return file.isFile() && isInfoFilename(file.getName());
-	}
-
-	/**
-	 * @param fileName
-	 *            the file name to test if it matches an info filename
-	 * @return true if the file name is five digits zero padded number
-	 */
-	public static boolean isInfoFilename(String fileName) {
-		return fileName.matches("^[0-9]{1,5}\\." + INFO_EXT);
-	}
-
-	/**
 	 * @param id
 	 *            the id of the Info file to open
 	 * @return the info file for id id
@@ -187,7 +169,7 @@ public final class ArchiveCollection {
 		for (File file : this.rootDirectory.listFiles()) {
 			if (file.isDirectory()) {
 				addArchiveItemFromDirectory(file);
-			} else if (isInfoFile(file)) {
+			} else if (CdItemRecord.isInfoFile(file)) {
 				addCataloguedCdFromFile(file);
 			}
 		}

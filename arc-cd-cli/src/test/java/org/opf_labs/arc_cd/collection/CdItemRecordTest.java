@@ -3,6 +3,7 @@
  */
 package org.opf_labs.arc_cd.collection;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import java.io.File;
@@ -58,12 +59,27 @@ public class CdItemRecordTest {
 
 	/**
 	 * Test method for
-	 * {@link org.opf_labs.arc_cd.collection.ArchiveCollection#isInfoFile(File)}
+	 * {@link org.opf_labs.arc_cd.collection.CdItemRecord#isInfoFile(File)}
 	 * 
 	 * @throws URISyntaxException
 	 */
 	@Test
 	public void testIsInfoFile() throws URISyntaxException {
-		assertTrue(ArchiveCollection.isInfoFile(AllArcCdCliTests.INFO_00001));
+		assertTrue(CdItemRecord.isInfoFile(AllArcCdCliTests.INFO_00001));
 	}
+	
+	/**
+	 * Test method for
+	 * {@link org.opf_labs.arc_cd.collection.CdItemRecord#isInfoFilename(String)}
+	 * 
+	 * @throws URISyntaxException
+	 */
+	@Test
+	public void testIsInfoFilename() throws URISyntaxException {
+		assertFalse(CdItemRecord.isInfoFilename(""));
+		assertFalse(CdItemRecord.isInfoFilename("001"));
+		assertFalse(CdItemRecord.isInfoFilename("001.info"));
+		assertTrue(CdItemRecord.isInfoFilename("99999.info"));
+	}
+	
 }

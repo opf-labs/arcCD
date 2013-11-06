@@ -9,9 +9,9 @@ import com.google.common.base.Preconditions;
  * @author carl
  * 
  */
-@SuppressWarnings("static-method")
 public final class AudioTrack {
 	private final int number;
+	private final TrackType type;
 	private final boolean copyPermitted;
 	private final boolean preEmphasisFlag;
 	private final boolean isTwoChannel;
@@ -32,11 +32,12 @@ public final class AudioTrack {
 	 * @param start
 	 * @param length
 	 */
-	private AudioTrack(int number, boolean copyPermitted,
+	private AudioTrack(int number, TrackType type, boolean copyPermitted,
 			boolean preEmphasisFlag, boolean isTwoChannel,
 			boolean isFourChannel, String isrc, String file, String start,
 			String length) {
 		this.number = number;
+		this.type = type;
 		this.copyPermitted = copyPermitted;
 		this.preEmphasisFlag = preEmphasisFlag;
 		this.isTwoChannel = isTwoChannel;
@@ -114,7 +115,7 @@ public final class AudioTrack {
 	 * @return the track type
 	 */
 	public TrackType getType() {
-		return TrackType.AUDIO;
+		return this.type;
 	}
 
 	@Override
@@ -138,6 +139,8 @@ public final class AudioTrack {
 				+ ((this.isrc == null) ? 0 : this.isrc.hashCode());
 		result = prime * result
 				+ ((this.length == null) ? 0 : this.length.hashCode());
+		result = prime * result
+				+ ((this.type == null) ? 0 : this.type.hashCode());
 		result = prime * result + this.number;
 		result = prime * result + (this.preEmphasisFlag ? 1231 : 1237);
 		result = prime * result
@@ -178,6 +181,11 @@ public final class AudioTrack {
 				return false;
 		} else if (!this.length.equals(other.length))
 			return false;
+		if (this.type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!(this.type == other.type))
+			return false;
 		if (this.number != other.number)
 			return false;
 		if (this.preEmphasisFlag != other.preEmphasisFlag)
@@ -197,6 +205,7 @@ public final class AudioTrack {
 	@SuppressWarnings("hiding")
 	public static class Builder {
 		private int number = 1;
+		private TrackType type = TrackType.AUDIO;
 		private boolean copyPermitted = false;
 		private boolean preEmphasisFlag = false;
 		private boolean isTwoChannel = true;
@@ -216,6 +225,15 @@ public final class AudioTrack {
 			this.number = number;
 		}
 
+		/**
+		 * @param type the new TrackType value
+		 * @return this builder for chaining
+		 */
+		public Builder type(final TrackType type) {
+			Preconditions.checkNotNull(type, "type == null");
+			this.type = type;
+			return this;
+		}
 		/**
 		 * @param copyPermitted a new copyPermitted flag value
 		 * @return this Builder object for chaining
@@ -298,7 +316,7 @@ public final class AudioTrack {
 		 * @return the created AudioTrack
 		 */
 		public AudioTrack build() {
-			return new AudioTrack(this.number, this.copyPermitted,
+			return new AudioTrack(this.number, this.type, this.copyPermitted,
 					this.preEmphasisFlag, this.isTwoChannel,
 					this.isFourChannel, this.isrc, this.file, this.start,
 					this.length);

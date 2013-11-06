@@ -6,6 +6,7 @@ package org.opf_labs.arc_cd.collection;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -68,6 +69,31 @@ public final class ArchiveCollection {
 	 */
 	public int size() {
 		return this.archived.size();
+	}
+	
+	/**
+	 * @param id the id if the item to retrieve
+	 * @return the item with the id passed or ArchiveItem.DEFAULT if not found
+	 */
+	public ArchiveItem getArchiveItem(Integer id) {
+		if (this.archived.containsKey(id)) {
+			return this.archived.get(id);
+		}
+		return ArchiveItem.DEFAULT;
+	}
+	
+	/**
+	 * @return the set of ids in the collection
+	 */
+	public Set<Integer> getArchiveIds() {
+		return this.archived.keySet();
+	}
+	
+	/**
+	 * @return the collection of archive items
+	 */
+	public Collection<ArchiveItem> getArchiveItems() {
+		return this.archived.values();
 	}
 	/**
 	 * @param id

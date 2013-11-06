@@ -43,8 +43,52 @@ public class ArchiveCollectionTest {
 	@Test
 	public final void testGetItemRecord() {
 		ArchiveCollection fromFile = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT);
-		assertTrue(fromFile.getItemRecord(Integer.valueOf(1)) != CdItemRecord.DEFAULT_ITEM);
+		assertFalse(fromFile.getItemRecord(Integer.valueOf(1)) == CdItemRecord.DEFAULT_ITEM);
 		assertTrue(fromFile.getItemRecord(Integer.valueOf(2)) == CdItemRecord.DEFAULT_ITEM);
+	}
+
+	/**
+	 * Test method for {@link org.opf_labs.arc_cd.collection.ArchiveCollection#size()}.
+	 */
+	@Test
+	public final void testSize() {
+		ArchiveCollection fromFile = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT);
+		assertTrue(fromFile.size() == 7);
+	}
+
+	/**
+	 * Test method for {@link org.opf_labs.arc_cd.collection.ArchiveCollection#getArchiveIds()}.
+	 */
+	@Test
+	public final void testGetArchiveIds() {
+		ArchiveCollection fromFile = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT);
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(1)));
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(22)));
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(103)));
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(212)));
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(304)));
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(390)));
+		assertTrue(fromFile.getArchiveIds().contains(Integer.valueOf(429)));
+		assertFalse(fromFile.getArchiveIds().contains(Integer.valueOf(430)));
+	}
+
+	/**
+	 * Test method for {@link org.opf_labs.arc_cd.collection.ArchiveCollection#getArchiveItem(Integer)}.
+	 */
+	@Test
+	public final void testGetArchiveItem() {
+		ArchiveCollection fromFile = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT);
+		ArchiveItem item = fromFile.getArchiveItem(Integer.valueOf(22));
+		assertFalse(item.equals(ArchiveItem.DEFAULT));
+	}
+
+	/**
+	 * Test method for {@link org.opf_labs.arc_cd.collection.ArchiveCollection#getArchiveItems()}.
+	 */
+	@Test
+	public final void testGetArchiveItems() {
+		ArchiveCollection fromFile = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT);
+		assertTrue(fromFile.getArchiveItems().size() == fromFile.size());
 	}
 
 	/**
@@ -53,7 +97,7 @@ public class ArchiveCollectionTest {
 	@Test
 	public final void testGetItemToc() {
 		ArchiveCollection fromString = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT.getAbsolutePath());
-		assertTrue(fromString.getItemToc(Integer.valueOf(22)) != TocItemRecord.defaultInstance());
+		assertFalse(fromString.getItemToc(Integer.valueOf(22)) == TocItemRecord.defaultInstance());
 		assertTrue(fromString.getItemToc(Integer.valueOf(2)) == TocItemRecord.defaultInstance());
 	}
 
@@ -63,7 +107,7 @@ public class ArchiveCollectionTest {
 	@Test
 	public final void testGetItemCueSheet() {
 		ArchiveCollection fromString = new ArchiveCollection(AllArcCdCliTests.TEST_COLLECTION_ROOT.getAbsolutePath());
-		assertTrue(fromString.getItemCueSheet(Integer.valueOf(22)) != ArchiveItem.DEFAULT_CUE);
+		assertFalse(fromString.getItemCueSheet(Integer.valueOf(22)) == ArchiveItem.DEFAULT_CUE);
 		assertTrue(fromString.getItemCueSheet(Integer.valueOf(2)) == ArchiveItem.DEFAULT_CUE);
 	}
 

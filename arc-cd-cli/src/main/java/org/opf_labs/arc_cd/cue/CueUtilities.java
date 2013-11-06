@@ -3,6 +3,9 @@
  */
 package org.opf_labs.arc_cd.cue;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.Iterator;
 
 import org.apache.commons.io.FilenameUtils;
@@ -11,6 +14,7 @@ import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 import org.opf_labs.arc_cd.collection.CdItemRecord;
 import org.opf_labs.arc_cd.collection.CdTrack;
 import org.opf_labs.audio.CueSheet;
+import org.opf_labs.audio.CueSheetSerializer;
 import org.opf_labs.audio.FileData;
 import org.opf_labs.audio.Index;
 import org.opf_labs.audio.Position;
@@ -109,6 +113,24 @@ public final class CueUtilities {
 		}
 
 		return cue;
+	}
+	
+	/**
+	 * @param cueSheet the cue sheet to serialise to file
+	 * @param file the file to write the CUE sheet to
+	 * @return true if serialised to file, false otherwise
+	 */
+	public static boolean cueSheetToFile(CueSheet cueSheet, File file) {
+		CueSheetSerializer css = new CueSheetSerializer();
+		try (PrintWriter writer = new PrintWriter(file)) {
+			writer.print(css.serializeCueSheet(cueSheet));
+			writer.close();
+		} catch (FileNotFoundException excep) {
+			// TODO Auto-generated catch block
+			excep.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 	
 	private static CueSheet cueSheetFromInfo(CdItemRecord info) {

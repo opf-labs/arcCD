@@ -1,0 +1,43 @@
+CD_DA
+
+CD_TEXT {
+  LANGUAGE_MAP {
+    0: 9
+  }
+  LANGUAGE 0 {
+    TITLE ""
+    PERFORMER ""
+    SIZE_INFO { 0,  1,  2,  0,  4,  1,  0,  0,  0,  0,  0,  0,
+                0,  0,  0,  0,  0,  0,  0,  3,  7,  0,  0,  0,
+                0,  0,  0,  0,  9,  0,  0,  0,  0,  0,  0,  0}
+  }
+}
+
+// Track 1
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "YOU WILL NEVER KNOW5"
+    PERFORMER ""
+  }
+}
+FILE "/Users/M3PUser/Music/arccd/00212/00212.bin" 0 03:03:40
+
+
+// Track 2
+TRACK AUDIO
+NO COPY
+NO PRE_EMPHASIS
+TWO_CHANNEL_AUDIO
+CD_TEXT {
+  LANGUAGE 0 {
+    TITLE "PLEASE MY SOUL2"
+    PERFORMER ""
+  }
+}
+FILE "/Users/M3PUser/Music/arccd/00212/00212.bin" 03:03:40 03:03:07
+START 00:00:08
+

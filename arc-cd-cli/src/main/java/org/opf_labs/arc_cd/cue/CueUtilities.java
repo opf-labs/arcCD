@@ -11,6 +11,7 @@ import java.util.Iterator;
 import org.apache.commons.io.FilenameUtils;
 import org.opf_labs.arc_cd.cdrdao.toc.AudioTrack;
 import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
+import org.opf_labs.arc_cd.cdrdao.toc.TrackType;
 import org.opf_labs.arc_cd.collection.CdItemRecord;
 import org.opf_labs.arc_cd.collection.CdTrack;
 import org.opf_labs.audio.CueSheet;
@@ -94,7 +95,7 @@ public final class CueUtilities {
 	public static CueSheet cueFromTocAndInfo(final TocItemRecord toc, final CdItemRecord info) {
 		Preconditions.checkNotNull(toc, "toc == null");
 		Preconditions.checkNotNull(info, "info == null");
-		Preconditions.checkState(toc.getTracks().size() == info.getTracks().size(), "TocItemRecord and CdItemRecord have different number of tracks.");
+		Preconditions.checkState(toc.getTracks().size() >= info.getTracks().size(), "TocItemRecord and CdItemRecord have different number of tracks.");
 
 		CueSheet cue = cueSheetFromInfo(info);
 		FileData fileData = new FileData(cue);
@@ -102,14 +103,19 @@ public final class CueUtilities {
 
 		Iterator<CdTrack> infoTracks = info.getTracks().iterator();
 		Iterator<AudioTrack> tocTracks = toc.getTracks().iterator();
-		while (infoTracks.hasNext() && tocTracks.hasNext()) {
+		while (tocTracks.hasNext()) {
 			AudioTrack audioTrack = tocTracks.next();
-			CdTrack infoTrack = infoTracks.next();
-			if (fileData.getFile() == null) {
-				fileData.setFile(FilenameUtils.getName(audioTrack.getFile()));
+			if (audioTrack.getType() == TrackType.AUDIO) {
+				CdTrack infoTrack = infoTracks.next();
+				if (fileData.getFile() == null) {
+					fileData.setFile(FilenameUtils.getName(audioTrack.getFile()));
+				}
+				TrackData cueTrack = trackDataFromTocAndInfoTracks(fileData, audioTrack, infoTrack);
+				fileData.getTrackData().add(cueTrack);
+			} else {
+				TrackData cueTrack = trackDataFromTocTrack(fileData, audioTrack);
+				fileData.getTrackData().add(cueTrack);
 			}
-			TrackData cueTrack = trackDataFromTocAndInfoTracks(fileData, audioTrack, infoTrack);
-			fileData.getTrackData().add(cueTrack);
 		}
 
 		return cue;
@@ -141,13 +147,18 @@ public final class CueUtilities {
 	}
 	
 	private static TrackData trackDataFromTocAndInfoTracks(final FileData parent, final AudioTrack tocTrack, final CdTrack infoTrack) {
-		TrackData cueTrack = new TrackData(parent, tocTrack.getNumber(), "AUDIO");
-		if (!tocTrack.getIsrc().isEmpty()) {
-			cueTrack.setIsrcCode(tocTrack.getIsrc());
-		}
+		TrackData cueTrack = trackDataFromTocTrack(parent, tocTrack);
 		cueTrack.setTitle(infoTrack.getTitle());
 		if (!infoTrack.getArtist().isEmpty() && !infoTrack.getArtist().equals(CdTrack.DEFAULT_ARTIST)) {
 			cueTrack.setPerformer(infoTrack.getArtist());
+		}
+		return cueTrack;
+	}
+	
+	private static TrackData trackDataFromTocTrack(final FileData parent, final AudioTrack tocTrack) {
+		TrackData cueTrack = new TrackData(parent, tocTrack.getNumber(), tocTrack.getType().getCueSyntax());
+		if (!tocTrack.getIsrc().isEmpty()) {
+			cueTrack.setIsrcCode(tocTrack.getIsrc());
 		}
 		Index index = new Index(1, CueUtilities.timeToPosition(tocTrack.getStart()));
 		cueTrack.getIndices().add(index);

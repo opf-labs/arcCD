@@ -22,6 +22,7 @@
 	<modules>
 		<module>arc-cd-cli</module>
 		<module>arc-cd-wrap-cdrdao</module>
+		<module>arc-cd-collection-manager</module>
 	</modules>
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

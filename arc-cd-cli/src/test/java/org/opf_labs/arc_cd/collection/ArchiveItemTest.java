@@ -20,20 +20,6 @@ import org.opf_labs.audio.CueSheet;
 public class ArchiveItemTest {
 
 	/**
-	 * @throws java.lang.Exception
-	 */
-	@BeforeClass
-	public static void setUpBeforeClass() throws Exception {
-	}
-
-	/**
-	 * @throws java.lang.Exception
-	 */
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
-
-	/**
 	 * Test method for {@link org.opf_labs.arc_cd.collection.ArchiveItem#getId()}.
 	 */
 	@Test

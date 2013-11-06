@@ -138,19 +138,26 @@ public final class TocItemRecord {
 		Preconditions.checkNotNull(reader, "reader == null");
 		List<AudioTrack> tracks = new ArrayList<>();
 		String line;
+		String lastTrack = "";
 		while ((line = reader.readLine()) != null) {
 			System.err.println(line);
 			Matcher trackStartMatcher = TocUtilities.TRACK_START_COMMENT.matcher(line);
-			if (trackStartMatcher.matches())
-				tracks.add(parseTrack(trackStartMatcher.group(1), reader));
+			if (trackStartMatcher.matches()) {
+				lastTrack = trackStartMatcher.group(1);
+			}
+			Matcher trackTypeMatcher = TocUtilities.TRACK_TYPE_PATTERN.matcher(line);
+			if (trackTypeMatcher.matches()) {
+				tracks.add(parseTrack(lastTrack, TrackType.fromTocValue(trackTypeMatcher.group(1)), reader));
+			}
 		}
 		return new TocItemRecord(tracks);
 	}
 
-	private static AudioTrack parseTrack(String numberMatch,
+	private static AudioTrack parseTrack(String numberMatch, TrackType type,
 			BufferedReader reader) throws IOException {
 		int number = Integer.parseInt(numberMatch);
 		Builder builder = new Builder(number);
+		builder.type(type);
 		String line;
 		while (((line = reader.readLine()) != null) && !(line.isEmpty())) {
 			Matcher isrcMatcher = TocUtilities.ISRC_PATTERN.matcher(line);

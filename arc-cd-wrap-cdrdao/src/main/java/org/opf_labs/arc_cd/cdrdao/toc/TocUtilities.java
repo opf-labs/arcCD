@@ -12,6 +12,8 @@ import java.util.regex.Pattern;
 public final class TocUtilities {
 	static final Pattern TRACK_START_COMMENT = Pattern
 	.compile("^// Track ([0-9]+)");
+	static final Pattern TRACK_TYPE_PATTERN = Pattern
+	.compile("^TRACK (.*)$");
 	static final Pattern ISRC_PATTERN = Pattern
 	.compile("^ISRC \"(.*)\"$");
 	static final Pattern FILE_PATTERN = Pattern

@@ -6,9 +6,11 @@ import java.net.URISyntaxException;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
+import org.opf_labs.arc_cd.collection.ArchiveCollectionTest;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
 import org.opf_labs.arc_cd.collection.CdItemRecordTest;
 import org.opf_labs.arc_cd.collection.ItemManifestTest;
+import org.opf_labs.arc_cd.collection.ManifestTestTest;
 import org.opf_labs.arc_cd.config.ArcCdConfigTest;
 import org.opf_labs.arc_cd.cue.CueSheetTest;
 import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
@@ -24,19 +26,39 @@ import org.opf_labs.arc_cd.cue.CueUtilitiesTest;
  */
 @SuppressWarnings("javadoc")
 @RunWith(Suite.class)
-@SuiteClasses({ArcCdConfigTest.class, CdItemRecordTest.class, ItemManifestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
+@SuiteClasses({ArcCdConfigTest.class, ArchiveCollectionTest.class, CdItemRecordTest.class, ItemManifestTest.class, ManifestTestTest.class, CueSheetTest.class, CueUtilitiesTest.class })
 public class AllArcCdCliTests {
 
 	public static final File INFO_00001;
 	public static final File INFO_00022;
+	public static final File INFO_00103;
+	public static final File INFO_00212;
+	public static final File INFO_00304;
+	public static final File INFO_00429;
 	public static final File MANIFEST_00022;
+	public static final File MANIFEST_00390;
 	public static final ArchiveItem ITEM_00022;
+	public static final ArchiveItem ITEM_00103;
+	public static final ArchiveItem ITEM_00212;
+	public static final ArchiveItem ITEM_00304;
+	public static final ArchiveItem ITEM_00390;
+	public static final ArchiveItem ITEM_00429;
 	static {
 		try {
 			INFO_00001 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00001/00001.info");
 			INFO_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.info");
-			MANIFEST_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.manifest");
+			INFO_00103 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00103/00103.info");
+			INFO_00212 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00212/00212.info");
+			INFO_00304 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00304/00304.info");
+			INFO_00429 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00429/00429.info");
+			MANIFEST_00022 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00022/00022.man");
+			MANIFEST_00390 = AllArcCdCliTests.getResourceAsFile("org/opf_labs/arc_cd/collection/00390/00390.man");
 			ITEM_00022 = ArchiveItem.fromDirectory(INFO_00022.getParentFile());
+			ITEM_00103 = ArchiveItem.fromDirectory(INFO_00103.getParentFile());
+			ITEM_00212 = ArchiveItem.fromDirectory(INFO_00212.getParentFile());
+			ITEM_00304 = ArchiveItem.fromDirectory(INFO_00304.getParentFile());
+			ITEM_00390 = ArchiveItem.fromDirectory(MANIFEST_00390.getParentFile());
+			ITEM_00429 = ArchiveItem.fromDirectory(INFO_00429.getParentFile());
 		} catch (URISyntaxException excep) {
 			throw new AssertionError("Couldn't load test data.");
 		}

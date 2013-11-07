@@ -43,10 +43,13 @@ public final class CollectionManagerCli {
 			outputHelpAndExit(OK_STATUS);
 		}
 		setupConfiguration(args);
-		CollectionManagerCli manager = new CollectionManagerCli(new ArchiveCollection("/home/carl/dev/arc-cd-test/M3P/metadata"));
-		System.err.println(manager.collection.size());
-			//manager.generateCues();
+		CollectionManagerCli manager = new CollectionManagerCli(new ArchiveCollection(CONFIG.getCollectionRoot()));
+		if (CONFIG.generateCues()) {
+			manager.generateCues();
+		}
+		if (CONFIG.checkManifests()) {
 			manager.checkManifests();
+		}
 	}
 
 	private static void setupConfiguration(final String args[]) {

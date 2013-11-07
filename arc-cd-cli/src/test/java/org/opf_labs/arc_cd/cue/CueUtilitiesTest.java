@@ -131,17 +131,6 @@ public class CueUtilitiesTest {
 	 * Test method for {@link org.opf_labs.arc_cd.cue.CueUtilities#cueFromTocAndInfo(org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord, org.opf_labs.arc_cd.collection.CdItemRecord)}.
 	 * @throws IOException 
 	 */
-	@Test(expected=IllegalStateException.class)
-	public void testCueFromTocAndInfoDifferingTracks() throws IOException {
-		TocItemRecord tocRecord = TocItemRecord.fromTocFile(TOC_CD1);
-		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);
-		CueUtilities.cueFromTocAndInfo(tocRecord, itemRecord);
-	}
-
-	/**
-	 * Test method for {@link org.opf_labs.arc_cd.cue.CueUtilities#cueFromTocAndInfo(org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord, org.opf_labs.arc_cd.collection.CdItemRecord)}.
-	 * @throws IOException 
-	 */
 	@Test
 	public void testCueFromTocAndInfoCdDetails() throws IOException {
 		CdItemRecord itemRecord = CdItemRecord.fromInfoFile(AllArcCdCliTests.INFO_00022);

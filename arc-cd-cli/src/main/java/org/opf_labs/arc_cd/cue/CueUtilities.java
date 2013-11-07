@@ -105,17 +105,17 @@ public final class CueUtilities {
 		Iterator<AudioTrack> tocTracks = toc.getTracks().iterator();
 		while (tocTracks.hasNext()) {
 			AudioTrack audioTrack = tocTracks.next();
-			if (audioTrack.getType() == TrackType.AUDIO) {
+			TrackData cueTrack;
+			if ((audioTrack.getType() == TrackType.AUDIO) && infoTracks.hasNext()) {
 				CdTrack infoTrack = infoTracks.next();
 				if (fileData.getFile() == null) {
 					fileData.setFile(FilenameUtils.getName(audioTrack.getFile()));
 				}
-				TrackData cueTrack = trackDataFromTocAndInfoTracks(fileData, audioTrack, infoTrack);
-				fileData.getTrackData().add(cueTrack);
+				cueTrack = trackDataFromTocAndInfoTracks(fileData, audioTrack, infoTrack);
 			} else {
-				TrackData cueTrack = trackDataFromTocTrack(fileData, audioTrack);
-				fileData.getTrackData().add(cueTrack);
+				cueTrack = trackDataFromTocTrack(fileData, audioTrack);
 			}
+			fileData.getTrackData().add(cueTrack);
 		}
 
 		return cue;

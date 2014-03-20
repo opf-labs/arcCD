@@ -29,19 +29,22 @@ public final class CdItemRecord {
 	public static final String VARIOUS = "Various Artists";
 	/** Label for the Album Title field */
 	public static final String ALBUM_TITLE = "AlbumTitle";
+	/** Label for the Compilation field */
+	public static final String COMPILATION = "Compilation";
 	/** Label for the Album Artist field */
 	public static final String ALBUM_ARTIST = "AlbumArtist";
 	/** Label for a Track field */
 	public static final String TRACK = "Track";
 	/** Label for a Track Artist field */
-	public static final String TRACK_ARTIST = "TrackArtist";
+	public static final String ARTIST = "Artist";
 	private static final String OPEN_DELIM = "\\[";
 	private static final String CLOSE_DELIM = "\\]";
 	private static final String GRABBER = "(.+)$";
 	private static final Pattern ALBUM_TITLE_PATTERN = Pattern.compile("^" + OPEN_DELIM + ALBUM_TITLE + CLOSE_DELIM + GRABBER);
+	private static final Pattern COMPILATION_PATTERN = Pattern.compile("^" + OPEN_DELIM + COMPILATION + CLOSE_DELIM + GRABBER);
 	private static final Pattern ALBUM_ARTIST_PATTERN = Pattern.compile("^" + OPEN_DELIM + ALBUM_ARTIST + CLOSE_DELIM + GRABBER);
 	private static final Pattern TRACK_TITLE_PATTERN = Pattern.compile("^" + OPEN_DELIM + TRACK + CLOSE_DELIM + GRABBER);
-	private static final Pattern TRACK_ARTIST_PATTERN = Pattern.compile("^" + OPEN_DELIM + TRACK_ARTIST + CLOSE_DELIM + GRABBER);
+	private static final Pattern ARTIST_PATTERN = Pattern.compile("^" + OPEN_DELIM + ARTIST + CLOSE_DELIM + GRABBER);
 
 	private static final Logger LOGGER = Logger.getLogger(CdItemRecord.class); 
 
@@ -51,13 +54,17 @@ public final class CdItemRecord {
 	final List<CdTrack> tracks;
 	
 	private CdItemRecord() {
-		this(DEFAULT_STRING_VALUE, DEFAULT_STRING_VALUE, new ArrayList<CdTrack>());
+		this(DEFAULT_STRING_VALUE, VARIOUS, new ArrayList<CdTrack>());
 	}
 	
 	private CdItemRecord(final String title, final String artist, final List<CdTrack> tracks) {
+		this(title, artist, tracks, (artist == VARIOUS));
+	}
+	
+	private CdItemRecord(final String title, final String artist, final List<CdTrack> tracks, final boolean isCompilation) {
 		this.title = title;
 		this.albumArtist = (artist == null || artist.isEmpty()) ? VARIOUS : artist;
-		this.isCompilation = (this.albumArtist == VARIOUS);
+		this.isCompilation = isCompilation;
 		this.tracks = new ArrayList<>(tracks);
 	}
 	
@@ -201,9 +208,10 @@ public final class CdItemRecord {
 	@SuppressWarnings({"javadoc", "hiding"})
 	public static final class Builder {
 		private String title = DEFAULT_STRING_VALUE;
-		private String albumArtist = DEFAULT_STRING_VALUE;
+		private String albumArtist = VARIOUS;
 		boolean isCompilation = false;
 		List<CdTrack> tracks = new ArrayList<>();
+		private CdTrack currentTrack = CdTrack.defaultInstance();
 		
 		/**	creates a bare bones, default instance */
 		public Builder() {
@@ -249,28 +257,37 @@ public final class CdItemRecord {
 				// Going to return what we can
 				LOGGER.error("Problem reading line from reader");
 			}
+			builder.tracks.add(builder.currentTrack);
 			return builder;
 		}
 		
 		private Builder updateFromInfoLine(final String infoLine) {
+			final int GROUP_ORD = 1;
 			Matcher trackMatcher = TRACK_TITLE_PATTERN.matcher(infoLine);
 			if (trackMatcher.matches()) {
-				this.tracks.add(CdTrack.fromValues(trackMatcher.group(1)));
+				if (this.currentTrack != CdTrack.DEFAULT) {
+					this.tracks.add(this.currentTrack);
+				}
+				this.currentTrack = CdTrack.fromValues(trackMatcher.group(GROUP_ORD));
 				return this;
+			}
+			Matcher artistMatcher = ARTIST_PATTERN.matcher(infoLine);
+			if (artistMatcher.matches()) {
+				this.currentTrack = CdTrack.fromValues(this.currentTrack.getTitle(), artistMatcher.group(GROUP_ORD));
 			}
 			Matcher albumTitleMatcher = ALBUM_TITLE_PATTERN.matcher(infoLine);
 			if (albumTitleMatcher.matches()) {
-				this.title = albumTitleMatcher.group(1);
+				this.title = albumTitleMatcher.group(GROUP_ORD);
 				return this;
 			}
 			Matcher albumArtistMatcher = ALBUM_ARTIST_PATTERN.matcher(infoLine);
 			if (albumArtistMatcher.matches()) {
-				this.albumArtist = albumArtistMatcher.group(1);
+				this.albumArtist = albumArtistMatcher.group(GROUP_ORD);
 				return this;
 			}
 			return this;
 		}
-		
+
 		public CdItemRecord build() {
 			return new CdItemRecord(this.title, this.albumArtist, this.tracks);
 		}

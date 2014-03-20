@@ -61,6 +61,12 @@ public final class ArcCdCli {
 		outputWelcome();
 
 		CD_COLLECTION = new ArchiveCollection(CONFIG.getCollectionRoot());
+		// if no items to archive, then terminate
+		if (CD_COLLECTION.size() == 0) {
+			LOGGER.fatal("No info files for items to archive found in Collection root: " + CONFIG.getCollectionRoot());
+			logFatalMessageAndTerminateWithCode("Terminating arcCD.", 1);
+			
+		}
 		CdrdaoCliWrapper wrapper;
 		try {
 			wrapper = CdrdaoCliWrapperFactory.getInstalledInstance();

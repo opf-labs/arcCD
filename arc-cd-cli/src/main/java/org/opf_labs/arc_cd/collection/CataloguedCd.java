@@ -75,6 +75,15 @@ public final class CataloguedCd {
 		return this.cdDetails;
 	}
 	
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "CataloguedCd [id=" + this.id + ", cdDetails=" + this.cdDetails
+				+ "]";
+	}
+
 	/**
 	 * @param id the Integer id to format
 	 * @return the integer as a five digit, zero padded string

@@ -90,6 +90,13 @@ public final class ArchiveCollection {
 	}
 	
 	/**
+	 * @return the set of ids of info files to be archived
+	 */
+	public Set<Integer> getCataloguedIds() {
+		return this.toArchive.keySet();
+	}
+	
+	/**
 	 * @return the collection of archive items
 	 */
 	public Collection<ArchiveItem> getArchiveItems() {
@@ -199,6 +206,7 @@ public final class ArchiveCollection {
 	private int clearAndRepopulateArchiveMapsFromDisk() {
 		clearArchiveMaps();
 		for (File file : this.rootDirectory.listFiles()) {
+			LOGGER.debug("file:" + file);
 			if (file.isDirectory()) {
 				addArchiveItemFromDirectory(file);
 			} else if (CdItemRecord.isInfoFile(file)) {
@@ -238,6 +246,7 @@ public final class ArchiveCollection {
 					+ file.getAbsolutePath());
 			logAndRecordParseException(id, excep);
 		}
+		LOGGER.debug("Adding to archive:" + cd);
 		this.toArchive.put(id, cd);
 	}
 

@@ -56,7 +56,7 @@ public final class ArcCdCli {
 	 */
 	public static void main(final String[] args) {
 		// TODO Replace basic logger configuration
-		BasicConfigurator.configure();
+		//BasicConfigurator.configure();
 		setupConfiguration(args);
 		outputWelcome();
 
@@ -74,6 +74,17 @@ public final class ArcCdCli {
 		// Check for info file in root
 		CdItemRecord item;
 		item = CD_COLLECTION.getItemRecord(itemId);
+
+		// If no info file found then report, and list available info files
+		if (item.equals(CdItemRecord.defaultItem())) {
+			LOGGER.warn("No info file found for id: " + itemId);
+			LOGGER.warn("List of ids for info files awaiting archiving:");
+			for (Integer id : CD_COLLECTION.getCataloguedIds()) {
+				LOGGER.warn(id.toString());
+			}
+		}
+		
+		LOGGER.debug("item:" + item.toString());
 
 		File itemDir = new File(String.format("%s%s%05d",
 				CONFIG.getCollectionRoot(), File.separator, itemId));

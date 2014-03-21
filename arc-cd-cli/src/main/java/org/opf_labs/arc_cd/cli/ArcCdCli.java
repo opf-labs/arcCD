@@ -16,6 +16,8 @@ import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 import org.opf_labs.arc_cd.collection.ArchiveCollection;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
 import org.opf_labs.arc_cd.collection.CataloguedCd;
+import org.opf_labs.arc_cd.collection.ManifestTest;
+import org.opf_labs.arc_cd.collection.ManifestTest.Result;
 import org.opf_labs.arc_cd.config.ArcCdConfig;
 
 /**
@@ -38,6 +40,7 @@ public final class ArcCdCli {
 
 	private static ArcCdConfig CONFIG = ArcCdConfig.getDefault();
 	private static ArchiveCollection ARCHIVE_COLLECTION;
+	private static CdrdaoCliWrapper CDRDAO;
 	private static Logger LOGGER = Logger.getLogger(ArcCdCli.class);
 
 	private ArcCdCli() {
@@ -58,49 +61,8 @@ public final class ArcCdCli {
 		setupConfiguration(args);
 		outputWelcome();
 		getArchiveCollection();
-		CdrdaoCliWrapper wrapper = getCdrdaoWrapper();
-		CataloguedCd itemToArchive = getItemToArchive();
-		File itemDir = getItemDirectory(itemToArchive.getId());
-		TocItemRecord tocRecord = readCdToc(wrapper);
-
-		String tocPath = itemDir.getAbsolutePath() + File.separator
-		+ itemToArchive.getFormattedId() + "." + "toc";
-		File tocFile = new File(tocPath);
-		if (tocFile.exists())
-			tocFile.delete();
-		if (tocRecord.getTracks().size() == itemToArchive.getCdDetails().getTracks().size()) {
-			System.out.println("Inserted CD is id " + itemToArchive.getFormattedId());
-			System.out.println("Artist is " + itemToArchive.getCdDetails().getAlbumArtist()
-					+ ", and title is " + itemToArchive.getCdDetails().getTitle());
-			System.out.println("Item has " + itemToArchive.getCdDetails().getTracks().size()
-					+ " tracks.");
-			System.out.println("OK to archive? [Y/n]");
-			if (ArcCdInputProcessor.confirmChoice()) {
-				try {
-					wrapper.ripCdToBinFromDefaultCdDevice(itemDir, itemToArchive.getFormattedId());
-				} catch (CdrdaoException excep) {
-					// TODO Auto-generated catch block
-					excep.printStackTrace();
-				}
-				try {
-					ARCHIVE_COLLECTION.archiveItem(itemToArchive.getId().intValue());
-				} catch (IOException excep) {
-					// TODO Auto-generated catch block
-					excep.printStackTrace();
-				}
-			}
-		} else if (tocRecord.getTracks().size() != itemToArchive.getCdDetails().getTracks().size()) {
-			System.out.println("Inserted CD is id " + itemToArchive.getFormattedId());
-			System.out.println("Artist is " + itemToArchive.getCdDetails().getAlbumArtist()
-					+ ", and title is " + itemToArchive.getCdDetails().getTitle());
-			System.out.println("Info record states that the item should have "
-					+ itemToArchive.getCdDetails().getTracks().size() + " tracks.");
-			System.out.println("Inserted CD has "
-					+ tocRecord.getTracks().size() + " tracks.");
-			System.out.println("Please check that the CD matches.");
-		} else {
-			System.out.println("CD is not inserted or has no tracks.");
-		}
+		getCdrdaoWrapper();
+		archiveItem();
 	}
 
 	private static void setupConfiguration(final String args[]) {
@@ -147,6 +109,55 @@ public final class ArcCdCli {
 		return true;
 	}
 
+	private static void archiveItem() {
+		CataloguedCd itemToArchive = getItemToArchive();
+		File itemDir = getItemDirectory(itemToArchive.getId());
+		TocItemRecord tocRecord = readCdToc();
+
+		String tocPath = itemDir.getAbsolutePath() + File.separator
+		+ itemToArchive.getFormattedId() + "." + "toc";
+		File tocFile = new File(tocPath);
+		if (tocFile.exists())
+			tocFile.delete();
+		if (tocRecord.getTracks().size() == itemToArchive.getCdDetails().getTracks().size()) {
+			System.out.println("Inserted CD is id " + itemToArchive.getFormattedId());
+			System.out.println("Artist is " + itemToArchive.getCdDetails().getAlbumArtist()
+					+ ", and title is " + itemToArchive.getCdDetails().getTitle());
+			System.out.println("Item has " + itemToArchive.getCdDetails().getTracks().size()
+					+ " tracks.");
+			System.out.println("OK to archive? [Y/n]");
+			if (ArcCdInputProcessor.confirmChoice()) {
+				try {
+					CDRDAO.ripCdToBinFromDefaultCdDevice(itemDir, itemToArchive.getFormattedId());
+				} catch (CdrdaoException excep) {
+					// TODO Auto-generated catch block
+					excep.printStackTrace();
+				}
+				try {
+					ARCHIVE_COLLECTION.archiveItem(itemToArchive.getId().intValue());
+					System.out.println("\007");
+					System.out.println("\007");
+					System.out.println("\007");
+				} catch (IOException excep) {
+					// TODO Auto-generated catch block
+					excep.printStackTrace();
+				}
+			}
+		} else if (tocRecord.getTracks().size() != itemToArchive.getCdDetails().getTracks().size()) {
+			System.out.println("Inserted CD is id " + itemToArchive.getFormattedId());
+			System.out.println("Artist is " + itemToArchive.getCdDetails().getAlbumArtist()
+					+ ", and title is " + itemToArchive.getCdDetails().getTitle());
+			System.out.println("Info record states that the item should have "
+					+ itemToArchive.getCdDetails().getTracks().size() + " tracks.");
+			System.out.println("Inserted CD has "
+					+ tocRecord.getTracks().size() + " tracks.");
+			System.out.println("Please check that the CD matches.");
+		} else {
+			System.out.println("CD is not inserted or has no tracks.");
+		}
+		
+	}
+	
 	private static void outputWelcome() {
 		if (!CdrdaoCliWrapperFactory.isCdrdaoInstalled()) {
 			System.out.println("Couldn't detect cdrdao utility");
@@ -181,9 +192,9 @@ public final class ArcCdCli {
 		return infoRecord;
 	}
 	
-	private static CdrdaoCliWrapper getCdrdaoWrapper() {
+	private static void getCdrdaoWrapper() {
 		try {
-			return CdrdaoCliWrapperFactory.getInstalledInstance();
+			CDRDAO = CdrdaoCliWrapperFactory.getInstalledInstance();
 		} catch (CdrdaoException excep) {
 			throw new IllegalStateException(excep);
 		}
@@ -193,8 +204,7 @@ public final class ArcCdCli {
 		ARCHIVE_COLLECTION = new ArchiveCollection(CONFIG.getCollectionRoot());
 		// if no items to archive, then terminate
 		if (ARCHIVE_COLLECTION.getCataloguedIds().size() == 0) {
-			LOGGER.fatal("No info files for items to archive found in Collection root: " + CONFIG.getCollectionRoot());
-			logFatalMessageAndTerminateWithCode("Terminating arcCD.", ERROR_STATUS);
+			LOGGER.warn("No info files for items to archive found in Collection root: " + CONFIG.getCollectionRoot());
 		}
 	}
 	
@@ -215,11 +225,11 @@ public final class ArcCdCli {
 		return itemDir;
 	}
 
-	private static TocItemRecord readCdToc(CdrdaoCliWrapper wrapper) {
+	private static TocItemRecord readCdToc() {
 		System.out.println("Reading CD Table Of Contents [TOC].");
 		TocItemRecord toc = TocItemRecord.defaultInstance();
 		try {
-			toc = TocItemRecord.fromInputStream(wrapper.readTocFromDefaultCdDevice());
+			toc = TocItemRecord.fromInputStream(CDRDAO.readTocFromDefaultCdDevice());
 		} catch (CdrdaoException | IOException excep) {
 			// TODO Auto-generated catch block
 			excep.printStackTrace();
@@ -228,6 +238,20 @@ public final class ArcCdCli {
 		return toc;
 	}
 	
+	private static void checkManifests() {
+		for (ArchiveItem item : ARCHIVE_COLLECTION.getArchiveItems()) {
+			// System.out.println("Checking manifest for item:" + item.getInfo());
+			ManifestTest manifest = item.checkManifest();
+			if (!manifest.hasPassed()) {
+				if (manifest.getBinResult() != Result.DELETED && manifest.getCueResult() != Result.ADDED)
+				{
+					System.err.println("Manifest test failed for item" + item.getId());
+					System.err.println("Test Failed:" + manifest.toString());
+				}
+			}
+		}
+	}
+
 	private static void logFatalMessageAndTerminateWithCode(
 			final String message, final int exitCode) {
 		LOGGER.fatal(message);

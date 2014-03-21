@@ -176,6 +176,7 @@ public final class ArchiveCollection {
 			File itemDir = new File(this.rootDirectory.getAbsolutePath()
 					+ File.separator + cdToArchive.getFormattedId());
 			ArchiveItem archItem = ArchiveItem.fromDirectory(itemDir);
+			archItem.createCue();
 			archItem.writeManifestFile();
 			return true;
 		}

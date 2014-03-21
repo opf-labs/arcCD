@@ -90,6 +90,16 @@ public final class ArchiveCollection {
 	}
 	
 	/**
+	 * @param id the id of the Catalogued Item to retrieve
+	 * @return the item with the id passed, or CataloguedCD.DEFAULT if not found
+	 */
+	public CataloguedCd getCataloguedItem(Integer id) {
+		if (this.toArchive.containsKey(id)) {
+			return this.toArchive.get(id);
+		}
+		return CataloguedCd.DEFAULT;
+	}
+	/**
 	 * @return the set of ids of info files to be archived
 	 */
 	public Set<Integer> getCataloguedIds() {

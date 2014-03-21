@@ -73,26 +73,10 @@ public final class ArcCdCli {
 			throw new IllegalStateException(excep);
 		}
 
-		Integer itemId = ArcCdInputProcessor.getInputId();
-		String formattedId = CataloguedCd.formatIdToString(itemId);
-
-		// Check for info file in root
-		CataloguedCd infoRecord = CD_COLLECTION.getCataloguedItem(itemId);
-		CdItemRecord item = infoRecord.getCdDetails();
-		
-		// If no info file found then report, and list available info files
-		if (item.equals(CdItemRecord.defaultItem())) {
-			LOGGER.warn("No info file found for id: " + itemId);
-			LOGGER.warn("List of ids for info files awaiting archiving:");
-			for (Integer id : CD_COLLECTION.getCataloguedIds()) {
-				LOGGER.warn(id.toString());
-			}
-		}
-		
-		LOGGER.debug("item:" + item.toString());
+		CataloguedCd itemToArchive = getItemToArchive();
 
 		File itemDir = new File(String.format("%s%s%05d",
-				CONFIG.getCollectionRoot(), File.separator, itemId));
+				CONFIG.getCollectionRoot(), File.separator, itemToArchive.getId()));
 		if (!itemDir.exists()) {
 			if (!itemDir.mkdirs()) {
 				System.out.println("Couldn't create item  dir:" + itemDir);
@@ -109,7 +93,7 @@ public final class ArcCdCli {
 
 		System.out.println("Reading CD contents.");
 		String tocPath = itemDir.getAbsolutePath() + File.separator
-				+ formattedId + "." + "toc";
+				+ itemToArchive.getFormattedId() + "." + "toc";
 		try {
 			wrapper.readTocFromDefaultCdDevice();
 		} catch (CdrdaoException excep) {
@@ -120,33 +104,33 @@ public final class ArcCdCli {
 		TocItemRecord tocRecord = TocItemRecord.fromTocFile(tocFile);
 		if (tocFile.exists())
 			tocFile.delete();
-		if (tocRecord.getTracks().size() == item.getTracks().size()) {
-			System.out.println("Inserted CD is id " + formattedId);
-			System.out.println("Artist is " + item.getAlbumArtist()
-					+ ", and title is " + item.getTitle());
-			System.out.println("Item has " + item.getTracks().size()
+		if (tocRecord.getTracks().size() == itemToArchive.getCdDetails().getTracks().size()) {
+			System.out.println("Inserted CD is id " + itemToArchive.getFormattedId());
+			System.out.println("Artist is " + itemToArchive.getCdDetails().getAlbumArtist()
+					+ ", and title is " + itemToArchive.getCdDetails().getTitle());
+			System.out.println("Item has " + itemToArchive.getCdDetails().getTracks().size()
 					+ " tracks.");
 			System.out.println("OK to archive? [Y/n]");
 			if (ArcCdInputProcessor.confirmChoice()) {
 				try {
-					wrapper.ripCdToBinFromDefaultCdDevice(itemDir, formattedId);
+					wrapper.ripCdToBinFromDefaultCdDevice(itemDir, itemToArchive.getFormattedId());
 				} catch (CdrdaoException excep) {
 					// TODO Auto-generated catch block
 					excep.printStackTrace();
 				}
 				try {
-					CD_COLLECTION.archiveItem(itemId.intValue());
+					CD_COLLECTION.archiveItem(itemToArchive.getId().intValue());
 				} catch (IOException excep) {
 					// TODO Auto-generated catch block
 					excep.printStackTrace();
 				}
 			}
-		} else if (tocRecord.getTracks().size() != item.getTracks().size()) {
-			System.out.println("Inserted CD is id " + formattedId);
-			System.out.println("Artist is " + item.getAlbumArtist()
-					+ ", and title is " + item.getTitle());
+		} else if (tocRecord.getTracks().size() != itemToArchive.getCdDetails().getTracks().size()) {
+			System.out.println("Inserted CD is id " + itemToArchive.getFormattedId());
+			System.out.println("Artist is " + itemToArchive.getCdDetails().getAlbumArtist()
+					+ ", and title is " + itemToArchive.getCdDetails().getTitle());
 			System.out.println("Info record states that the item should have "
-					+ item.getTracks().size() + " tracks.");
+					+ itemToArchive.getCdDetails().getTracks().size() + " tracks.");
 			System.out.println("Inserted CD has "
 					+ tocRecord.getTracks().size() + " tracks.");
 			System.out.println("Please check that the CD matches.");
@@ -214,6 +198,23 @@ public final class ArcCdCli {
 		HelpFormatter formatter = new HelpFormatter();
 		formatter.printHelp("arcCD", ArcCdOptionsParser.getOptions());
 		System.exit(status);
+	}
+	
+	private static CataloguedCd getItemToArchive() {
+		Integer itemId = ArcCdInputProcessor.getInputId();
+
+		// Check for info file in root
+		CataloguedCd infoRecord = CD_COLLECTION.getCataloguedItem(itemId);
+		
+		// If no info file found then report, and list available info files
+		if (infoRecord.equals(CataloguedCd.DEFAULT)) {
+			LOGGER.info("No info file found for id: " + itemId);
+			LOGGER.info("List of ids for info files awaiting archiving:");
+			for (Integer id : CD_COLLECTION.getCataloguedIds()) {
+				LOGGER.info(id.toString());
+			}
+		}
+		return infoRecord;
 	}
 
 	private static void logFatalMessageAndTerminateWithCode(

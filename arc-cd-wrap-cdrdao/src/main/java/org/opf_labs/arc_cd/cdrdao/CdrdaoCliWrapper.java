@@ -5,6 +5,8 @@ package org.opf_labs.arc_cd.cdrdao;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -178,15 +180,17 @@ public final class CdrdaoCliWrapper implements CdrdaoWrapper {
 		String[] lines = runner.getProcessErrorAsString().split("\n");
 		for (String line : lines) {
 			System.out.println(line);
-			if (line.matches("^[\\s]+[0-9]{1,2}.*"))
-				System.out.println("Track:" + line);
 		}
 		if (retCode != 0) {
 			throw new CdrdaoException(StatusCode.ERROR,
 					"Error reading TOC from device:" + deviceName);
 		}
 		// Get the process output
-		return runner.getProcessError();
+		try {
+			return new FileInputStream(tocPath);
+		} catch (FileNotFoundException excep) {
+			throw new CdrdaoException(StatusCode.NO_EXECUTION, excep);
+		}
 	}
 
 	@Override

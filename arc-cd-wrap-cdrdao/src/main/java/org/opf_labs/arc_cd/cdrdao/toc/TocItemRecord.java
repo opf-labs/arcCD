@@ -140,7 +140,6 @@ public final class TocItemRecord {
 		String line;
 		String lastTrack = "";
 		while ((line = reader.readLine()) != null) {
-			System.err.println(line);
 			Matcher trackStartMatcher = TocUtilities.TRACK_START_COMMENT.matcher(line);
 			if (trackStartMatcher.matches()) {
 				lastTrack = trackStartMatcher.group(1);

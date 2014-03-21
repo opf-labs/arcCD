@@ -60,22 +60,7 @@ public final class ArcCdCli {
 		getArchiveCollection();
 		CdrdaoCliWrapper wrapper = getCdrdaoWrapper();
 		CataloguedCd itemToArchive = getItemToArchive();
-
-		File itemDir = new File(String.format("%s%s%05d",
-				CONFIG.getCollectionRoot(), File.separator, itemToArchive.getId()));
-		if (!itemDir.exists()) {
-			if (!itemDir.mkdirs()) {
-				System.out.println("Couldn't create item  dir:" + itemDir);
-				System.exit(ERROR_STATUS);
-			}
-		} else if (itemDir.list().length > 0) {
-			ArchiveItem archItem = ArchiveItem.fromDirectory(itemDir);
-			if (archItem.isArchived()) {
-				System.out.println("Item " + itemDir
-						+ " exists and is already valid");
-				System.exit(ERROR_STATUS);
-			}
-		}
+		File itemDir = getItemDirectory(itemToArchive.getId());
 
 		System.out.println("Reading CD contents.");
 		String tocPath = itemDir.getAbsolutePath() + File.separator
@@ -216,9 +201,27 @@ public final class ArcCdCli {
 		// if no items to archive, then terminate
 		if (ARCHIVE_COLLECTION.getCataloguedIds().size() == 0) {
 			LOGGER.fatal("No info files for items to archive found in Collection root: " + CONFIG.getCollectionRoot());
-			logFatalMessageAndTerminateWithCode("Terminating arcCD.", 1);
+			logFatalMessageAndTerminateWithCode("Terminating arcCD.", ERROR_STATUS);
 		}
 	}
+	
+	private static File getItemDirectory(Integer id) {
+		File itemDir = new File(String.format("%s%s%05d",
+				CONFIG.getCollectionRoot(), File.separator, id));
+		if (!itemDir.exists()) {
+			if (!itemDir.mkdirs()) {
+				logFatalMessageAndTerminateWithCode("Couldn't create item  dir:" + itemDir, ERROR_STATUS);
+			}
+		} else if (itemDir.list().length > 0) {
+			ArchiveItem archItem = ArchiveItem.fromDirectory(itemDir);
+			if (archItem.isArchived()) {
+				logFatalMessageAndTerminateWithCode("Archived Item " + itemDir
+						+ " exists and is already valid", ERROR_STATUS);
+			}
+		}
+		return itemDir;
+	}
+
 	private static void logFatalMessageAndTerminateWithCode(
 			final String message, final int exitCode) {
 		LOGGER.fatal(message);

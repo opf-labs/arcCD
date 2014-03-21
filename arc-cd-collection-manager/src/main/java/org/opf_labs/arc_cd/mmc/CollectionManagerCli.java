@@ -124,6 +124,7 @@ public final class CollectionManagerCli {
 			if (!manifest.hasPassed()) {
 				if (manifest.getBinResult() != Result.DELETED && manifest.getCueResult() != Result.ADDED)
 				{
+					System.err.println("Manifest test failed for item" + item.getId());
 					System.err.println("Test Failed:" + manifest.toString());
 				}
 			}

@@ -10,7 +10,6 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -18,12 +17,9 @@ import java.util.List;
 import org.apache.commons.io.IOUtils;
 import org.junit.Test;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCommands.Command;
-import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.CdrdaoException;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdDeviceException;
-import org.opf_labs.arc_cd.cdrdao.CdrdaoWrapper.NoCdException;
 import org.opf_labs.arc_cd.cdrdao.test.MockCdrProcessFactory;
 import org.opf_labs.arc_cd.cdrdao.test.MockCdrdaoProcessRunner;
-import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 import org.opf_labs.utils.ProcessRunnerFactory;
 
 /**

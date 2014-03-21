@@ -250,11 +250,11 @@ public final class CdrdaoCommands {
 		Preconditions.checkArgument(!binPath.isEmpty(), "binPath.isEmpty()");
 		this.optionValues.clear();
 		this.optionValues.put(Option.DEVICE, device);
-		this.optionValues.put(Option.DATA_FILE_OPTION, tocPath);
+		this.optionValues.put(Option.DATA_FILE_OPTION, binPath);
 		List<String> commands = createCommandList(Command.READ_CD);
 		commands.add(ParanoiaModeOption.PARANOIA_MODE_OPTION);
 		commands.add(this.paranoiaMode.getModeValueAsString());
-		commands.add(binPath);
+		commands.add(tocPath);
 		return Collections.unmodifiableList(commands);
 	}
 

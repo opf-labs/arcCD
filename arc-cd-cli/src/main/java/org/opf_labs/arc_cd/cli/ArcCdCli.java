@@ -37,7 +37,7 @@ public final class ArcCdCli {
 	public static final int ERROR_STATUS = 1;
 
 	private static ArcCdConfig CONFIG = ArcCdConfig.getDefault();
-	private static ArchiveCollection CD_COLLECTION;
+	private static ArchiveCollection ARCHIVE_COLLECTION;
 	private static Logger LOGGER = Logger.getLogger(ArcCdCli.class);
 
 	private ArcCdCli() {
@@ -57,16 +57,8 @@ public final class ArcCdCli {
 		//BasicConfigurator.configure();
 		setupConfiguration(args);
 		outputWelcome();
-
-		CD_COLLECTION = new ArchiveCollection(CONFIG.getCollectionRoot());
-		// if no items to archive, then terminate
-		if (CD_COLLECTION.getCataloguedIds().size() == 0) {
-			LOGGER.fatal("No info files for items to archive found in Collection root: " + CONFIG.getCollectionRoot());
-			logFatalMessageAndTerminateWithCode("Terminating arcCD.", 1);
-			
-		}
+		getArchiveCollection();
 		CdrdaoCliWrapper wrapper = getCdrdaoWrapper();
-
 		CataloguedCd itemToArchive = getItemToArchive();
 
 		File itemDir = new File(String.format("%s%s%05d",
@@ -113,7 +105,7 @@ public final class ArcCdCli {
 					excep.printStackTrace();
 				}
 				try {
-					CD_COLLECTION.archiveItem(itemToArchive.getId().intValue());
+					ARCHIVE_COLLECTION.archiveItem(itemToArchive.getId().intValue());
 				} catch (IOException excep) {
 					// TODO Auto-generated catch block
 					excep.printStackTrace();
@@ -198,13 +190,13 @@ public final class ArcCdCli {
 		Integer itemId = ArcCdInputProcessor.getInputId();
 
 		// Check for info file in root
-		CataloguedCd infoRecord = CD_COLLECTION.getCataloguedItem(itemId);
+		CataloguedCd infoRecord = ARCHIVE_COLLECTION.getCataloguedItem(itemId);
 		
 		// If no info file found then report, and list available info files
 		if (infoRecord.equals(CataloguedCd.DEFAULT)) {
 			LOGGER.info("No info file found for id: " + itemId);
 			LOGGER.info("List of ids for info files awaiting archiving:");
-			for (Integer id : CD_COLLECTION.getCataloguedIds()) {
+			for (Integer id : ARCHIVE_COLLECTION.getCataloguedIds()) {
 				LOGGER.info(id.toString());
 			}
 		}
@@ -219,6 +211,14 @@ public final class ArcCdCli {
 		}
 	}
 
+	private static void getArchiveCollection() {
+		ARCHIVE_COLLECTION = new ArchiveCollection(CONFIG.getCollectionRoot());
+		// if no items to archive, then terminate
+		if (ARCHIVE_COLLECTION.getCataloguedIds().size() == 0) {
+			LOGGER.fatal("No info files for items to archive found in Collection root: " + CONFIG.getCollectionRoot());
+			logFatalMessageAndTerminateWithCode("Terminating arcCD.", 1);
+		}
+	}
 	private static void logFatalMessageAndTerminateWithCode(
 			final String message, final int exitCode) {
 		LOGGER.fatal(message);

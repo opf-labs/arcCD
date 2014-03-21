@@ -16,7 +16,6 @@ import org.opf_labs.arc_cd.cdrdao.toc.TocItemRecord;
 import org.opf_labs.arc_cd.collection.ArchiveCollection;
 import org.opf_labs.arc_cd.collection.ArchiveItem;
 import org.opf_labs.arc_cd.collection.CataloguedCd;
-import org.opf_labs.arc_cd.collection.CdItemRecord;
 import org.opf_labs.arc_cd.config.ArcCdConfig;
 
 /**
@@ -66,12 +65,7 @@ public final class ArcCdCli {
 			logFatalMessageAndTerminateWithCode("Terminating arcCD.", 1);
 			
 		}
-		CdrdaoCliWrapper wrapper;
-		try {
-			wrapper = CdrdaoCliWrapperFactory.getInstalledInstance();
-		} catch (CdrdaoException excep) {
-			throw new IllegalStateException(excep);
-		}
+		CdrdaoCliWrapper wrapper = getCdrdaoWrapper();
 
 		CataloguedCd itemToArchive = getItemToArchive();
 
@@ -215,6 +209,14 @@ public final class ArcCdCli {
 			}
 		}
 		return infoRecord;
+	}
+	
+	private static CdrdaoCliWrapper getCdrdaoWrapper() {
+		try {
+			return CdrdaoCliWrapperFactory.getInstalledInstance();
+		} catch (CdrdaoException excep) {
+			throw new IllegalStateException(excep);
+		}
 	}
 
 	private static void logFatalMessageAndTerminateWithCode(

@@ -61,18 +61,11 @@ public final class ArcCdCli {
 		CdrdaoCliWrapper wrapper = getCdrdaoWrapper();
 		CataloguedCd itemToArchive = getItemToArchive();
 		File itemDir = getItemDirectory(itemToArchive.getId());
+		TocItemRecord tocRecord = readCdToc(wrapper);
 
-		System.out.println("Reading CD contents.");
 		String tocPath = itemDir.getAbsolutePath() + File.separator
-				+ itemToArchive.getFormattedId() + "." + "toc";
-		try {
-			wrapper.readTocFromDefaultCdDevice();
-		} catch (CdrdaoException excep) {
-			// TODO Auto-generated catch block
-			excep.printStackTrace();
-		}
+		+ itemToArchive.getFormattedId() + "." + "toc";
 		File tocFile = new File(tocPath);
-		TocItemRecord tocRecord = TocItemRecord.fromTocFile(tocFile);
 		if (tocFile.exists())
 			tocFile.delete();
 		if (tocRecord.getTracks().size() == itemToArchive.getCdDetails().getTracks().size()) {
@@ -222,6 +215,21 @@ public final class ArcCdCli {
 		return itemDir;
 	}
 
+	private static TocItemRecord readCdToc(CdrdaoCliWrapper wrapper) {
+		System.out.println("Reading CD Table Of Contents [TOC].");
+		TocItemRecord toc = TocItemRecord.defaultInstance();
+		try {
+			toc = TocItemRecord.fromInputStream(wrapper.readTocFromDefaultCdDevice());
+		} catch (CdrdaoException | IOException excep) {
+			// TODO Auto-generated catch block
+			excep.printStackTrace();
+			logFatalMessageAndTerminateWithCode("Fatal Exception reading CD TOC.", ERROR_STATUS);
+		}
+		System.out.println("toc size:" + toc.size());
+		System.out.println("toc:" + toc.toString());
+		return toc;
+	}
+	
 	private static void logFatalMessageAndTerminateWithCode(
 			final String message, final int exitCode) {
 		LOGGER.fatal(message);

@@ -225,8 +225,6 @@ public final class ArcCdCli {
 			excep.printStackTrace();
 			logFatalMessageAndTerminateWithCode("Fatal Exception reading CD TOC.", ERROR_STATUS);
 		}
-		System.out.println("toc size:" + toc.size());
-		System.out.println("toc:" + toc.toString());
 		return toc;
 	}
 	

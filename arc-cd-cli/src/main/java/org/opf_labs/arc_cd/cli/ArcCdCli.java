@@ -8,7 +8,6 @@ import java.io.IOException;
 
 import org.apache.commons.cli.HelpFormatter;
 import org.apache.commons.cli.ParseException;
-import org.apache.log4j.BasicConfigurator;
 import org.apache.log4j.Logger;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper;
 import org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapperFactory;
@@ -78,9 +77,9 @@ public final class ArcCdCli {
 		String formattedId = CataloguedCd.formatIdToString(itemId);
 
 		// Check for info file in root
-		CdItemRecord item;
-		item = CD_COLLECTION.getItemRecord(itemId);
-
+		CataloguedCd infoRecord = CD_COLLECTION.getCataloguedItem(itemId);
+		CdItemRecord item = infoRecord.getCdDetails();
+		
 		// If no info file found then report, and list available info files
 		if (item.equals(CdItemRecord.defaultItem())) {
 			LOGGER.warn("No info file found for id: " + itemId);

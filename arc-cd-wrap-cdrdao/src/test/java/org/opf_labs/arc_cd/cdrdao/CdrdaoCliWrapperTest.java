@@ -196,27 +196,6 @@ public class CdrdaoCliWrapperTest {
 
 	/**
 	 * Test method for
-	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#readTocFromDefaultCdDevice()}
-	 * .
-	 * @throws CdrdaoException 
-	 * @throws NoCdException 
-	 * @throws NoCdDeviceException 
-	 * @throws IOException 
-	 */
-	@Test
-	public void testReadTocFromDefaultDevice() throws NoCdDeviceException, NoCdException, CdrdaoException, IOException {
-		CdrdaoCliWrapper wrapper = createTestableInstance(MOCK_FACTORY);
-		try (InputStream stream = wrapper.readTocFromDefaultCdDevice()) {
-			TocItemRecord fromWrapper = TocItemRecord.fromInputStream(stream);
-			System.out.println(fromWrapper.getTracks().size());
-		}
-		/**
-		 * TODO: Implement proper test
-		 */
-	}
-
-	/**
-	 * Test method for
 	 * {@link org.opf_labs.arc_cd.cdrdao.CdrdaoCliWrapper#ripCdToBinFromDefaultCdDevice(java.io.File, java.lang.String)}
 	 * .
 	 */
